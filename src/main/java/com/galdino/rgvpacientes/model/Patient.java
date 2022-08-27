@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,5 +14,10 @@ public class Patient {
 	private String cpf;
 
 	private String name;
+
+	private String phone;
+
+	@Embedded
+	private Address address;
 
 }
