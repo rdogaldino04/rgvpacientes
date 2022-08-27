@@ -8,8 +8,4 @@ public class PatientNotFindException extends EntityNotFoundException {
 		super(message);
 	}
 
-	public PatientNotFindException(Long cpf) {
-		this(String.format("There is no registration of patient with cpf %d", cpf));
-	}
-
 }

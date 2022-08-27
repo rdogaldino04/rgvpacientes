@@ -13,10 +13,9 @@ public class PatientService {
 	@Autowired
 	private PatientRepository patienteRepository;
 
-	public Patient findByCpf(Long cpf) {
-		return this.patienteRepository
-				.findById(cpf)
-				.orElseThrow(() -> new PatientNotFindException(cpf));
+	public Patient findByCpf(String cpf) {
+		return this.patienteRepository.findById(cpf).orElseThrow(() -> new PatientNotFindException(cpf));
+	}
 	}
 
 }

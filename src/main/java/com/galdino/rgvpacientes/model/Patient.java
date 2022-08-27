@@ -10,7 +10,7 @@ import lombok.Data;
 public class Patient {
 
 	@Id
-	private Long cpf;
+	private String cpf;
 
 	private String name;
 

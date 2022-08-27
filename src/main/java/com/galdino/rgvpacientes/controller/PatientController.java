@@ -12,12 +12,12 @@ import com.galdino.rgvpacientes.service.PatientService;
 @RestController
 @RequestMapping("patients")
 public class PatientController {
-	
+
 	@Autowired
 	private PatientService patientService;
 
 	@GetMapping("/{cpf}")
-	public Patient findByCpf(@PathVariable Long cpf) {
+	public Patient findByCpf(@PathVariable String cpf) {
 		return this.patientService.findByCpf(cpf);
 	}
 
