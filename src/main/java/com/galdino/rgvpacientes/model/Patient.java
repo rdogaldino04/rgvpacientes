@@ -3,11 +3,12 @@ package com.galdino.rgvpacientes.model;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import javax.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "patients")
 public class Patient {
 
 	@Id
