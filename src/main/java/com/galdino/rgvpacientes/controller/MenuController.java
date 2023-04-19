@@ -11,7 +11,7 @@ import com.galdino.rgvpacientes.model.Menu;
 import com.galdino.rgvpacientes.repository.MenuRepository;
 
 @RestController
-@RequestMapping("items-menus")
+@RequestMapping("menus")
 public class MenuController {
 
     @Autowired
