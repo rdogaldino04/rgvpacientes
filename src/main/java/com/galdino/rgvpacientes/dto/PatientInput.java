@@ -1,8 +1,10 @@
-package com.galdino.rgvpacientes.controller.input;
+package com.galdino.rgvpacientes.dto;
 
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.br.CPF;
+
+import com.galdino.rgvpacientes.controller.input.AddressInput;
 
 import lombok.Getter;
 import lombok.Setter;

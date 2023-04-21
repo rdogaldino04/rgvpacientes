@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galdino.rgvpacientes.controller.input.PatientInput;
-import com.galdino.rgvpacientes.model.Address;
+import com.galdino.rgvpacientes.dto.PatientInput;
+import com.galdino.rgvpacientes.dto.PatientOut;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.service.PatientService;
 
@@ -31,24 +31,8 @@ public class PatientController {
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Patient save(@RequestBody @Valid PatientInput patientInput) {
-		return this.patientService.save(toPatient(patientInput));
-	}
-
-	private Patient toPatient(PatientInput patientInput) {
-		Patient patient = new Patient();
-		patient.setCpf(patientInput.getCpf());
-		patient.setName(patientInput.getName());
-		patient.setPhone(patientInput.getPhone());
-		Address address = new Address();
-		if (patientInput.getAddress() != null) {
-			address.setAddressName(patientInput.getAddress().getAddressName());
-			address.setComplement(patientInput.getAddress().getComplement());
-			address.setDistrict(patientInput.getAddress().getDistrict());
-			address.setNumber(patientInput.getAddress().getNumber());
-			patient.setAddress(address);
-		}
-		return patient;
+	public PatientOut save(@RequestBody @Valid PatientInput patientInput) {
+		return this.patientService.save(patientInput);
 	}
 
 }
