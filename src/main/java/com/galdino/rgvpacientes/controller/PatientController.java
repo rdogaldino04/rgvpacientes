@@ -1,9 +1,11 @@
 package com.galdino.rgvpacientes.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +35,12 @@ public class PatientController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public PatientOut save(@RequestBody @Valid PatientInput patientInput) {
 		return this.patientService.save(patientInput);
+	}
+
+	@DeleteMapping("/{cpf}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable @NotBlank String cpf) {
+		patientService.delete(cpf);
 	}
 
 }
