@@ -4,6 +4,10 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.galdino.rgvpacientes.enums.Status;
+
 import lombok.Data;
 
 @Data
@@ -20,5 +24,8 @@ public class Patient {
 
 	@Embedded
 	private Address address;
+
+	@NotNull
+	private Status status = Status.ACTIVE;
 
 }
