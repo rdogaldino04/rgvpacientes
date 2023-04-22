@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.galdino.rgvpacientes.controller.input.AddressOut;
 import com.galdino.rgvpacientes.dto.PatientInput;
 import com.galdino.rgvpacientes.dto.PatientOut;
+import com.galdino.rgvpacientes.enums.Status;
 import com.galdino.rgvpacientes.model.Address;
 import com.galdino.rgvpacientes.model.Patient;
 
@@ -22,6 +23,7 @@ public class PatientMapper {
                 .complement(patientInput.getAddress().getComplement())
                 .district(patientInput.getAddress().getDistrict())
                 .build());
+        patient.setStatus(Status.ACTIVE);
 
         return patient;
     }
