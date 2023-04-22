@@ -22,8 +22,9 @@ public class PatientService {
 	@Autowired
 	private PatientMapper patientMapper;
 
-	public Patient findByCpf(String cpf) {
-		return this.patienteRepository.findById(cpf).orElseThrow(() -> new EntityNotFoundException(cpf));
+	public PatientOut findByCpf(String cpf) {
+		return this.patientMapper.toDTO(this.patienteRepository.findById(cpf)
+				.orElseThrow(() -> new EntityNotFoundException(cpf)));
 	}
 
 	@Transactional(rollbackFor = Exception.class)

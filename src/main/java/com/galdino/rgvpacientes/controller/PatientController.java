@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.galdino.rgvpacientes.dto.PatientInput;
 import com.galdino.rgvpacientes.dto.PatientOut;
-import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.service.PatientService;
 
 @RestController
@@ -27,7 +26,7 @@ public class PatientController {
 	private PatientService patientService;
 
 	@GetMapping("/{cpf}")
-	public Patient findByCpf(@PathVariable String cpf) {
+	public PatientOut findByCpf(@PathVariable @NotBlank String cpf) {
 		return this.patientService.findByCpf(cpf);
 	}
 
