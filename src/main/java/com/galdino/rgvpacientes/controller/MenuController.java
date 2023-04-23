@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galdino.rgvpacientes.model.Menu;
-import com.galdino.rgvpacientes.repository.MenuRepository;
+import com.galdino.rgvpacientes.dto.MenuOut;
+import com.galdino.rgvpacientes.dto.MenuService;
 
 @RestController
 @RequestMapping("menus")
 public class MenuController {
 
     @Autowired
-    private MenuRepository itemMenuRepository;
+    private MenuService menusService;
 
     @GetMapping
-    public List<Menu> getMenus() {
-        return this.itemMenuRepository.getMenus();
+    public List<MenuOut> getMenus() {
+        return this.menusService.getMenus();
     }
 
 }
