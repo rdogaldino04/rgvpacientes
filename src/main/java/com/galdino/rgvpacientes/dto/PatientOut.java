@@ -1,7 +1,5 @@
 package com.galdino.rgvpacientes.dto;
 
-import com.galdino.rgvpacientes.controller.input.AddressOut;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

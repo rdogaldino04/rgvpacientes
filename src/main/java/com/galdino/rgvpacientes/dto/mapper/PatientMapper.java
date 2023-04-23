@@ -2,7 +2,7 @@ package com.galdino.rgvpacientes.dto.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.galdino.rgvpacientes.controller.input.AddressOut;
+import com.galdino.rgvpacientes.dto.AddressOut;
 import com.galdino.rgvpacientes.dto.PatientInput;
 import com.galdino.rgvpacientes.dto.PatientOut;
 import com.galdino.rgvpacientes.enums.Status;

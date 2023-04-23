@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.controller.input;
+package com.galdino.rgvpacientes.dto;
 
 import lombok.Getter;
 import lombok.Setter;
