@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
 import com.galdino.rgvpacientes.dto.PatientFilter;
+import com.galdino.rgvpacientes.enums.Status;
 import com.galdino.rgvpacientes.model.Patient;
 
 public class PatientSpecs {
@@ -19,6 +20,7 @@ public class PatientSpecs {
     public static Specification<Patient> usingFilter(PatientFilter filter) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
+            predicates.add(builder.equal(root.get("status"), Status.ACTIVE));
             if (StringUtils.hasText(filter.getCpf())) {
                 predicates.add(builder.equal(root.get("cpf"), filter.getCpf()));
             }

@@ -49,7 +49,7 @@ public class PatientController {
 	}
 
 	@GetMapping
-    public ResponseEntity<Page<Patient>> getAllWithPaginate(PatientFilter patientFilter, @PageableDefault(size = 6) Pageable pageable) {
+    public ResponseEntity<Page<Patient>> getAllWithPaginate(PatientFilter patientFilter, @PageableDefault(size = 10) Pageable pageable) {
 		return ResponseEntity.ok(patientService.getAllWithPaginate(patientFilter, pageable));
     }
 
