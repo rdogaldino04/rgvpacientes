@@ -25,7 +25,7 @@ public class PatientSpecs {
                 predicates.add(builder.equal(root.get("cpf"), filter.getCpf()));
             }
             if (StringUtils.hasText(filter.getName())) {
-                predicates.add(builder.like(root.get("name"), filter.getName().concat("%")));
+                predicates.add(builder.like(root.get("name"), filter.getName().toUpperCase().concat("%")));
             }
             query.orderBy(builder.asc(root.get("name")));
             return builder.and(predicates.toArray(new Predicate[0]));

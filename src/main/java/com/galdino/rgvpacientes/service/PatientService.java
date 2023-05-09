@@ -14,6 +14,7 @@ import com.galdino.rgvpacientes.dto.PatientInput;
 import com.galdino.rgvpacientes.dto.PatientOut;
 import com.galdino.rgvpacientes.dto.mapper.PatientMapper;
 import com.galdino.rgvpacientes.dto.specs.PatientSpecs;
+import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.repository.PatientRepository;
 
@@ -44,8 +45,9 @@ public class PatientService {
 						.orElseThrow(() -> new EntityNotFoundException(cpf)));
 	}
 
-	public Page<Patient> getAllWithPaginate(PatientFilter patientFilter, Pageable pageable) {
-		return this.patienteRepository.findAll(PatientSpecs.usingFilter(patientFilter), pageable);
+	public PageWrapper<Patient> getAllWithPaginate(PatientFilter patientFilter, Pageable pageable) {
+		Page<Patient> patientPage = this.patienteRepository.findAll(PatientSpecs.usingFilter(patientFilter), pageable);
+		return new PageWrapper<>(patientPage);
 	}
 
 }

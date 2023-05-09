@@ -4,7 +4,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.galdino.rgvpacientes.dto.PatientFilter;
 import com.galdino.rgvpacientes.dto.PatientInput;
 import com.galdino.rgvpacientes.dto.PatientOut;
+import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.service.PatientService;
 
@@ -49,7 +49,7 @@ public class PatientController {
 	}
 
 	@GetMapping
-    public ResponseEntity<Page<Patient>> getAllWithPaginate(PatientFilter patientFilter, @PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<PageWrapper<Patient>> getAllWithPaginate(PatientFilter patientFilter, @PageableDefault(size = 10) Pageable pageable) {
 		return ResponseEntity.ok(patientService.getAllWithPaginate(patientFilter, pageable));
     }
 
