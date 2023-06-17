@@ -4,6 +4,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class PatientService {
 	@Autowired
 	private PatientMapper patientMapper;
 
+	@Autowired
+	private Environment env;
+
 	public PatientOut findByCpf(String cpf) {
 		return this.patientMapper.toDTO(this.patienteRepository.findById(cpf)
 				.orElseThrow(() -> new EntityNotFoundException(cpf)));
@@ -46,6 +50,10 @@ public class PatientService {
 	}
 
 	public PageWrapper<Patient> getAllWithPaginate(PatientFilter patientFilter, Pageable pageable) {
+		String databaseUrl = env.getProperty("spring.datasource.url");
+		if (databaseUrl != null && databaseUrl.startsWith("jdbc:sqlite:")) {
+			return new PageWrapper<>(this.patienteRepository.getAllWithPaginate(patientFilter, pageable));
+		}
 		Page<Patient> patientPage = this.patienteRepository.findAll(PatientSpecs.usingFilter(patientFilter), pageable);
 		return new PageWrapper<>(patientPage);
 	}
