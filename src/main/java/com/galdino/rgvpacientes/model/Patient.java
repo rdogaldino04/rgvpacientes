@@ -16,8 +16,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "patients")
-@SQLDelete(sql = "UPDATE patients SET status = 'Inactive' WHERE cpf = ?")
+@Table(name = "patients", schema = "dbapatient")
+@SQLDelete(sql = "UPDATE dbapatient.patients SET status = 'Inactive' WHERE cpf = ?")
 public class Patient {
 
 	@Id
