@@ -5,7 +5,9 @@
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <include file="db/changelog/changes/0001-create-patients-table.xml" />
-    <include file="db/changelog/changes/0002-create-menus-table.xml" />
-    <include file="db/changelog/changes/0003-add-column-status-patient.xml" />
+    <property name="schemaName" value="dbapatient" />                    
+    <include file="db/changelog/changes/230715_1151_create_patients_table.xml" />
+    <include file="db/changelog/changes/230715_1159_create_menus_table.xml" />
+    <include file="db/changelog/changes/230715_1204_insert_the_initial_menus.xml" />
+    <include file="db/changelog/changes/230715_1210_add_column_status_patient.xml" />
 </databaseChangeLog>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="230715_1159" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql" />
+        </preConditions>
+        <comment>create table menus</comment>
+        <sql>
+            create table ${schemaName}.menus(
+                id int4 NOT NULL,
+                name varchar(200) NOT NULL,
+                active bool NULL DEFAULT true,
+                url varchar(200) NULL,
+                menu_parent_id int4 NULL,
+                CONSTRAINT menus_pkey PRIMARY KEY (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

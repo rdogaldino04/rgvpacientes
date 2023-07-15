@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "menus")
+@Table(name = "menus", schema = "dbapatient")
 public class Menu {
 
     @Id
