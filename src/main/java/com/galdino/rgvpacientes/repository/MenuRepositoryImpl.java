@@ -19,7 +19,7 @@ public class MenuRepositoryImpl implements MenuRepositoryQuery {
                 "select distinct m " +
                         "from Menu m " +
                         "left join fetch m.subMenus " +
-                        "where m.active = 'true' " +
+                        "where m.active = '1' " +
                         "and m.menuParent.id is null " +
                         "order by m.id ",
                 Menu.class);
