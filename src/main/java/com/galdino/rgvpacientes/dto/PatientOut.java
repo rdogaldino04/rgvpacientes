@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class PatientOut {
 
+	private long id;
+
 	private String cpf;
 
 	private String name;

@@ -1,10 +1,6 @@
 package com.galdino.rgvpacientes.model;
 
-import javax.persistence.Convert;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.SQLDelete;
@@ -17,10 +13,13 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "patients", schema = "dbapatient")
-@SQLDelete(sql = "UPDATE dbapatient.patients SET status = 'Inactive' WHERE cpf = ?")
+@SQLDelete(sql = "UPDATE dbapatient.patients SET status = 'Inactive' WHERE id = ?")
 public class Patient {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String cpf;
 
 	private String name;

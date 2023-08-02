@@ -42,6 +42,7 @@ public class PatientMapper {
         }
 
         return new PatientOut(
+                patient.getId(),
                 patient.getCpf(),
                 patient.getName(),
                 patient.getPhone(),

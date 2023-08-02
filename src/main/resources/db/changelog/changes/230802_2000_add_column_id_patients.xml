@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="230802_2000" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql" />
+        </preConditions>
+        <comment>add column id patient</comment>
+        <sql>ALTER TABLE ${schemaName}.PATIENTS ADD COLUMN ID BIGSERIAL NOT NULL;</sql>
+        <sql>ALTER TABLE ${schemaName}.PATIENTS DROP CONSTRAINT PK_PATIENTS;</sql>
+        <sql>ALTER TABLE ${schemaName}.PATIENTS ADD CONSTRAINT UK_PATIENTS UNIQUE(CPF);</sql>
+        <sql>ALTER TABLE ${schemaName}.PATIENTS ADD CONSTRAINT PK_PATIENTS PRIMARY KEY(ID);</sql>
+    </changeSet>
+
+</databaseChangeLog>

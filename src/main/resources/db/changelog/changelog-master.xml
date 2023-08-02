@@ -10,4 +10,5 @@
     <include file="db/changelog/changes/230715_1159_create_menus_table.xml" />
     <include file="db/changelog/changes/230715_1204_insert_the_initial_menus.xml" />
     <include file="db/changelog/changes/230715_1210_add_column_status_patient.xml" />
+    <include file="db/changelog/changes/230802_2000_add_column_id_patients.xml" />
 </databaseChangeLog>

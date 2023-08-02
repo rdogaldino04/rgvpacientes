@@ -3,6 +3,7 @@ package com.galdino.rgvpacientes.service;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotBlank;
 
+import com.galdino.rgvpacientes.service.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -32,12 +33,16 @@ public class PatientService {
 	private Environment env;
 
 	public PatientOut findByCpf(String cpf) {
-		return this.patientMapper.toDTO(this.patienteRepository.findById(cpf)
+		return this.patientMapper.toDTO(this.patienteRepository.findByCpf(cpf)
 				.orElseThrow(() -> new EntityNotFoundException(cpf)));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public PatientOut save(PatientInput patientInput) {
+		if (patienteRepository.existsByCpf(patientInput.getCpf())) {
+			throw new BusinessException("Já existe um paciente com cpf " + patientInput.getCpf() +
+					" desativado, revise as informações ou desative o paciente.");
+		}
 		Patient patient = patienteRepository.save(patientMapper.toModel(patientInput));
 		return patientMapper.toDTO(patient);
 	}
@@ -45,7 +50,7 @@ public class PatientService {
 	@Transactional(rollbackFor = Exception.class)
 	public void delete(@NotBlank String cpf) {
 		patienteRepository.delete(
-				patienteRepository.findById(cpf)
+				patienteRepository.findByCpf(cpf)
 						.orElseThrow(() -> new EntityNotFoundException(cpf)));
 	}
 

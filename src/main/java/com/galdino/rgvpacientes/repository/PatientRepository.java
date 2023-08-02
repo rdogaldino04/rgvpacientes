@@ -11,6 +11,8 @@ import com.galdino.rgvpacientes.model.Patient;
 public interface PatientRepository extends JpaRepository<Patient, String>, JpaSpecificationExecutor<Patient>, PatientRepositoryQuery {
 
   @Query("select p from Patient p where p.status = 'Active' and p.cpf = :cpf")
-  Optional<Patient> findById(String cpf);
+  Optional<Patient> findByCpf(String cpf);
+
+  boolean existsByCpf(String cpf);
 
 }

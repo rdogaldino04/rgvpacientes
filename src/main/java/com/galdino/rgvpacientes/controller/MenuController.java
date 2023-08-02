@@ -14,8 +14,11 @@ import com.galdino.rgvpacientes.dto.MenuService;
 @RequestMapping("menus")
 public class MenuController {
 
-    @Autowired
-    private MenuService menusService;
+    private final MenuService menusService;
+
+    public MenuController(MenuService menusService) {
+        this.menusService = menusService;
+    }
 
     @GetMapping
     public List<MenuOut> getMenus() {
