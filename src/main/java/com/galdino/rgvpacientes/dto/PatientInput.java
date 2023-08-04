@@ -10,6 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PatientInput {
+
+	private Long id;
 	
 	@NotBlank(message = "CPF é obrigatório")
 	@CPF

@@ -49,4 +49,16 @@ public class PatientMapper {
                 addressOut);
     }
 
+    public void copyToDomainObject(PatientInput patientInput, Patient patient) {
+        patient.setCpf(patientInput.getCpf());
+        patient.setName(patientInput.getName());
+        patient.setPhone(patientInput.getPhone());
+        if (patientInput.getAddress() != null) {
+            patient.getAddress().setAddressName(patientInput.getAddress().getAddressName());
+            patient.getAddress().setNumber(patientInput.getAddress().getNumber());
+            patient.getAddress().setComplement(patientInput.getAddress().getComplement());
+            patient.getAddress().setDistrict(patientInput.getAddress().getDistrict());
+        }
+    }
+
 }
