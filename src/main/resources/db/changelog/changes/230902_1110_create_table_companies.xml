@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="230902_1110" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql" />
+        </preConditions>
+        <comment>add column id patient</comment>
+        <sql>
+            create table ${schemaName}.companies (
+              id bigserial not null,
+              name varchar(200) not null,
+              cnpj varchar(14) not null,
+              constraint pk_companies primary key (id),
+              constraint uk_companies unique (cnpj)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
