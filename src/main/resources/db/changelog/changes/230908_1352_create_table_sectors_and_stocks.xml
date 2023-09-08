@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="230908_1352" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>create table sectors and stocks</comment>
+        <sql>
+            create table ${schemaName}.sectors (
+            id bigserial not null,
+            name varchar(200) not null,
+            constraint pk_sectors primary key (id)
+            );
+
+            create table ${schemaName}.stocks (
+            id bigserial not null,
+            name varchar(200) not null,
+            sector_id bigint,
+            constraint pk_stocks primary key (id)
+            );
+
+            alter table ${schemaName}.stocks
+            add constraint fk_sectors
+            foreign key(sector_id) references dbapatient.sectors(id);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
