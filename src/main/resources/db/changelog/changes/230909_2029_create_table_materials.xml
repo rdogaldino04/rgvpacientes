@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="230909_2029" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>create table materials</comment>
+        <sql>
+            create table ${schemaName}.materials (
+            id bigserial,
+            name varchar(200) not null,
+            expiration_date Date,
+            registration_date Date,
+
+            constraint pk_materials primary key(id)
+            );
+
+            alter table ${schemaName}.movement_items
+            add constraint fk_materials foreign key(material_id) references ${schemaName}.materials(id);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

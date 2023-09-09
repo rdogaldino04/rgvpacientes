@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="230909_0841" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>create table movements</comment>
+        <sql>
+            create table ${schemaName}.movements (
+            id bigserial,
+            patient_id bigint,
+            company_id bigint,
+            sector_id bigint,
+            stock_id bigint,
+
+            constraint pk_movements primary key(id),
+            constraint fk_patients foreign key(patient_id) references ${schemaName}.patients(id),
+            constraint fk_companies foreign key(company_id) references ${schemaName}.companies(id),
+            constraint fk_sectors foreign key(sector_id) references ${schemaName}.sectors(id),
+            constraint fk_stocks foreign key(stock_id) references ${schemaName}.stocks(id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
