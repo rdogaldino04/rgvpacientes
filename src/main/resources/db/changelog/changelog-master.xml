@@ -13,5 +13,6 @@
     <include file="db/changelog/changes/230802_2000_add_column_id_patients.xml"/>
     <include file="db/changelog/changes/230902_1110_create_table_companies.xml"/>
     <include file="db/changelog/changes/230908_1352_create_table_sectors_and_stocks.xml"/>
+    <include file="db/changelog/changes/230909_0841_add_column_company_id_in_sectors.xml"/>
 
 </databaseChangeLog>

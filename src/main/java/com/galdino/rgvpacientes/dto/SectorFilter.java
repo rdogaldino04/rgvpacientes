@@ -15,4 +15,6 @@ public class SectorFilter {
 
     private String stockName;
 
+    private Long companyId;
+
 }

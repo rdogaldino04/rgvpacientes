@@ -22,4 +22,7 @@ public class Sector {
     @OneToMany(mappedBy = "sector", fetch = FetchType.LAZY)
     private List<Stock> stocks;
 
+    @ManyToOne
+    private Company company;
+
 }

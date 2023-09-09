@@ -7,29 +7,18 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-
-    <changeSet id="230908_1352" author="Galdino">
+    <changeSet id="230909_0841" author="Galdino">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
-        <comment>create table sectors and stocks</comment>
+        <comment>add column company_id in sectors</comment>
         <sql>
-            create table ${schemaName}.sectors (
-            id bigserial not null,
-            name varchar(200) not null,
-            constraint pk_sectors primary key (id)
-            );
+            alter table ${schemaName}.sectors
+            add column company_id bigint;
 
-            create table ${schemaName}.stocks (
-            id bigserial not null,
-            name varchar(200) not null,
-            sector_id bigint,
-            constraint pk_stocks primary key (id)
-            );
-
-            alter table ${schemaName}.stocks
-            add constraint fk_sectors
-            foreign key(sector_id) references ${schemaName}.sectors(id);
+            alter table ${schemaName}.sectors
+            add constraint fk_companies foreign key(company_id)
+            references ${schemaName}.companies(id);
         </sql>
     </changeSet>
 

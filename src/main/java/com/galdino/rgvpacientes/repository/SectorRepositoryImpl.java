@@ -21,6 +21,7 @@ public class SectorRepositoryImpl implements SectorRepositoryQuery {
         sql.append("DISTINCT s ");
         sql.append("FROM Sector s ");
         sql.append("JOIN FETCH s.stocks ");
+        sql.append("LEFT JOIN FETCH s.company ");
         sql.append("WHERE 1 = 1 ");
 
         if (sectorFilter.getId() != null) {
@@ -29,6 +30,10 @@ public class SectorRepositoryImpl implements SectorRepositoryQuery {
 
         if (StringUtils.hasText(sectorFilter.getName())) {
             sql.append("AND UPPER(s.name) LIKE UPPER(:name) ");
+        }
+
+        if (sectorFilter.getCompanyId() != null) {
+            sql.append("AND s.company.id = :companyId ");
         }
 
         sql.append("ORDER BY s.name ");
@@ -42,6 +47,10 @@ public class SectorRepositoryImpl implements SectorRepositoryQuery {
 
         if (StringUtils.hasText(sectorFilter.getName())) {
             createQuery.setParameter("name", sectorFilter.getName().concat("%"));
+        }
+
+        if (sectorFilter.getCompanyId() != null) {
+            createQuery.setParameter("companyId", sectorFilter.getCompanyId());
         }
 
         return createQuery.getResultList();
