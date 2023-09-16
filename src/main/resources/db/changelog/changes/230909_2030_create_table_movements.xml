@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="230909_0841" author="Galdino">
+    <changeSet id="230909_2030" author="Galdino">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -13,16 +13,17 @@
         <sql>
             create table ${schemaName}.movements (
             id bigserial,
-            patient_id bigint,
-            company_id bigint,
-            sector_id bigint,
-            stock_id bigint,
+            patient_id bigint not null,
+            company_id bigint not null,
+            sector_id bigint not null,
+            stock_id bigint not null,
+            registration_date Date not null,
 
             constraint pk_movements primary key(id),
-            constraint fk_patients foreign key(patient_id) references ${schemaName}.patients(id),
-            constraint fk_companies foreign key(company_id) references ${schemaName}.companies(id),
-            constraint fk_sectors foreign key(sector_id) references ${schemaName}.sectors(id),
-            constraint fk_stocks foreign key(stock_id) references ${schemaName}.stocks(id)
+            constraint fk_patients foreign key(patient_id) references dbapatient.patients(id),
+            constraint fk_companies foreign key(company_id) references dbapatient.companies(id),
+            constraint fk_sectors foreign key(sector_id) references dbapatient.sectors(id),
+            constraint fk_stocks foreign key(stock_id) references dbapatient.stocks(id)
             );
         </sql>
     </changeSet>

@@ -19,9 +19,6 @@
 
             constraint pk_materials primary key(id)
             );
-
-            alter table ${schemaName}.movement_items
-            add constraint fk_materials foreign key(material_id) references ${schemaName}.materials(id);
         </sql>
     </changeSet>
 
