@@ -29,4 +29,8 @@ public class SectorService {
     public Sector findById(Long id) {
         return this.sectorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("There is no company with code %d", id)));
     }
+
+    public boolean existsById(Long sectorId) {
+        return this.sectorRepository.existsById(sectorId);
+    }
 }

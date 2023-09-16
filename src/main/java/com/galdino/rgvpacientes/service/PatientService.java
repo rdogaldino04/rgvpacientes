@@ -1,11 +1,13 @@
 package com.galdino.rgvpacientes.service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-
+import com.galdino.rgvpacientes.dto.PatientFilter;
+import com.galdino.rgvpacientes.dto.PatientInput;
+import com.galdino.rgvpacientes.dto.PatientDTO;
+import com.galdino.rgvpacientes.dto.mapper.PatientMapper;
+import com.galdino.rgvpacientes.dto.specs.PatientSpecs;
+import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.model.Patient;
+import com.galdino.rgvpacientes.repository.PatientRepository;
 import com.galdino.rgvpacientes.service.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -14,83 +16,84 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.galdino.rgvpacientes.dto.PatientFilter;
-import com.galdino.rgvpacientes.dto.PatientInput;
-import com.galdino.rgvpacientes.dto.PatientOut;
-import com.galdino.rgvpacientes.dto.mapper.PatientMapper;
-import com.galdino.rgvpacientes.dto.specs.PatientSpecs;
-import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
-import com.galdino.rgvpacientes.model.Patient;
-import com.galdino.rgvpacientes.repository.PatientRepository;
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 @Service
 public class PatientService {
 
-	@Autowired
-	private PatientRepository patienteRepository;
+    @Autowired
+    private PatientRepository patienteRepository;
 
-	@Autowired
-	private PatientMapper patientMapper;
+    @Autowired
+    private PatientMapper patientMapper;
 
-	@Autowired
-	private Environment env;
+    @Autowired
+    private Environment env;
 
-	@PersistenceContext
-	private EntityManager manager;
+    @PersistenceContext
+    private EntityManager manager;
 
-	public PatientOut findByCpf(String cpf) {
-		return this.patientMapper.toDTO(this.patienteRepository.findByCpf(cpf)
-				.orElseThrow(() -> new EntityNotFoundException(cpf)));
-	}
-
-	@Transactional(rollbackFor = Exception.class)
-	public PatientOut save(@Valid PatientInput patientInput) {
-		patientInput.setId(null);
-		if (patienteRepository.existsByCpf(patientInput.getCpf())) {
-			throw new BusinessException("Já existe um paciente com cpf " + patientInput.getCpf() +
-					" desativado, revise as informações ou desative o paciente.");
-		}
-		Patient patient = patienteRepository.save(patientMapper.toModel(patientInput));
-		return patientMapper.toDTO(patient);
-	}
-
-	@Transactional(rollbackFor = Exception.class)
-	public void delete(@NotBlank String cpf) {
-		patienteRepository.delete(
-				patienteRepository.findByCpf(cpf)
-						.orElseThrow(() -> new EntityNotFoundException(cpf)));
-	}
-
-	public PageWrapper<Patient> getAllWithPaginate(PatientFilter patientFilter, Pageable pageable) {
-		String databaseUrl = env.getProperty("spring.datasource.url");
-		if (databaseUrl != null && databaseUrl.startsWith("jdbc:sqlite:")) {
-			return new PageWrapper<>(this.patienteRepository.getAllWithPaginate(patientFilter, pageable));
-		}
-		Page<Patient> patientPage = this.patienteRepository.findAll(PatientSpecs.usingFilter(patientFilter), pageable);
-		return new PageWrapper<>(patientPage);
-	}
-
-	@Transactional(rollbackFor = Exception.class)
-    public PatientOut update(@Valid PatientInput patientInput, @Valid Long id) {
-		patientInput.setId(id);
-		Patient patientCurrent = findById(id);
-		manager.detach(patientCurrent);
-		patientMapper.copyToDomainObject(patientInput, patientCurrent);
-		Optional<Patient> patientExisting = patienteRepository.findByCpf(patientInput.getCpf());
-		boolean exist = patientExisting.isPresent() && !patientExisting.get().equals(patientCurrent);
-		if (exist) {
-			throw new BusinessException(
-					String.format("There is already a registered patient with the cpf %s", patientInput.getCpf())
-			);
-		}
-		return patientMapper.toDTO(patienteRepository.save(patientCurrent));
+    public PatientDTO findByCpf(String cpf) {
+        return this.patientMapper.toDTO(this.patienteRepository.findByCpf(cpf)
+                .orElseThrow(() -> new EntityNotFoundException(cpf)));
     }
 
-	public Patient findById(Long id) {
-		return patienteRepository
-				.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException(String.format("There is no patient with code %d", id)));
-	}
+    @Transactional(rollbackFor = Exception.class)
+    public PatientDTO save(@Valid PatientInput patientInput) {
+        patientInput.setId(null);
+        if (patienteRepository.existsByCpf(patientInput.getCpf())) {
+            throw new BusinessException("Já existe um paciente com cpf " + patientInput.getCpf() +
+                    " desativado, revise as informações ou desative o paciente.");
+        }
+        Patient patient = patienteRepository.save(patientMapper.toModel(patientInput));
+        return patientMapper.toDTO(patient);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(@NotBlank String cpf) {
+        patienteRepository.delete(
+                patienteRepository.findByCpf(cpf)
+                        .orElseThrow(() -> new EntityNotFoundException(cpf)));
+    }
+
+    public PageWrapper<Patient> getAllWithPaginate(PatientFilter patientFilter, Pageable pageable) {
+        String databaseUrl = env.getProperty("spring.datasource.url");
+        if (databaseUrl != null && databaseUrl.startsWith("jdbc:sqlite:")) {
+            return new PageWrapper<>(this.patienteRepository.getAllWithPaginate(patientFilter, pageable));
+        }
+        Page<Patient> patientPage = this.patienteRepository.findAll(PatientSpecs.usingFilter(patientFilter), pageable);
+        return new PageWrapper<>(patientPage);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public PatientDTO update(@Valid PatientInput patientInput, @Valid Long id) {
+        patientInput.setId(id);
+        Patient patientCurrent = findById(id);
+        manager.detach(patientCurrent);
+        patientMapper.copyToDomainObject(patientInput, patientCurrent);
+        Optional<Patient> patientExisting = patienteRepository.findByCpf(patientInput.getCpf());
+        boolean exist = patientExisting.isPresent() && !patientExisting.get().equals(patientCurrent);
+        if (exist) {
+            throw new BusinessException(
+                    String.format("There is already a registered patient with the cpf %s", patientInput.getCpf())
+            );
+        }
+        return patientMapper.toDTO(patienteRepository.save(patientCurrent));
+    }
+
+    public Patient findById(Long id) {
+        return patienteRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("There is no patient with code %d", id)));
+    }
+
+    public boolean existsById(Long id) {
+        return patienteRepository.existsById(id);
+    }
+
 }

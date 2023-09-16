@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.galdino.rgvpacientes.dto.AddressOut;
 import com.galdino.rgvpacientes.dto.PatientInput;
-import com.galdino.rgvpacientes.dto.PatientOut;
+import com.galdino.rgvpacientes.dto.PatientDTO;
 import com.galdino.rgvpacientes.enums.Status;
 import com.galdino.rgvpacientes.model.Address;
 import com.galdino.rgvpacientes.model.Patient;
@@ -28,7 +28,7 @@ public class PatientMapper {
         return patient;
     }
 
-    public PatientOut toDTO(Patient patient) {
+    public PatientDTO toDTO(Patient patient) {
         if (patient == null) {
             return null;
         }
@@ -41,7 +41,7 @@ public class PatientMapper {
             addressOut.setDistrict(patient.getAddress().getDistrict());
         }
 
-        return new PatientOut(
+        return new PatientDTO(
                 patient.getId(),
                 patient.getCpf(),
                 patient.getName(),

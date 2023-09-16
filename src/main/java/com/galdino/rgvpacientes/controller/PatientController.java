@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.galdino.rgvpacientes.dto.PatientFilter;
 import com.galdino.rgvpacientes.dto.PatientInput;
-import com.galdino.rgvpacientes.dto.PatientOut;
+import com.galdino.rgvpacientes.dto.PatientDTO;
 import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.service.PatientService;
@@ -25,13 +25,13 @@ public class PatientController {
 	private PatientService patientService;
 
 	@GetMapping("/{cpf}")
-	public PatientOut findByCpf(@PathVariable @NotBlank String cpf) {
+	public PatientDTO findByCpf(@PathVariable @NotBlank String cpf) {
 		return this.patientService.findByCpf(cpf);
 	}
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public PatientOut save(@RequestBody @Valid PatientInput patientInput) {
+	public PatientDTO save(@RequestBody @Valid PatientInput patientInput) {
 		return this.patientService.save(patientInput);
 	}
 
@@ -48,7 +48,7 @@ public class PatientController {
 
 	@PutMapping("{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public PatientOut update(@RequestBody @Valid PatientInput patientInput, @PathVariable @Valid Long id) {
+	public PatientDTO update(@RequestBody @Valid PatientInput patientInput, @PathVariable @Valid Long id) {
 		return this.patientService.update(patientInput, id);
 	}
 

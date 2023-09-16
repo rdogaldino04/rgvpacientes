@@ -1,13 +1,14 @@
 package com.galdino.rgvpacientes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "stocks", schema = "dbapatient")
@@ -21,8 +22,8 @@ public class Stock {
     private String name;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "sector_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "sector_id", nullable = false)
     private Sector sector;
 
 }

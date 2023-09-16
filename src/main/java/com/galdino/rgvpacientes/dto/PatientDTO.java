@@ -7,16 +7,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class PatientOut {
+public class PatientDTO {
 
-	private long id;
+    private long id;
 
-	private String cpf;
+    private String cpf;
 
-	private String name;
+    private String name;
 
-	private String phone;
+    private String phone;
 
-	private AddressOut address;
+    private AddressOut address;
 
 }

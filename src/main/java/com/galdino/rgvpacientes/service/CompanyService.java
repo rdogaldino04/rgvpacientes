@@ -30,4 +30,7 @@ public class CompanyService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("There is no company with cnpj %s", cnpj)));
     }
 
+    public boolean existsById(Long companyId) {
+        return this.companyRepository.existsById(companyId);
+    }
 }
