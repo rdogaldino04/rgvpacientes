@@ -1,11 +1,11 @@
-package com.galdino.rgvpacientes.dto;
+package com.galdino.rgvpacientes.dto.material;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MaterialDTO {
+public class MaterialMovementItemDTO {
 
     private Long id;
     private String name;

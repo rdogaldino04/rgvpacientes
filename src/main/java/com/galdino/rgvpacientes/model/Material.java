@@ -3,9 +3,12 @@ package com.galdino.rgvpacientes.model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,8 +24,17 @@ public class Material {
 
     private String name;
 
-    private OffsetDateTime expirationDate;
+    @NotNull
+    @FutureOrPresent
+    private LocalDate expirationDate;
 
-    private OffsetDateTime registrationDate;
+    @CreationTimestamp
+    private LocalDate registrationDate;
 
+    public Material() {
+    }
+
+    public Material(Long id) {
+        this.id = id;
+    }
 }

@@ -1,6 +1,7 @@
 package com.galdino.rgvpacientes.dto.mapper;
 
 import com.galdino.rgvpacientes.dto.*;
+import com.galdino.rgvpacientes.dto.material.MaterialMovementItemDTO;
 import com.galdino.rgvpacientes.model.*;
 import org.springframework.stereotype.Component;
 
@@ -104,11 +105,11 @@ public class MovementMapper {
                     itemDTO.setAmount(item.getAmount());
 
                     // TODO criar mapper material issues #3
-                    MaterialDTO materialDTO = new MaterialDTO();
-                    materialDTO.setId(item.getMaterial().getId());
-                    materialDTO.setName(item.getMaterial().getName());
+                    MaterialMovementItemDTO materialMovementItemDTO = new MaterialMovementItemDTO();
+                    materialMovementItemDTO.setId(item.getMaterial().getId());
+                    materialMovementItemDTO.setName(item.getMaterial().getName());
 
-                    itemDTO.setMaterial(materialDTO);
+                    itemDTO.setMaterial(materialMovementItemDTO);
                     return itemDTO;
                 }).collect(Collectors.toList());
         movementDTO.setItems(itemsDTO);

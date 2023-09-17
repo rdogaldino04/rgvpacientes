@@ -1,34 +1,54 @@
 package com.galdino.rgvpacientes.controller;
 
+import com.galdino.rgvpacientes.dto.material.MaterialDTO;
+import com.galdino.rgvpacientes.dto.material.MaterialInput;
 import com.galdino.rgvpacientes.model.Material;
-import com.galdino.rgvpacientes.repository.MaterialRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.galdino.rgvpacientes.service.MaterialService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
 @RequestMapping("materials")
 public class MaterialController {
 
-    private final MaterialRepository materialRepository;
+    private final MaterialService materialService;
 
-    public MaterialController(MaterialRepository materialRepository) {
-        this.materialRepository = materialRepository;
+    public MaterialController(MaterialService materialService) {
+        this.materialService = materialService;
     }
 
+    // todo mudar retorno para dto
     @GetMapping
     public List<Material> getAll(String name) {
-        return this.materialRepository.getAll(name);
+        return this.materialService.getAll(name);
     }
 
     @GetMapping("{id}")
-    public Material getAll(@PathVariable Long id) {
-        return this.materialRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("There is no material with code %d", id)));
+    public MaterialDTO findById(@PathVariable Long id) {
+        return this.materialService.findById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public MaterialDTO create(@RequestBody @Valid @NotNull MaterialInput materialInput) {
+        return this.materialService.create(materialInput);
+    }
+
+    @PutMapping("/{id}")
+    public MaterialDTO update(@PathVariable @NotNull @Positive Long id,
+                              @RequestBody @Valid @NotNull MaterialInput materialInput) {
+        return materialService.update(id, materialInput);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable @NotNull @Positive Long id) {
+        materialService.delete(id);
     }
 
 }

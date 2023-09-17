@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.dto.MaterialMovementItemInput;
+import com.galdino.rgvpacientes.dto.material.MaterialMovementItemInput;
 import com.galdino.rgvpacientes.dto.MovementDTO;
 import com.galdino.rgvpacientes.dto.MovementInput;
 import com.galdino.rgvpacientes.dto.MovementItemInput;
