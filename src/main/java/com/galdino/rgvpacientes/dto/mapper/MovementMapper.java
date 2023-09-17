@@ -68,7 +68,14 @@ public class MovementMapper {
 
         MovementDTO movementDTO = new MovementDTO();
         movementDTO.setId(movement.getId());
-        movementDTO.setPatient(patientMapper.toDTO(movement.getPatient()));
+
+        movementDTO.setPatient(
+                PatientMovementDTO.builder()
+                        .id(movement.getPatient().getId())
+                        .name(movement.getPatient().getName())
+                        .cpf(movement.getPatient().getCpf())
+                        .build()
+        );
 
         // TODO criar mapper company issues #3
         CompanyDTO companyDTO = new CompanyDTO();
@@ -94,10 +101,13 @@ public class MovementMapper {
                 .map(item -> {
                     MovementItemDTO itemDTO = new MovementItemDTO();
                     itemDTO.setId(item.getId());
+                    itemDTO.setAmount(item.getAmount());
+
                     // TODO criar mapper material issues #3
                     MaterialDTO materialDTO = new MaterialDTO();
                     materialDTO.setId(item.getMaterial().getId());
                     materialDTO.setName(item.getMaterial().getName());
+
                     itemDTO.setMaterial(materialDTO);
                     return itemDTO;
                 }).collect(Collectors.toList());

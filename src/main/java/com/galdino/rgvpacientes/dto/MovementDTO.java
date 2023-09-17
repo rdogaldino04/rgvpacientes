@@ -12,7 +12,7 @@ public class MovementDTO {
 
     private Long id;
 
-    private PatientDTO patient;
+    private PatientMovementDTO patient;
 
     private CompanyDTO company;
 

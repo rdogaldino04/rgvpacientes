@@ -1,6 +1,7 @@
 package com.galdino.rgvpacientes.service;
 
 import com.galdino.rgvpacientes.dto.MaterialMovementItemInput;
+import com.galdino.rgvpacientes.dto.MovementDTO;
 import com.galdino.rgvpacientes.dto.MovementInput;
 import com.galdino.rgvpacientes.dto.MovementItemInput;
 import com.galdino.rgvpacientes.dto.mapper.MovementMapper;
@@ -47,9 +48,10 @@ public class MovementService {
         this.materialService = materialService;
     }
 
-    public Movement findById(Long id) {
-        return movementRepository.findById(id)
+    public MovementDTO findById(Long id) {
+        Movement movement = movementRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("There is no movement with id %d", id)));
+        return movementMapper.toDTO(movement);
     }
 
     @Transactional

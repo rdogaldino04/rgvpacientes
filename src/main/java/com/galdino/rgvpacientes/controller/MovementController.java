@@ -21,7 +21,7 @@ public class MovementController {
     }
 
     @GetMapping("{id}")
-    public Movement getById(@Positive @PathVariable Long id) {
+    public MovementDTO findById(@Positive @PathVariable Long id) {
         return this.movementService.findById(id);
     }
 
