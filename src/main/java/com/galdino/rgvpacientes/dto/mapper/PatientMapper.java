@@ -1,13 +1,13 @@
 package com.galdino.rgvpacientes.dto.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.galdino.rgvpacientes.dto.AddressOut;
-import com.galdino.rgvpacientes.dto.PatientInput;
 import com.galdino.rgvpacientes.dto.PatientDTO;
+import com.galdino.rgvpacientes.dto.PatientInput;
+import com.galdino.rgvpacientes.dto.PatientMovementDTO;
 import com.galdino.rgvpacientes.enums.Status;
 import com.galdino.rgvpacientes.model.Address;
 import com.galdino.rgvpacientes.model.Patient;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PatientMapper {
@@ -47,6 +47,14 @@ public class PatientMapper {
                 patient.getName(),
                 patient.getPhone(),
                 addressOut);
+    }
+
+    public PatientMovementDTO toPatientMovementDTO(Patient patient) {
+        return PatientMovementDTO.builder()
+                .id(patient.getId())
+                .name(patient.getName())
+                .cpf(patient.getCpf())
+                .build();
     }
 
     public void copyToDomainObject(PatientInput patientInput, Patient patient) {

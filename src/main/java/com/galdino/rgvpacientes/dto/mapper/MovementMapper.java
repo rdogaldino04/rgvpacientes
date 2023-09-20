@@ -1,7 +1,8 @@
 package com.galdino.rgvpacientes.dto.mapper;
 
-import com.galdino.rgvpacientes.dto.*;
-import com.galdino.rgvpacientes.dto.material.MaterialMovementItemDTO;
+import com.galdino.rgvpacientes.dto.MovementDTO;
+import com.galdino.rgvpacientes.dto.MovementInput;
+import com.galdino.rgvpacientes.dto.MovementItemDTO;
 import com.galdino.rgvpacientes.model.*;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +13,17 @@ import java.util.stream.Collectors;
 public class MovementMapper {
 
     private final PatientMapper patientMapper;
+    private final CompanyMapper companyMapper;
+    private final SectorMapper sectorMapper;
+    private final StockMapper stockMapper;
+    private final MovementItemMapper itemMapper;
 
-    public MovementMapper(PatientMapper patientMapper) {
+    public MovementMapper(PatientMapper patientMapper, CompanyMapper companyMapper, SectorMapper sectorMapper, StockMapper stockMapper, MovementItemMapper itemMapper) {
         this.patientMapper = patientMapper;
+        this.companyMapper = companyMapper;
+        this.sectorMapper = sectorMapper;
+        this.stockMapper = stockMapper;
+        this.itemMapper = itemMapper;
     }
 
     public Movement toEntity(MovementInput movementInput) {
@@ -66,54 +75,16 @@ public class MovementMapper {
         if (movement == null) {
             return null;
         }
-
         MovementDTO movementDTO = new MovementDTO();
         movementDTO.setId(movement.getId());
-
-        movementDTO.setPatient(
-                PatientMovementDTO.builder()
-                        .id(movement.getPatient().getId())
-                        .name(movement.getPatient().getName())
-                        .cpf(movement.getPatient().getCpf())
-                        .build()
-        );
-
-        // TODO criar mapper company issues #3
-        CompanyDTO companyDTO = new CompanyDTO();
-        companyDTO.setId(movement.getCompany().getId());
-        companyDTO.setCnpj(movement.getCompany().getCnpj());
-        companyDTO.setName(movement.getCompany().getName());
-        movementDTO.setCompany(companyDTO);
-
-        // TODO criar mapper sector issues #3
-        SectorDTO sectorDTO = new SectorDTO();
-        sectorDTO.setId(movement.getSector().getId());
-        sectorDTO.setName(movement.getSector().getName());
-        movementDTO.setSector(sectorDTO);
-
-        // TODO criar mapper stock issues #3
-        StockDTO stockDTO = new StockDTO();
-        stockDTO.setId(movement.getStock().getId());
-        stockDTO.setName(movement.getStock().getName());
-        movementDTO.setStock(stockDTO);
-
-        // TODO criar mapper movementItem issues #3
+        movementDTO.setPatient(patientMapper.toPatientMovementDTO(movement.getPatient()));
+        movementDTO.setCompany(companyMapper.toDTO(movement.getCompany()));
+        movementDTO.setSector(sectorMapper.toDTO(movement.getSector()));
+        movementDTO.setStock(stockMapper.toDTO(movement.getStock()));
         List<MovementItemDTO> itemsDTO = movement.getItems().stream()
-                .map(item -> {
-                    MovementItemDTO itemDTO = new MovementItemDTO();
-                    itemDTO.setId(item.getId());
-                    itemDTO.setAmount(item.getAmount());
-
-                    // TODO criar mapper material issues #3
-                    MaterialMovementItemDTO materialMovementItemDTO = new MaterialMovementItemDTO();
-                    materialMovementItemDTO.setId(item.getMaterial().getId());
-                    materialMovementItemDTO.setName(item.getMaterial().getName());
-
-                    itemDTO.setMaterial(materialMovementItemDTO);
-                    return itemDTO;
-                }).collect(Collectors.toList());
+                .map(itemMapper::toDTO)
+                .collect(Collectors.toList());
         movementDTO.setItems(itemsDTO);
-
         return movementDTO;
     }
 

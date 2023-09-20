@@ -2,6 +2,7 @@ package com.galdino.rgvpacientes.dto.mapper;
 
 import com.galdino.rgvpacientes.dto.material.MaterialDTO;
 import com.galdino.rgvpacientes.dto.material.MaterialInput;
+import com.galdino.rgvpacientes.dto.material.MaterialMovementItemDTO;
 import com.galdino.rgvpacientes.model.Material;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,16 @@ public class MaterialMapper {
                 .expirationDate(material.getExpirationDate())
                 .registrationDate(material.getRegistrationDate())
                 .build();
+    }
+
+    public MaterialMovementItemDTO toMaterialMovementItemDTO(Material material) {
+        if (material == null) {
+            return null;
+        }
+        MaterialMovementItemDTO materialMovementItemDTO = new MaterialMovementItemDTO();
+        materialMovementItemDTO.setId(material.getId());
+        materialMovementItemDTO.setName(material.getName());
+        return materialMovementItemDTO;
     }
 
 }
