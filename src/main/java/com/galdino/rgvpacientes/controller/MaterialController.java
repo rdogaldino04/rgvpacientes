@@ -2,7 +2,6 @@ package com.galdino.rgvpacientes.controller;
 
 import com.galdino.rgvpacientes.dto.material.MaterialDTO;
 import com.galdino.rgvpacientes.dto.material.MaterialInput;
-import com.galdino.rgvpacientes.model.Material;
 import com.galdino.rgvpacientes.service.MaterialService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +21,9 @@ public class MaterialController {
         this.materialService = materialService;
     }
 
-    // todo mudar retorno para dto
     @GetMapping
-    public List<Material> getAll(String name) {
-        return this.materialService.getAll(name);
+    public List<MaterialDTO> getAll(MaterialDTO materialDTO) {
+        return this.materialService.getAll(materialDTO);
     }
 
     @GetMapping("{id}")

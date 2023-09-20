@@ -60,8 +60,8 @@ public class MaterialService {
         return this.materialMapper.toDTO(material);
     }
 
-    public List<Material> getAll(String name) {
-        return this.materialRepository.getAll(name);
+    public List<MaterialDTO> getAll(MaterialDTO materialDTO) {
+        return this.materialRepository.getAll(materialDTO);
     }
 
     @Transactional

@@ -1,11 +1,11 @@
 package com.galdino.rgvpacientes.repository;
 
-import com.galdino.rgvpacientes.model.Material;
+import com.galdino.rgvpacientes.dto.material.MaterialDTO;
 
 import java.util.List;
 
 public interface MaterialRepositoryQuery {
 
-    List<Material> getAll(String name);
+    List<MaterialDTO> getAll(MaterialDTO materialDTO);
 
 }
