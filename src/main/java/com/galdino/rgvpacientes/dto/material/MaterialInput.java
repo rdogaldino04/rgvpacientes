@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -21,8 +21,7 @@ public class MaterialInput {
     private String name;
 
     @NotNull
-    @FutureOrPresent
-//    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Future
     private LocalDate expirationDate;
 
 }

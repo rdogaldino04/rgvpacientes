@@ -1,13 +1,12 @@
 package com.galdino.rgvpacientes.dto.mapper;
 
+import com.galdino.rgvpacientes.dto.MenuOut;
+import com.galdino.rgvpacientes.model.Menu;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
-
-import com.galdino.rgvpacientes.dto.MenuOut;
-import com.galdino.rgvpacientes.model.Menu;
 
 @Component
 public class MenuMapper {
@@ -45,19 +44,15 @@ public class MenuMapper {
 
     private List<MenuOut> toSubMenusOut(List<Menu> menus) {
         if (!menus.isEmpty()) {
-            return menus
-                    .stream()
-                    .map(m -> {
-                        return MenuOut
-                                .builder()
-                                .id(m.getId())
-                                .name(m.getName())
-                                .active(m.isActive())
-                                .url(m.getUrl())
-                                .menuParent(toMenuParentOut(m))
-                                .subMenus(new ArrayList<>())
-                                .build();
-                    })
+            return menus.stream()
+                    .map(menu -> MenuOut.builder()
+                            .id(menu.getId())
+                            .name(menu.getName())
+                            .active(menu.isActive())
+                            .url(menu.getUrl())
+                            .menuParent(toMenuParentOut(menu))
+                            .subMenus(new ArrayList<>())
+                            .build())
                     .collect(Collectors.toList());
         }
         return new ArrayList<>();

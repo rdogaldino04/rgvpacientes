@@ -1,6 +1,5 @@
 package com.galdino.rgvpacientes.model;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,6 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Data
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

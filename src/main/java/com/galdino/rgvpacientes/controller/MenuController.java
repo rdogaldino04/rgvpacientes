@@ -1,14 +1,12 @@
 package com.galdino.rgvpacientes.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.galdino.rgvpacientes.dto.MenuOut;
+import com.galdino.rgvpacientes.dto.MenuService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galdino.rgvpacientes.dto.MenuOut;
-import com.galdino.rgvpacientes.dto.MenuService;
+import java.util.List;
 
 @RestController
 @RequestMapping("menus")
