@@ -1,15 +1,26 @@
 package com.galdino.rgvpacientes.controller;
 
-import com.galdino.rgvpacientes.dto.material.MaterialDTO;
-import com.galdino.rgvpacientes.dto.material.MaterialInput;
-import com.galdino.rgvpacientes.service.MaterialService;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.galdino.rgvpacientes.dto.material.MaterialDTO;
+import com.galdino.rgvpacientes.dto.material.MaterialInput;
+import com.galdino.rgvpacientes.service.MaterialService;
 
 @RestController
 @RequestMapping("materials")
@@ -22,8 +33,9 @@ public class MaterialController {
     }
 
     @GetMapping
-    public List<MaterialDTO> getAll(MaterialDTO materialDTO) {
-        return this.materialService.getAll(materialDTO);
+    public Page<MaterialDTO> getAll(MaterialDTO materialDTO,
+            @Valid @Positive @PageableDefault(size = 5) Pageable pageable) {
+        return this.materialService.getAll(materialDTO, pageable);
     }
 
     @GetMapping("{id}")
@@ -39,7 +51,7 @@ public class MaterialController {
 
     @PutMapping("/{id}")
     public MaterialDTO update(@PathVariable @NotNull @Positive Long id,
-                              @RequestBody @Valid @NotNull MaterialInput materialInput) {
+            @RequestBody @Valid @NotNull MaterialInput materialInput) {
         return materialService.update(id, materialInput);
     }
 

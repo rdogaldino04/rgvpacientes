@@ -1,12 +1,17 @@
 package com.galdino.rgvpacientes.repository;
 
-import com.galdino.rgvpacientes.dto.material.MaterialDTO;
-import org.springframework.util.StringUtils;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
+
+import com.galdino.rgvpacientes.dto.material.MaterialDTO;
 
 public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
 
@@ -14,7 +19,7 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
     private EntityManager manager;
 
     @Override
-    public List<MaterialDTO> getAll(MaterialDTO materialDTO) {
+    public Page<MaterialDTO> getAll(MaterialDTO materialDTO, Pageable pageable) {
         StringBuilder sql = new StringBuilder("SELECT ");
         sql.append("new com.galdino.rgvpacientes.dto.material.MaterialDTO( ");
         sql.append("  m.id, m.name, m.expirationDate, m.registrationDate ");
@@ -43,7 +48,15 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
             createQuery.setParameter("name", materialDTO.getName().concat("%"));
         }
 
-        return createQuery.getResultList();
+        createQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        createQuery.setMaxResults(pageable.getPageSize());
+
+        List<MaterialDTO> results = createQuery.getResultList();
+
+        TypedQuery<Long> countQuery = manager.createQuery("SELECT COUNT(m.id) FROM Material m", Long.class);
+        long totalElements = countQuery.getSingleResult();
+
+        return new PageImpl<>(results, pageable, totalElements);
     }
 
 }

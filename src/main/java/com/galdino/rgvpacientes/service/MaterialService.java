@@ -1,5 +1,16 @@
 package com.galdino.rgvpacientes.service;
 
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.galdino.rgvpacientes.dto.mapper.MaterialMapper;
 import com.galdino.rgvpacientes.dto.material.MaterialDTO;
 import com.galdino.rgvpacientes.dto.material.MaterialInput;
@@ -7,14 +18,6 @@ import com.galdino.rgvpacientes.model.Material;
 import com.galdino.rgvpacientes.repository.MaterialRepository;
 import com.galdino.rgvpacientes.service.exception.BusinessException;
 import com.galdino.rgvpacientes.service.exception.EntityInUseException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MaterialService {
@@ -25,7 +28,6 @@ public class MaterialService {
     private final MovementItemService movementItemService;
     @PersistenceContext
     private EntityManager manager;
-
 
     public MaterialService(
             MaterialRepository materialRepository,
@@ -54,14 +56,15 @@ public class MaterialService {
     @Transactional
     public MaterialDTO create(MaterialInput materialInput) {
         if (materialRepository.existsByName(materialInput.getName())) {
-            throw new BusinessException(String.format("Material with the name %s already exists", materialInput.getName()));
+            throw new BusinessException(
+                    String.format("Material with the name %s already exists", materialInput.getName()));
         }
         Material material = materialRepository.save(this.materialMapper.toEntity(materialInput));
         return this.materialMapper.toDTO(material);
     }
 
-    public List<MaterialDTO> getAll(MaterialDTO materialDTO) {
-        return this.materialRepository.getAll(materialDTO);
+    public Page<MaterialDTO> getAll(MaterialDTO materialDTO, Pageable pageable) {
+        return this.materialRepository.getAll(materialDTO, pageable);
     }
 
     @Transactional
@@ -74,7 +77,8 @@ public class MaterialService {
                     manager.detach(materialFound);
                     Optional<Material> existingMaterial = materialRepository.findByName(materialInput.getName());
                     if (existingMaterial.isPresent() && !existingMaterial.get().equals(materialFound)) {
-                        throw new BusinessException(String.format("Material with the name %s already exists", materialInput.getName()));
+                        throw new BusinessException(
+                                String.format("Material with the name %s already exists", materialInput.getName()));
                     }
 
                     return materialMapper.toDTO(materialRepository.save(materialFound));
@@ -88,8 +92,8 @@ public class MaterialService {
         }
         materialRepository.delete(
                 materialRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException(String.format(THERE_IS_NO_MATERIAL_WITH_CODE, id)))
-        );
+                        .orElseThrow(
+                                () -> new EntityNotFoundException(String.format(THERE_IS_NO_MATERIAL_WITH_CODE, id))));
     }
 
 }
