@@ -21,7 +21,7 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
     private EntityManager manager;
 
     @Override
-    public Page<MaterialDTO> getAll(MaterialDTO materialDTO, Pageable pageable) {
+    public Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO, Pageable pageable) {
         Map<String, Object> parameters = new HashMap<>();
         StringBuilder sql = new StringBuilder("SELECT ");
         sql.append("new com.galdino.rgvpacientes.dto.material.MaterialDTO( ");

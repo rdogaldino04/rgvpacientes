@@ -7,6 +7,6 @@ import com.galdino.rgvpacientes.dto.material.MaterialDTO;
 
 public interface MaterialRepositoryQuery {
 
-    Page<MaterialDTO> getAll(MaterialDTO materialDTO, Pageable pageable);
+    Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO, Pageable pageable);
 
 }

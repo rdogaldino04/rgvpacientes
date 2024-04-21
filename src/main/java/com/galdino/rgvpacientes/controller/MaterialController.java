@@ -33,9 +33,9 @@ public class MaterialController {
     }
 
     @GetMapping
-    public Page<MaterialDTO> getAll(MaterialDTO materialDTO,
+    public Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO,
             @Valid @Positive @PageableDefault(size = 5) Pageable pageable) {
-        return this.materialService.getAll(materialDTO, pageable);
+        return this.materialService.getMaterialsByFilter(materialDTO, pageable);
     }
 
     @GetMapping("{id}")

@@ -63,8 +63,8 @@ public class MaterialService {
         return this.materialMapper.toDTO(material);
     }
 
-    public Page<MaterialDTO> getAll(MaterialDTO materialDTO, Pageable pageable) {
-        return this.materialRepository.getAll(materialDTO, pageable);
+    public Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO, Pageable pageable) {
+        return this.materialRepository.getMaterialsByFilter(materialDTO, pageable);
     }
 
     @Transactional
