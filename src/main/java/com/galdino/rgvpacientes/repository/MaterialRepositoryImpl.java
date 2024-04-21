@@ -45,9 +45,7 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
         TypedQuery<MaterialDTO> createQuery = manager.createQuery(sql.toString(), MaterialDTO.class)
                 .setMaxResults(180);
 
-        parameters.keySet().forEach(key -> {
-            createQuery.setParameter(key, parameters.get(key));
-        });
+        parameters.keySet().forEach(key -> createQuery.setParameter(key, parameters.get(key)));
 
         createQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
         createQuery.setMaxResults(pageable.getPageSize());
@@ -70,9 +68,7 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
             parameters.put("name", materialDTO.getName().concat("%"));
         }
         TypedQuery<Long> countQuery = manager.createQuery(countSql.toString(), Long.class);
-        parameters.keySet().forEach(key -> {
-            countQuery.setParameter(key, parameters.get(key));
-        });
+        parameters.keySet().forEach(key -> countQuery.setParameter(key, parameters.get(key)));
         return countQuery.getSingleResult();
     }
 

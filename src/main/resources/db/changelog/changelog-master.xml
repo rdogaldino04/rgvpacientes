@@ -16,4 +16,5 @@
     <include file="db/changelog/changes/230909_2030_create_table_movements.xml"/>
     <include file="db/changelog/changes/230909_2031_create_table_movement_items.xml"/>
     <include file="db/changelog/changes/230919_0725_create_uk_materials_name.xml"/>
+    <include file="db/changelog/changes/240414_1649_create_table_batch.xml"/>
 </databaseChangeLog>
