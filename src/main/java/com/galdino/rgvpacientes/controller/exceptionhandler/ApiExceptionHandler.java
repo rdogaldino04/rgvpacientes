@@ -12,6 +12,7 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -266,6 +267,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private String joinPath(List<Reference> references) {
 		return references.stream().map(ref -> ref.getFieldName()).collect(Collectors.joining("."));
+	}
+
+	@ExceptionHandler(InvalidDataAccessApiUsageException.class)
+	public ResponseEntity<?> handlerInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException ex) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ProblemType problemType = ProblemType.PARAMETRO_INVALIDO;
+		String detail = ex.getMessage();
+		return ResponseEntity.status(status).body(ex.getMessage());
 	}
 
 }

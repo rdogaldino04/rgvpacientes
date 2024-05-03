@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import com.galdino.rgvpacientes.dto.material.MaterialFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
     private EntityManager manager;
 
     @Override
-    public Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO, Pageable pageable) {
+    public Page<MaterialDTO> getMaterialsByFilter(MaterialFilter materialFilter, Pageable pageable) {
         Map<String, Object> parameters = new HashMap<>();
         StringBuilder sql = new StringBuilder("SELECT ");
         sql.append("new com.galdino.rgvpacientes.dto.material.MaterialDTO( ");
@@ -30,14 +31,14 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
         sql.append("FROM Material m ");
         sql.append("WHERE 1 = 1 ");
 
-        if (materialDTO.getId() != null) {
+        if (materialFilter.getId() != null) {
             sql.append("AND m.id = :id ");
-            parameters.put("id", materialDTO.getId());
+            parameters.put("id", materialFilter.getId());
         }
 
-        if (StringUtils.hasText(materialDTO.getName())) {
+        if (StringUtils.hasText(materialFilter.getName())) {
             sql.append("AND UPPER(m.name) LIKE UPPER(:name) ");
-            parameters.put("name", materialDTO.getName().concat("%"));
+            parameters.put("name", materialFilter.getName().concat("%"));
         }
 
         sql.append("ORDER BY m.name ");
@@ -52,20 +53,20 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
 
         List<MaterialDTO> results = createQuery.getResultList();
 
-        long totalElements = getTotalElements(materialDTO, parameters);
+        long totalElements = getTotalElements(materialFilter, parameters);
 
         return new PageImpl<>(results, pageable, totalElements);
     }
 
-    private long getTotalElements(MaterialDTO materialDTO, Map<String, Object> parameters) {
+    private long getTotalElements(MaterialFilter materialFilter, Map<String, Object> parameters) {
         StringBuilder countSql = new StringBuilder("SELECT COUNT(m.id) FROM Material m WHERE 1 = 1 ");
-        if (materialDTO.getId() != null) {
+        if (materialFilter.getId() != null) {
             countSql.append("AND m.id = :id ");
-            parameters.put("id", materialDTO.getId());
+            parameters.put("id", materialFilter.getId());
         }
-        if (StringUtils.hasText(materialDTO.getName())) {
+        if (StringUtils.hasText(materialFilter.getName())) {
             countSql.append("AND UPPER(m.name) LIKE UPPER(:name) ");
-            parameters.put("name", materialDTO.getName().concat("%"));
+            parameters.put("name", materialFilter.getName().concat("%"));
         }
         TypedQuery<Long> countQuery = manager.createQuery(countSql.toString(), Long.class);
         parameters.keySet().forEach(key -> countQuery.setParameter(key, parameters.get(key)));

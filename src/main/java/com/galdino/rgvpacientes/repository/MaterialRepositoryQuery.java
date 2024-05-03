@@ -1,12 +1,13 @@
 package com.galdino.rgvpacientes.repository;
 
+import com.galdino.rgvpacientes.dto.material.MaterialFilter;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.galdino.rgvpacientes.dto.material.MaterialDTO;
+import org.springframework.data.domain.Pageable;
 
 public interface MaterialRepositoryQuery {
 
-    Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO, Pageable pageable);
+    Page<MaterialDTO> getMaterialsByFilter(MaterialFilter materialFilter, Pageable pageable);
 
 }

@@ -1,23 +1,24 @@
 package com.galdino.rgvpacientes.service;
 
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
-
+import com.galdino.rgvpacientes.dto.mapper.MaterialMapper;
+import com.galdino.rgvpacientes.dto.material.MaterialDTO;
+import com.galdino.rgvpacientes.dto.material.MaterialFilter;
+import com.galdino.rgvpacientes.dto.material.MaterialInput;
+import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.model.Material;
+import com.galdino.rgvpacientes.repository.MaterialRepository;
+import com.galdino.rgvpacientes.service.exception.BusinessException;
+import com.galdino.rgvpacientes.service.exception.EntityInUseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.galdino.rgvpacientes.dto.mapper.MaterialMapper;
-import com.galdino.rgvpacientes.dto.material.MaterialDTO;
-import com.galdino.rgvpacientes.dto.material.MaterialInput;
-import com.galdino.rgvpacientes.model.Material;
-import com.galdino.rgvpacientes.repository.MaterialRepository;
-import com.galdino.rgvpacientes.service.exception.BusinessException;
-import com.galdino.rgvpacientes.service.exception.EntityInUseException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
+import javax.validation.Valid;
+import java.util.Optional;
 
 @Service
 public class MaterialService {
@@ -63,8 +64,9 @@ public class MaterialService {
         return this.materialMapper.toDTO(material);
     }
 
-    public Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO, Pageable pageable) {
-        return this.materialRepository.getMaterialsByFilter(materialDTO, pageable);
+    public PageWrapper<MaterialDTO> getMaterialsByFilter(@Valid MaterialFilter materialFilter, Pageable pageable) {
+        Page<MaterialDTO> page = this.materialRepository.getMaterialsByFilter(materialFilter, pageable);
+        return new PageWrapper<>(page);
     }
 
     @Transactional

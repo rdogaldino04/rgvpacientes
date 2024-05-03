@@ -4,7 +4,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.galdino.rgvpacientes.dto.material.MaterialDTO;
+import com.galdino.rgvpacientes.dto.material.MaterialFilter;
 import com.galdino.rgvpacientes.dto.material.MaterialInput;
+import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.service.MaterialService;
 
 @RestController
@@ -33,9 +34,9 @@ public class MaterialController {
     }
 
     @GetMapping
-    public Page<MaterialDTO> getMaterialsByFilter(MaterialDTO materialDTO,
-            @Valid @Positive @PageableDefault(size = 5) Pageable pageable) {
-        return this.materialService.getMaterialsByFilter(materialDTO, pageable);
+    public PageWrapper<MaterialDTO> getMaterialsByFilter(@Valid MaterialFilter materialsByFilter,
+            @PageableDefault(size = 5) Pageable pageable) {
+        return this.materialService.getMaterialsByFilter(materialsByFilter, pageable);
     }
 
     @GetMapping("{id}")
