@@ -1,12 +1,12 @@
 package com.galdino.rgvpacientes.dto.mapper;
 
+import com.galdino.rgvpacientes.model.Product;
 import org.springframework.stereotype.Component;
 
 import com.galdino.rgvpacientes.dto.BatchDTO;
 import com.galdino.rgvpacientes.dto.BatchInput;
-import com.galdino.rgvpacientes.dto.material.MaterialDTO;
+import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.model.Batch;
-import com.galdino.rgvpacientes.model.Material;
 
 @Component
 public class BatchMapper {
@@ -21,13 +21,13 @@ public class BatchMapper {
         batch.setManufactureDate(batchInput.getManufactureDate());
         batch.setExpiryDate(batchInput.getExpiryDate());
 
-        if (batchInput.getMaterial() == null) {
+        if (batchInput.getProduct() == null) {
             return batch;
         }
 
-        Material materialEntity = new Material();
-        materialEntity.setId(batchInput.getMaterial().getId());
-        batch.setMaterial(materialEntity);
+        Product productEntity = new Product();
+        productEntity.setId(batchInput.getProduct().getId());
+        batch.setProduct(productEntity);
         return batch;
     }
 
@@ -35,7 +35,7 @@ public class BatchMapper {
         if (batch == null) {
             return null;
         }
-        if (batch.getMaterial() == null) {
+        if (batch.getProduct() == null) {
             return BatchDTO.builder()
                     .id(batch.getId())
                     .batchNumber(batch.getBatchNumber())
@@ -48,9 +48,9 @@ public class BatchMapper {
                 .batchNumber(batch.getBatchNumber())
                 .manufactureDate(batch.getManufactureDate())
                 .expiryDate(batch.getExpiryDate())
-                .material(MaterialDTO.builder()
-                        .id(batch.getMaterial().getId())
-                        .name(batch.getMaterial().getName())
+                .product(ProductDTO.builder()
+                        .id(batch.getProduct().getId())
+                        .name(batch.getProduct().getName())
                         .build())
                 .build();
     }

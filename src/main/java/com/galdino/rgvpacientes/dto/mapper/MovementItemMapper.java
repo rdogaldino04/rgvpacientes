@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MovementItemMapper {
 
-    private final MaterialMapper materialMapper;
+    private final ProductMapper productMapper;
 
-    public MovementItemMapper(MaterialMapper materialMapper) {
-        this.materialMapper = materialMapper;
+    public MovementItemMapper(ProductMapper productMapper) {
+        this.productMapper = productMapper;
     }
 
     public MovementItemDTO toDTO(MovementItem item) {
@@ -20,7 +20,7 @@ public class MovementItemMapper {
         MovementItemDTO itemDTO = new MovementItemDTO();
         itemDTO.setId(item.getId());
         itemDTO.setAmount(item.getAmount());
-        itemDTO.setMaterial(materialMapper.toMaterialMovementItemDTO(item.getMaterial()));
+        itemDTO.setProductMovementItem(productMapper.toProductMovementItemDTO(item.getProduct()));
         return itemDTO;
     }
 

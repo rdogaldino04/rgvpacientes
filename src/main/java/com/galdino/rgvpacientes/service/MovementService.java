@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.dto.material.MaterialMovementItemInput;
+import com.galdino.rgvpacientes.dto.product.ProductMovementItemInput;
 import com.galdino.rgvpacientes.dto.MovementDTO;
 import com.galdino.rgvpacientes.dto.MovementInput;
 import com.galdino.rgvpacientes.dto.MovementItemInput;
@@ -29,7 +29,7 @@ public class MovementService {
     private final CompanyService companyService;
     private final SectorService sectorService;
     private final StockService stockService;
-    private final MaterialService materialService;
+    private final ProductService productService;
 
     public MovementService(
             MovementRepository movementRepository,
@@ -38,14 +38,14 @@ public class MovementService {
             CompanyService companyService,
             SectorService sectorService,
             StockService stockService,
-            MaterialService materialService) {
+            ProductService productService) {
         this.movementRepository = movementRepository;
         this.movementMapper = movementMapper;
         this.patientService = patientService;
         this.companyService = companyService;
         this.sectorService = sectorService;
         this.stockService = stockService;
-        this.materialService = materialService;
+        this.productService = productService;
     }
 
     public MovementDTO findById(Long id) {
@@ -75,8 +75,8 @@ public class MovementService {
             }
 
             movementInput.getItems().forEach(itemInput -> {
-                if (!this.materialService.existsById(itemInput.getMaterial().getId())) {
-                    messageError.append(String.format("[There is no material with id %d]-", itemInput.getMaterial().getId()));
+                if (!this.productService.existsById(itemInput.getProduct().getId())) {
+                    messageError.append(String.format("[There is no product with id %d]-", itemInput.getProduct().getId()));
                 }
             });
 
@@ -92,10 +92,10 @@ public class MovementService {
                         MovementItemInput itemInput = new MovementItemInput();
                         itemInput.setId(item.getId());
                         itemInput.setAmount(item.getAmount());
-                        MaterialMovementItemInput materialMovementItemInput = new MaterialMovementItemInput();
-                        materialMovementItemInput.setId(item.getMaterial().getId());
-                        materialMovementItemInput.setName(item.getMaterial().getName());
-                        itemInput.setMaterial(materialMovementItemInput);
+                        ProductMovementItemInput productMovementItemInput = new ProductMovementItemInput();
+                        productMovementItemInput.setId(item.getProduct().getId());
+                        productMovementItemInput.setName(item.getProduct().getName());
+                        itemInput.setProduct(productMovementItemInput);
                         return itemInput;
                     })
                     .collect(Collectors.toList());

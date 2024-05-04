@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.dto.material;
+package com.galdino.rgvpacientes.dto.product;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaterialFilter {
+public class ProductDTO {
 
     private Long id;
     private String name;

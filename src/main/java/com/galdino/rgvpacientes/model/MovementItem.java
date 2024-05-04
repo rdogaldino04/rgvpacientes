@@ -30,7 +30,7 @@ public class MovementItem {
     private Movement movement;
 
     @ManyToOne
-    private Material material;
+    private Product product;
 
     private BigInteger amount;
 

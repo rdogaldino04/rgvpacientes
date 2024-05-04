@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.dto.material;
+package com.galdino.rgvpacientes.dto.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
-public class MaterialMovementItemInput {
+public class ProductMovementItemInput {
 
     @NotNull
     @Positive

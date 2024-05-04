@@ -24,8 +24,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "materials", schema = "dbapatient")
-public class Material {
+@Table(name = "product", schema = "dbapatient")
+public class Product {
 
     @EqualsAndHashCode.Include
     @Id
@@ -42,10 +42,10 @@ public class Material {
     @CreationTimestamp
     private LocalDate registrationDate;
 
-    public Material() {
+    public Product() {
     }
 
-    public Material(Long id) {
+    public Product(Long id) {
         this.id = id;
     }
 }

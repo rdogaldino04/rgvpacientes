@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.model.Material;
+import com.galdino.rgvpacientes.model.Product;
 import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class MovementItemService {
         this.movementItemRepository = movementItemRepository;
     }
 
-    public boolean existsByMaterial(Material material) {
-        return this.movementItemRepository.existsByMaterial(material);
+    public boolean existsByProduct(Product product) {
+        return this.movementItemRepository.existsByProduct(product);
     }
 }

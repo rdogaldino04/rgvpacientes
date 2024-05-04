@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.dto.material;
+package com.galdino.rgvpacientes.dto.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaterialInput {
+public class ProductInput {
 
     @NotNull
     @NotBlank

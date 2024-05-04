@@ -35,7 +35,7 @@ public class Batch {
     private LocalDate expiryDate;
 
     @ManyToOne
-    @JoinColumn(name = "material_id")
-    private Material material;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 }

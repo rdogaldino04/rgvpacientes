@@ -14,7 +14,7 @@ public interface MovementRepository extends JpaRepository<Movement, Long> {
             "JOIN FETCH m.sector s " +
             "JOIN FETCH m.stock st " +
             "JOIN FETCH m.items i " +
-            "JOIN FETCH i.material mat " +
+            "JOIN FETCH i.product prod " +
             "WHERE m.id = :id "
     )
     Optional<Movement> findById(Long id);

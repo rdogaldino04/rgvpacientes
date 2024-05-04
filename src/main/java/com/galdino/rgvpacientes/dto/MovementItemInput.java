@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.dto;
 
-import com.galdino.rgvpacientes.dto.material.MaterialMovementItemInput;
+import com.galdino.rgvpacientes.dto.product.ProductMovementItemInput;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class MovementItemInput {
 
     @NotNull
     @Valid
-    private MaterialMovementItemInput material;
+    private ProductMovementItemInput product;
 
     @NotNull
     @Positive

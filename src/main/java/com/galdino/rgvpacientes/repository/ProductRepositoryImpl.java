@@ -8,42 +8,42 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.galdino.rgvpacientes.dto.material.MaterialFilter;
+import com.galdino.rgvpacientes.dto.product.ProductFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
-import com.galdino.rgvpacientes.dto.material.MaterialDTO;
+import com.galdino.rgvpacientes.dto.product.ProductDTO;
 
-public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
+public class ProductRepositoryImpl implements ProductRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
 
     @Override
-    public Page<MaterialDTO> getMaterialsByFilter(MaterialFilter materialFilter, Pageable pageable) {
+    public Page<ProductDTO> getProductByFilter(ProductFilter productFilter, Pageable pageable) {
         Map<String, Object> parameters = new HashMap<>();
         StringBuilder sql = new StringBuilder("SELECT ");
-        sql.append("new com.galdino.rgvpacientes.dto.material.MaterialDTO( ");
+        sql.append("new com.galdino.rgvpacientes.dto.product.ProductDTO( ");
         sql.append("  m.id, m.name, m.expirationDate, m.registrationDate ");
         sql.append(" ) ");
-        sql.append("FROM Material m ");
+        sql.append("FROM Product m ");
         sql.append("WHERE 1 = 1 ");
 
-        if (materialFilter.getId() != null) {
+        if (productFilter.getId() != null) {
             sql.append("AND m.id = :id ");
-            parameters.put("id", materialFilter.getId());
+            parameters.put("id", productFilter.getId());
         }
 
-        if (StringUtils.hasText(materialFilter.getName())) {
+        if (StringUtils.hasText(productFilter.getName())) {
             sql.append("AND UPPER(m.name) LIKE UPPER(:name) ");
-            parameters.put("name", materialFilter.getName().concat("%"));
+            parameters.put("name", productFilter.getName().concat("%"));
         }
 
         sql.append("ORDER BY m.name ");
 
-        TypedQuery<MaterialDTO> createQuery = manager.createQuery(sql.toString(), MaterialDTO.class)
+        TypedQuery<ProductDTO> createQuery = manager.createQuery(sql.toString(), ProductDTO.class)
                 .setMaxResults(180);
 
         parameters.keySet().forEach(key -> createQuery.setParameter(key, parameters.get(key)));
@@ -51,22 +51,22 @@ public class MaterialRepositoryImpl implements MaterialRepositoryQuery {
         createQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
         createQuery.setMaxResults(pageable.getPageSize());
 
-        List<MaterialDTO> results = createQuery.getResultList();
+        List<ProductDTO> results = createQuery.getResultList();
 
-        long totalElements = getTotalElements(materialFilter, parameters);
+        long totalElements = getTotalElements(productFilter, parameters);
 
         return new PageImpl<>(results, pageable, totalElements);
     }
 
-    private long getTotalElements(MaterialFilter materialFilter, Map<String, Object> parameters) {
-        StringBuilder countSql = new StringBuilder("SELECT COUNT(m.id) FROM Material m WHERE 1 = 1 ");
-        if (materialFilter.getId() != null) {
+    private long getTotalElements(ProductFilter productFilter, Map<String, Object> parameters) {
+        StringBuilder countSql = new StringBuilder("SELECT COUNT(m.id) FROM Product m WHERE 1 = 1 ");
+        if (productFilter.getId() != null) {
             countSql.append("AND m.id = :id ");
-            parameters.put("id", materialFilter.getId());
+            parameters.put("id", productFilter.getId());
         }
-        if (StringUtils.hasText(materialFilter.getName())) {
+        if (StringUtils.hasText(productFilter.getName())) {
             countSql.append("AND UPPER(m.name) LIKE UPPER(:name) ");
-            parameters.put("name", materialFilter.getName().concat("%"));
+            parameters.put("name", productFilter.getName().concat("%"));
         }
         TypedQuery<Long> countQuery = manager.createQuery(countSql.toString(), Long.class);
         parameters.keySet().forEach(key -> countQuery.setParameter(key, parameters.get(key)));

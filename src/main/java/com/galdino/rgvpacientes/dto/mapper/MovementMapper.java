@@ -34,10 +34,10 @@ public class MovementMapper {
             item.setMovement(movement);
             item.setAmount(itemInput.getAmount());
 
-            Material material = new Material();
-            material.setId(itemInput.getMaterial().getId());
-            material.setName(itemInput.getMaterial().getName());
-            item.setMaterial(material);
+            Product product = new Product();
+            product.setId(itemInput.getProduct().getId());
+            product.setName(itemInput.getProduct().getName());
+            item.setProduct(product);
 
             movement.addItem(item);
         });

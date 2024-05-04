@@ -17,49 +17,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galdino.rgvpacientes.dto.material.MaterialDTO;
-import com.galdino.rgvpacientes.dto.material.MaterialFilter;
-import com.galdino.rgvpacientes.dto.material.MaterialInput;
+import com.galdino.rgvpacientes.dto.product.ProductDTO;
+import com.galdino.rgvpacientes.dto.product.ProductFilter;
+import com.galdino.rgvpacientes.dto.product.ProductInput;
 import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
-import com.galdino.rgvpacientes.service.MaterialService;
+import com.galdino.rgvpacientes.service.ProductService;
 
 @RestController
-@RequestMapping("materials")
-public class MaterialController {
+@RequestMapping("products")
+public class ProductController {
 
-    private final MaterialService materialService;
+    private final ProductService productService;
 
-    public MaterialController(MaterialService materialService) {
-        this.materialService = materialService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
-    public PageWrapper<MaterialDTO> getMaterialsByFilter(@Valid MaterialFilter materialsByFilter,
+    public PageWrapper<ProductDTO> getProductByFilter(@Valid ProductFilter productFilter,
             @PageableDefault(size = 5) Pageable pageable) {
-        return this.materialService.getMaterialsByFilter(materialsByFilter, pageable);
+        return this.productService.getProductByFilter(productFilter, pageable);
     }
 
     @GetMapping("{id}")
-    public MaterialDTO findById(@PathVariable Long id) {
-        return this.materialService.findById(id);
+    public ProductDTO findById(@PathVariable Long id) {
+        return this.productService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public MaterialDTO create(@RequestBody @Valid @NotNull MaterialInput materialInput) {
-        return this.materialService.create(materialInput);
+    public ProductDTO create(@RequestBody @Valid @NotNull ProductInput productInput) {
+        return this.productService.create(productInput);
     }
 
     @PutMapping("/{id}")
-    public MaterialDTO update(@PathVariable @NotNull @Positive Long id,
-            @RequestBody @Valid @NotNull MaterialInput materialInput) {
-        return materialService.update(id, materialInput);
+    public ProductDTO update(@PathVariable @NotNull @Positive Long id,
+            @RequestBody @Valid @NotNull ProductInput productInput) {
+        return productService.update(id, productInput);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @NotNull @Positive Long id) {
-        materialService.delete(id);
+        productService.delete(id);
     }
 
 }
