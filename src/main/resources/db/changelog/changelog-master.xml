@@ -18,4 +18,6 @@
     <include file="db/changelog/changes/230919_0725_create_uk_materials_name.xml"/>
     <include file="db/changelog/changes/240414_1649_create_table_batch.xml"/>
     <include file="db/changelog/changes/240504_0836_alter_name_table_materials_to_product.xml"/>
+    <include file="db/changelog/changes/240504_1541_alter_name_table_product_fields.xml"/>
+    <include file="db/changelog/changes/240504_1708_alter_name_table_product_fields_comments.xml"/>
 </databaseChangeLog>

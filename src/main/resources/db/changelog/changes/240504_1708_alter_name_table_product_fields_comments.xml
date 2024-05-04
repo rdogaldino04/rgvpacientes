@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240504_1708" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>alter name table product fields comments</comment>
+        <sql>
+            COMMENT ON table dbapatient.product IS 'Tabela de Produto';
+            COMMENT ON COLUMN dbapatient.product.product_id  IS 'ID do produto, chave primária';
+            COMMENT ON COLUMN dbapatient.product.product_name IS 'nome do produto, chave única';
+            COMMENT ON COLUMN dbapatient.product.created_at IS 'data de criação';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

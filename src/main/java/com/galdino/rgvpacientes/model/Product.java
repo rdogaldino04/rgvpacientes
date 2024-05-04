@@ -2,11 +2,7 @@ package com.galdino.rgvpacientes.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 
@@ -30,8 +26,10 @@ public class Product {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long id;
 
+    @Column(name = "product_name")
     private String name;
 
     @Deprecated
@@ -40,7 +38,8 @@ public class Product {
     private LocalDate expirationDate;
 
     @CreationTimestamp
-    private LocalDate registrationDate;
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
     public Product() {
     }

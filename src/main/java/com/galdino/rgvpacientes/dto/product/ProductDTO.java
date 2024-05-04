@@ -14,6 +14,6 @@ public class ProductDTO {
     private Long id;
     private String name;
     private LocalDate expirationDate;
-    private LocalDate registrationDate;
+    private LocalDate createdAt;
 
 }

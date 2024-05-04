@@ -21,7 +21,7 @@ public class ProductMapper {
                 .id(product.getId())
                 .name(product.getName())
                 .expirationDate(product.getExpirationDate())
-                .registrationDate(product.getRegistrationDate())
+                .createdAt(product.getCreatedAt())
                 .build();
     }
 
