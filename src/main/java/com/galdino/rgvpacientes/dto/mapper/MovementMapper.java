@@ -31,13 +31,12 @@ public class MovementMapper {
         movementInput.getItems().forEach(itemInput -> {
             MovementItem item = new MovementItem();
             item.setId(itemInput.getId());
-            item.setMovement(movement);
-            item.setAmount(itemInput.getAmount());
+            item.setQuantity(itemInput.getQuantity());
 
-            Product product = new Product();
-            product.setId(itemInput.getProduct().getId());
-            product.setName(itemInput.getProduct().getName());
-            item.setProduct(product);
+            Batch batch = new Batch();
+            batch.setId(itemInput.getBatch().getId());
+            batch.setBatchNumber(itemInput.getBatch().getBatchNumber());
+            item.setBatch(batch);
 
             movement.addItem(item);
         });

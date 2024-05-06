@@ -2,13 +2,7 @@ package com.galdino.rgvpacientes.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +18,7 @@ public class Batch {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "batch_id")
     private Long id;
 
     @NotBlank
@@ -38,4 +33,10 @@ public class Batch {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    public Batch() {
+    }
+
+    public Batch(Long id) {
+        this.id = id;
+    }
 }

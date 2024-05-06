@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240505_0858" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>create_struct_unit_and_packaging_type</comment>
+        <sql>            
+            create table dbapatient.unit (
+            unit_id bigserial not null,
+            unit_name varchar(200) not null,
+            constraint pk_unit primary key (unit_id),
+            constraint uk_unit_name unique (unit_name)
+            );
+            COMMENT ON TABLE dbapatient.unit IS 'Tabela de Unidade de Medida';
+            COMMENT ON COLUMN dbapatient.unit.unit_id IS 'ID da unidade de medida, chave primária';
+            COMMENT ON COLUMN dbapatient.unit.unit_name IS 'nome da unidade de medida, por exemplo, "Gramas", "Mililitros", etc.';           
+
+            create table dbapatient.packaging_type (
+            packaging_type_id bigserial not null,
+            packaging_name varchar(200) not null,
+            constraint pk_packaging_type primary key (packaging_type_id),
+            constraint uk_packaging_name unique (packaging_name)
+            );
+            COMMENT ON TABLE dbapatient.packaging_type IS 'Tabela de Tipo de Embalagem';
+            COMMENT ON COLUMN dbapatient.packaging_type.packaging_type_id IS 'ID do tipo de embalagem, chave primária';
+            COMMENT ON COLUMN dbapatient.packaging_type.packaging_name IS 'nome do tipo de embalagem, por exemplo, "Caixa", "Blister", etc.';
+
+            ALTER TABLE dbapatient.product ADD packaging_type_id int8 NULL;
+            COMMENT ON COLUMN dbapatient.product.packaging_type_id IS 'ID do tipo de embalagem, chave estrangeira referenciando a tabela packaging_type';
+
+            ALTER TABLE dbapatient.product
+            ADD CONSTRAINT product_packaging_type_fk
+            FOREIGN KEY (packaging_type_id)
+            REFERENCES dbapatient.packaging_type(packaging_type_id);
+
+            ALTER TABLE dbapatient.product ADD unit_id int8 NULL;
+            COMMENT ON COLUMN dbapatient.product.unit_id IS 'ID da unidade de medida, chave estrangeira referenciando a tabela unit';
+
+            ALTER TABLE dbapatient.product
+            ADD CONSTRAINT product_unit_fk
+            FOREIGN KEY (unit_id)
+            REFERENCES dbapatient.unit(unit_id);
+
+            --ALTER TABLE dbapatient.product DROP CONSTRAINT product_packaging_type_fk;
+            --ALTER TABLE dbapatient.product DROP CONSTRAINT product_unit_fk;
+            --ALTER TABLE dbapatient.product DROP COLUMN packaging_type_id;
+            --ALTER TABLE dbapatient.product DROP COLUMN unit_id;
+            --drop table dbapatient.unit;
+            --drop table dbapatient.packaging_type;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import javax.persistence.EntityManager;
 
 import com.galdino.rgvpacientes.model.Product;
+import com.galdino.rgvpacientes.service.movement.MovementItemService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.test.util.ReflectionTestUtils;

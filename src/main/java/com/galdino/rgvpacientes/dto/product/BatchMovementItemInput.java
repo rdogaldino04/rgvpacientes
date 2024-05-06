@@ -8,12 +8,12 @@ import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
-public class ProductMovementItemInput {
+public class BatchMovementItemInput {
 
     @NotNull
     @Positive
     private Long id;
 
-    private String name;
+    private String batchNumber;
 
 }

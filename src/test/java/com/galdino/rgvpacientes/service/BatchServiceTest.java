@@ -7,8 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.util.Set;
-
+import java.util.HashSet;
 import javax.validation.Validator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +41,7 @@ class BatchServiceTest {
         batchInput.setManufactureDate(LocalDate.of(2021, 1, 1));
         batchInput.setExpiryDate(LocalDate.of(2028, 12, 31));
 
-        when(validator.validate(batchInput)).thenReturn(Set.of());
+        when(validator.validate(batchInput)).thenReturn(new HashSet<>());
 
         Batch batch = new Batch();
         batch.setBatchNumber("123");

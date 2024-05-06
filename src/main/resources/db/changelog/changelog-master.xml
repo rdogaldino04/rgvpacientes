@@ -20,4 +20,10 @@
     <include file="db/changelog/changes/240504_0836_alter_name_table_materials_to_product.xml"/>
     <include file="db/changelog/changes/240504_1541_alter_name_table_product_fields.xml"/>
     <include file="db/changelog/changes/240504_1708_alter_name_table_product_fields_comments.xml"/>
+    <include file="db/changelog/changes/240505_0858_create_struct_unit_and_packaging_type.xml"/>
+    <include file="db/changelog/changes/240505_1014_alter_struct_batch.xml"/>
+    <include file="db/changelog/changes/240505_1029_alter_struct_batch_fix.xml"/>
+    <include file="db/changelog/changes/240505_1204_alter_struct_movements.xml"/>
+    <include file="db/changelog/changes/240505_1220_alter_struct_movements_1.xml"/>
+    <include file="db/changelog/changes/240505_1220_alter_struct_movements_2.xml"/>
 </databaseChangeLog>

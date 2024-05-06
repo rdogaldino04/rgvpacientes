@@ -5,10 +5,12 @@ import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.dto.product.ProductFilter;
 import com.galdino.rgvpacientes.dto.product.ProductInput;
 import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.model.Batch;
 import com.galdino.rgvpacientes.model.Product;
 import com.galdino.rgvpacientes.repository.ProductRepository;
 import com.galdino.rgvpacientes.service.exception.BusinessException;
 import com.galdino.rgvpacientes.service.exception.EntityInUseException;
+import com.galdino.rgvpacientes.service.movement.MovementItemService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -89,7 +91,7 @@ public class ProductService {
 
     @Transactional
     public void delete(Long id) {
-        if (this.movementItemService.existsByProduct(new Product(id))) {
+        if (this.movementItemService.existsByBatch(new Batch(id))) {
             throw new EntityInUseException(String.format("Product with code %d is in use and cannot be removed.", id));
         }
         productRepository.delete(

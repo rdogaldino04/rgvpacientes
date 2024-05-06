@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.dto;
 
-import com.galdino.rgvpacientes.dto.product.ProductMovementItemDTO;
+import com.galdino.rgvpacientes.dto.product.BatchMovementItemDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +12,8 @@ public class MovementItemDTO {
 
     private Long id;
 
-    private ProductMovementItemDTO productMovementItem;
+    private BatchMovementItemDTO productMovementItem;
 
-    private BigInteger amount;
+    private BigInteger quantity;
 
 }

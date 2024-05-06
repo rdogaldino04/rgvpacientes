@@ -6,11 +6,11 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -23,6 +23,7 @@ public class Movement {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movement_id")
     private Long id;
 
     @ManyToOne
@@ -39,17 +40,28 @@ public class Movement {
 
     @NotNull
     @NotEmpty
-    @Valid
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "movement")
     private List<MovementItem> items = new ArrayList<>();
 
     @CreationTimestamp
-    private OffsetDateTime registrationDate;
+    private OffsetDateTime movementDate;
 
     public void addItem(MovementItem item) {
         if (item != null) {
             items.add(item);
+            item.setMovement(this);
         }
+    }
+
+    public void removeItem(MovementItem item) {
+        if (item != null) {
+            items.remove(item);
+            item.setMovement(null);
+        }
+    }
+
+    public List<MovementItem> getItems() {
+        return Collections.unmodifiableList(items);
     }
 
 }

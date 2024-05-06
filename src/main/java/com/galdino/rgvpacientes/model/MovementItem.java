@@ -21,6 +21,7 @@ public class MovementItem {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movement_item_id")
     private Long id;
 
     @NotNull
@@ -30,11 +31,12 @@ public class MovementItem {
     private Movement movement;
 
     @ManyToOne
-    private Product product;
+    @JoinColumn(name = "batch_id")
+    private Batch batch;
 
-    private BigInteger amount;
+    private BigInteger quantity;
 
     @CreationTimestamp
-    private OffsetDateTime registrationDate;
+    private OffsetDateTime movementItemDate;
 
 }

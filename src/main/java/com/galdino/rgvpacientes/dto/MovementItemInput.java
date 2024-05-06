@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.dto;
 
-import com.galdino.rgvpacientes.dto.product.ProductMovementItemInput;
+import com.galdino.rgvpacientes.dto.product.BatchMovementItemInput;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,10 +17,10 @@ public class MovementItemInput {
 
     @NotNull
     @Valid
-    private ProductMovementItemInput product;
+    private BatchMovementItemInput batch;
 
     @NotNull
     @Positive
-    private BigInteger amount;
+    private BigInteger quantity;
 
 }

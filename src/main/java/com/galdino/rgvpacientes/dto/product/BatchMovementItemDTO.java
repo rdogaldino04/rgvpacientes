@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProductMovementItemDTO {
+public class BatchMovementItemDTO {
 
     private Long id;
-    private String name;
+    private String batchNumber;
 
 }

@@ -2,8 +2,6 @@ package com.galdino.rgvpacientes.dto;
 
 import java.time.LocalDate;
 
-import com.galdino.rgvpacientes.dto.product.ProductDTO;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,6 +17,6 @@ public class BatchDTO {
 
     private LocalDate expiryDate;
 
-    private ProductDTO product;
+    private Long productId;
 
 }

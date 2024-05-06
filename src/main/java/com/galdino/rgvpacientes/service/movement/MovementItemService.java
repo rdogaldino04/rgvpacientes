@@ -1,6 +1,6 @@
-package com.galdino.rgvpacientes.service;
+package com.galdino.rgvpacientes.service.movement;
 
-import com.galdino.rgvpacientes.model.Product;
+import com.galdino.rgvpacientes.model.Batch;
 import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class MovementItemService {
         this.movementItemRepository = movementItemRepository;
     }
 
-    public boolean existsByProduct(Product product) {
-        return this.movementItemRepository.existsByProduct(product);
+    public boolean existsByBatch(Batch batch) {
+        return this.movementItemRepository.existsByBatch(batch);
     }
 }

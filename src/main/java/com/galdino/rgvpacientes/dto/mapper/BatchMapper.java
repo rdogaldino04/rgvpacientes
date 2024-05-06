@@ -1,11 +1,11 @@
 package com.galdino.rgvpacientes.dto.mapper;
 
+import com.galdino.rgvpacientes.dto.product.BatchMovementItemDTO;
 import com.galdino.rgvpacientes.model.Product;
 import org.springframework.stereotype.Component;
 
 import com.galdino.rgvpacientes.dto.BatchDTO;
 import com.galdino.rgvpacientes.dto.BatchInput;
-import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.model.Batch;
 
 @Component
@@ -48,11 +48,18 @@ public class BatchMapper {
                 .batchNumber(batch.getBatchNumber())
                 .manufactureDate(batch.getManufactureDate())
                 .expiryDate(batch.getExpiryDate())
-                .product(ProductDTO.builder()
-                        .id(batch.getProduct().getId())
-                        .name(batch.getProduct().getName())
-                        .build())
+                .productId(batch.getProduct().getId())
                 .build();
+    }
+
+    public BatchMovementItemDTO toBatchMovementItemDTO(Batch batch) {
+        if (batch == null) {
+            return null;
+        }
+        BatchMovementItemDTO batchMovementItemDTO = new BatchMovementItemDTO();
+        batchMovementItemDTO.setId(batch.getId());
+        batchMovementItemDTO.setBatchNumber(batch.getBatchNumber());
+        return batchMovementItemDTO;
     }
 
 }

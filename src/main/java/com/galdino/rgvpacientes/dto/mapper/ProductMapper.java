@@ -2,7 +2,6 @@ package com.galdino.rgvpacientes.dto.mapper;
 
 import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.dto.product.ProductInput;
-import com.galdino.rgvpacientes.dto.product.ProductMovementItemDTO;
 import com.galdino.rgvpacientes.model.Product;
 import org.springframework.stereotype.Component;
 
@@ -23,16 +22,6 @@ public class ProductMapper {
                 .expirationDate(product.getExpirationDate())
                 .createdAt(product.getCreatedAt())
                 .build();
-    }
-
-    public ProductMovementItemDTO toProductMovementItemDTO(Product product) {
-        if (product == null) {
-            return null;
-        }
-        ProductMovementItemDTO productMovementItemDTO = new ProductMovementItemDTO();
-        productMovementItemDTO.setId(product.getId());
-        productMovementItemDTO.setName(product.getName());
-        return productMovementItemDTO;
     }
 
 }

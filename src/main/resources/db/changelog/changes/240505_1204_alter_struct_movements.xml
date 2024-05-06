@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240505_1204" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240505_1204_alter_struct_movements</comment>
+        <sql>
+            ALTER TABLE dbapatient.movements RENAME COLUMN id TO movement_id;
+            COMMENT ON COLUMN dbapatient.movements.movement_id IS 'identificador único de cada movimentação de estoque.';
+            COMMENT ON COLUMN dbapatient.movements.patient_id IS 'chave estrangeira patients';
+            ALTER TABLE dbapatient.movements ADD movement_type varchar(50) NULL;
+            COMMENT ON COLUMN dbapatient.movements.movement_type IS 'É um campo para indicar o tipo de movimentação (entrada, saída, transferência, etc.).';
+            ALTER TABLE dbapatient.movements RENAME COLUMN registration_date TO movement_date;
+            ALTER TABLE dbapatient.movements ALTER COLUMN movement_date TYPE timestamp USING movement_date::timestamp;
+            ALTER TABLE dbapatient.movements ALTER COLUMN movement_date SET DEFAULT CURRENT_TIMESTAMP;
+            COMMENT ON COLUMN dbapatient.movements.movement_date IS 'É a data e hora em que a movimentação ocorreu.';
+            COMMENT ON TABLE dbapatient.movements IS 'servirá como um registro principal para cada movimentação de estoque, contendo informações gerais sobre a movimentação';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

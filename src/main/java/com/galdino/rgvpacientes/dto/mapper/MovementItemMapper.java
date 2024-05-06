@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MovementItemMapper {
 
-    private final ProductMapper productMapper;
+    private final BatchMapper batchMapper;
 
-    public MovementItemMapper(ProductMapper productMapper) {
-        this.productMapper = productMapper;
+    public MovementItemMapper(BatchMapper batchMapper) {
+        this.batchMapper = batchMapper;
     }
 
     public MovementItemDTO toDTO(MovementItem item) {
@@ -19,8 +19,8 @@ public class MovementItemMapper {
         }
         MovementItemDTO itemDTO = new MovementItemDTO();
         itemDTO.setId(item.getId());
-        itemDTO.setAmount(item.getAmount());
-        itemDTO.setProductMovementItem(productMapper.toProductMovementItemDTO(item.getProduct()));
+        itemDTO.setQuantity(item.getQuantity());
+        itemDTO.setProductMovementItem(batchMapper.toBatchMovementItemDTO(item.getBatch()));
         return itemDTO;
     }
 
