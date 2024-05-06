@@ -1,6 +1,7 @@
 package com.galdino.rgvpacientes.service.movement;
 
 import com.galdino.rgvpacientes.dto.MovementDTO;
+import com.galdino.rgvpacientes.dto.MovementIdDTO;
 import com.galdino.rgvpacientes.dto.MovementInput;
 import com.galdino.rgvpacientes.dto.mapper.MovementMapper;
 import com.galdino.rgvpacientes.model.Movement;
@@ -37,11 +38,10 @@ public class MovementService {
     }
 
     @Transactional
-    public MovementInput save(@Valid @NotNull MovementInput movementInput) throws EntityNotFoundException {
+    public MovementIdDTO save(@Valid @NotNull MovementInput movementInput) throws EntityNotFoundException {
         Movement movement = movementMapper.toEntity(movementInput);
         this.movementValidationStrategies.forEach(validation -> validation.execute(movement));
         Movement movementSaved = this.movementRepository.save(movement);
-        movementInput.setId(movementSaved.getId());
-        return movementInput;
+        return new MovementIdDTO(movementSaved.getId());
     }
 }

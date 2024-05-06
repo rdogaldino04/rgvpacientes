@@ -34,8 +34,7 @@ public class MovementMapper {
             item.setQuantity(itemInput.getQuantity());
 
             Batch batch = new Batch();
-            batch.setId(itemInput.getBatch().getId());
-            batch.setBatchNumber(itemInput.getBatch().getBatchNumber());
+            batch.setId(itemInput.getBatchId());
             item.setBatch(batch);
 
             movement.addItem(item);
@@ -50,21 +49,19 @@ public class MovementMapper {
         }
 
         Sector sector = new Sector();
-        sector.setId(movementInput.getSector().getId());
+        sector.setId(movementInput.getSectorId());
         movement.setSector(sector);
 
         Patient patient = new Patient();
-        patient.setId(movementInput.getPatient().getId());
-        patient.setName(movementInput.getPatient().getName());
-        patient.setCpf(movementInput.getPatient().getCpf());
+        patient.setId(movementInput.getPatientId());
         movement.setPatient(patient);
 
         Company company = new Company();
-        company.setId(movementInput.getCompany().getId());
+        company.setId(movementInput.getCompanyId());
         movement.setCompany(company);
 
         Stock stock = new Stock();
-        stock.setId(movementInput.getStock().getId());
+        stock.setId(movementInput.getStockId());
         movement.setStock(stock);
 
         return movement;

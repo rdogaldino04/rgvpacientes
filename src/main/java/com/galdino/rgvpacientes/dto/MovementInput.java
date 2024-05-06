@@ -16,20 +16,16 @@ public class MovementInput {
     private Long id;
 
     @NotNull
-    @Valid
-    private PatientMovementInput patient;
+    private Long patientId;
 
     @NotNull
-    @Valid
-    private CompanyMovementInput company;
+    private Long companyId;
 
     @NotNull
-    @Valid
-    private SectorMovementInput sector;
+    private Long sectorId;
 
     @NotNull
-    @Valid
-    private StockMovementInput stock;
+    private Long stockId;
 
     @Valid
     @NotEmpty

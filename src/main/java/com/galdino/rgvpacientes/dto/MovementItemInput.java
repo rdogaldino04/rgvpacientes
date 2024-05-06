@@ -17,7 +17,7 @@ public class MovementItemInput {
 
     @NotNull
     @Valid
-    private BatchMovementItemInput batch;
+    private Long batchId;
 
     @NotNull
     @Positive
