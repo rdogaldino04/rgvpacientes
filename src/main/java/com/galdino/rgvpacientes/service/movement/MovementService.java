@@ -39,6 +39,7 @@ public class MovementService {
 
     @Transactional
     public MovementIdDTO save(@Valid @NotNull MovementInput movementInput) throws EntityNotFoundException {
+        movementInput.setId(null);
         Movement movement = movementMapper.toEntity(movementInput);
         this.movementValidationStrategies.forEach(validation -> validation.execute(movement));
         Movement movementSaved = this.movementRepository.save(movement);

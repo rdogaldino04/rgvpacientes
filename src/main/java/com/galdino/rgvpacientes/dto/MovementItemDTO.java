@@ -12,7 +12,7 @@ public class MovementItemDTO {
 
     private Long id;
 
-    private BatchMovementItemDTO productMovementItem;
+    private BatchMovementItemDTO batch;
 
     private BigInteger quantity;
 
