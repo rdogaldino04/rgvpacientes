@@ -2,10 +2,8 @@ package com.galdino.rgvpacientes.controller;
 
 import javax.validation.Valid;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import com.galdino.rgvpacientes.dto.BatchDTO;
 import com.galdino.rgvpacientes.dto.BatchInput;
@@ -22,8 +20,20 @@ public class BatchController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public BatchDTO create(@RequestBody @Valid BatchInput batchInput) {
         return this.batchService.create(batchInput);
+    }
+
+    @PutMapping("/{id}")
+    public BatchDTO update(@PathVariable Long id, @RequestBody @Valid BatchInput batchInput) {
+        batchInput.setId(id);
+        return this.batchService.create(batchInput);
+    }
+
+    @GetMapping("/{id}")
+    public BatchDTO findById(@PathVariable Long id) {
+        return this.batchService.findById(id);
     }
 
 }

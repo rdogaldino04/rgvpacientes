@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.galdino.rgvpacientes.dto.product.ProductDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,15 +18,18 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BatchInput {
 
+    private Long id;
+
     @NotBlank
     private String batchNumber;
 
     @NotNull
     private LocalDate manufactureDate;
 
+    @NotNull
     private LocalDate expiryDate;
 
     @NotNull
-    private ProductDTO product;
+    private Long productId;
 
 }

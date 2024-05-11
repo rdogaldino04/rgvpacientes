@@ -17,16 +17,13 @@ public class BatchMapper {
         }
 
         Batch batch = new Batch();
+        batch.setId(batchInput.getId());
         batch.setBatchNumber(batchInput.getBatchNumber());
         batch.setManufactureDate(batchInput.getManufactureDate());
         batch.setExpiryDate(batchInput.getExpiryDate());
 
-        if (batchInput.getProduct() == null) {
-            return batch;
-        }
-
         Product productEntity = new Product();
-        productEntity.setId(batchInput.getProduct().getId());
+        productEntity.setId(batchInput.getProductId());
         batch.setProduct(productEntity);
         return batch;
     }

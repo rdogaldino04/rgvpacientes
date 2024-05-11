@@ -23,15 +23,17 @@ class BatchServiceTest {
 
     private BatchService batchService;
     private BatchRepository batchRepository;
+    private ProductService productService;
     private Validator validator;
     private BatchMapper batchMapper;
 
     @BeforeEach
     public void setUp() {
         batchRepository = mock(BatchRepository.class);
+        productService = mock(ProductService.class);
         validator = mock(Validator.class);
         batchMapper = mock(BatchMapper.class);
-        batchService = new BatchService(batchRepository, validator, batchMapper);
+        batchService = new BatchService(batchRepository, validator, batchMapper, productService);
     }
 
     @Test
