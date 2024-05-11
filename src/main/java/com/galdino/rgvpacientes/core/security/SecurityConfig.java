@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
 //        http.cors().and().authorizeRequests().antMatchers("/**").permitAll();
+        http.cors().configurationSource(corsConfigurationSource());
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/login", "/api/users/token/refresh/**", "/api/users/current/**").permitAll();
         http.authorizeRequests().antMatchers(MethodType.GET.name(), "/api/users/**").hasAnyAuthority("ROLE_USER");

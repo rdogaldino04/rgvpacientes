@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Positive;
 
 @RestController
-@RequestMapping("movements")
+@RequestMapping("api/movements")
 public class MovementController {
 
     private final MovementService movementService;

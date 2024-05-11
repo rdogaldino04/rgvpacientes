@@ -10,7 +10,7 @@ import com.galdino.rgvpacientes.dto.BatchInput;
 import com.galdino.rgvpacientes.service.BatchService;
 
 @RestController
-@RequestMapping("batches")
+@RequestMapping("api/batches")
 public class BatchController {
 
     private final BatchService batchService;

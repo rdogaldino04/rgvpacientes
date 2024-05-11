@@ -18,7 +18,7 @@ import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.service.PatientService;
 
 @RestController
-@RequestMapping("patients")
+@RequestMapping("api/patients")
 public class PatientController {
 
 	@Autowired

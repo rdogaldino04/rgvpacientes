@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("sectors")
+@RequestMapping("api/sectors")
 public class SectorController {
 
     private final SectorService sectorService;

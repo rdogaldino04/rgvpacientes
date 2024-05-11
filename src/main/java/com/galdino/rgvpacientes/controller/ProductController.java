@@ -24,7 +24,7 @@ import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.service.ProductService;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("api/products")
 public class ProductController {
 
     private final ProductService productService;
