@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240511_1116" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240511_1116_insert_admin_user</comment>
+        <sql>
+            insert into dbapatient.roles (roles_name) values('ROLE_USER');
+            insert into dbapatient.roles (roles_name) values('ROLE_MANAGER');
+            insert into dbapatient.roles (roles_name) values('ROLE_ADMIN');
+            insert into dbapatient.roles (roles_name) values('ROLE_SUPER_ADMIN');
+
+            insert into dbapatient.users ("name", username, "password")
+                values('admin', 'admin', '$2a$12$fx8TXZmhqZe71XKw7sgXEeM6ih4xECPguxb.wAEJGLGJS1Y6eAt5C');
+
+            insert into dbapatient.users_roles (user_id, role_id)
+            values(
+                (select u.user_id
+                 from dbapatient.users u
+                 where u.username = 'admin'),
+                (select r.roles_id
+                 from dbapatient.roles r
+                where r.roles_name = 'ROLE_SUPER_ADMIN')
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

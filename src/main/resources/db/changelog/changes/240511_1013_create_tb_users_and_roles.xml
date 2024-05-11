@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240511_1013" author="Galdino">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240511_1013_create_tb_users_and_roles</comment>
+        <sql>
+            create table dbapatient.roles (
+                roles_id SERIAL PRIMARY KEY,
+                roles_name varchar(255) not null
+            );
+
+            create table dbapatient.users (
+                user_id SERIAL PRIMARY KEY,
+                name varchar(255) not null,
+                username varchar(255) not null,
+                password varchar(255) not null,
+                roles_id INTEGER references dbapatient.roles(roles_id)
+            );
+
+            create table dbapatient.users_roles (
+                user_id INTEGER not null references dbapatient.users(user_id),
+                role_id INTEGER not null references dbapatient.roles(roles_id)
+            );
+
+            ALTER TABLE dbapatient.users
+                ADD CONSTRAINT uk_username UNIQUE (username);
+
+            ALTER TABLE dbapatient.roles
+                ADD CONSTRAINT uk_role_name UNIQUE (roles_name);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
