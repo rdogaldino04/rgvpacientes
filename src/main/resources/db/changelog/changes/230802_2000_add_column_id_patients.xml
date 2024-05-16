@@ -8,7 +8,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 
-    <changeSet id="230802_2000" author="Galdino">
+    <changeSet id="230802_2000" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql" />
         </preConditions>
@@ -17,6 +17,31 @@
         <sql>ALTER TABLE ${schemaName}.PATIENTS DROP CONSTRAINT PK_PATIENTS;</sql>
         <sql>ALTER TABLE ${schemaName}.PATIENTS ADD CONSTRAINT UK_PATIENTS UNIQUE(CPF);</sql>
         <sql>ALTER TABLE ${schemaName}.PATIENTS ADD CONSTRAINT PK_PATIENTS PRIMARY KEY(ID);</sql>
+    </changeSet>
+
+    <changeSet id="230802_2000" author="Galdino" dbms="sqlite">
+        <comment>add column id patient</comment>
+        <sql>
+            ALTER TABLE PATIENTS RENAME TO PATIENTS_BK;
+
+            CREATE TABLE patients (
+                id  INTEGER PRIMARY KEY autoincrement not null,
+                cpf VARCHAR unique,
+                name VARCHAR NOT NULL,
+                phone VARCHAR,
+                address_name VARCHAR,
+                address_number VARCHAR,
+                address_complement VARCHAR,
+                address_district VARCHAR,
+                status VARCHAR DEFAULT ('Active') NOT NULL
+            );
+
+            INSERT INTO patients (cpf, name, phone, address_name, address_number, address_complement, address_district)
+                SELECT cpf, name, phone, address_name, address_number, address_complement, address_district
+                FROM PATIENTS_BK;
+
+            DROP TABLE PATIENTS_BK;
+        </sql>
     </changeSet>
 
 </databaseChangeLog>

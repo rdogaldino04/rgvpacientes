@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="230909_2030" author="Galdino">
+    <changeSet id="230909_2030" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -24,6 +24,25 @@
             constraint fk_companies foreign key(company_id) references dbapatient.companies(id),
             constraint fk_sectors foreign key(sector_id) references dbapatient.sectors(id),
             constraint fk_stocks foreign key(stock_id) references dbapatient.stocks(id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="230909_2030" author="Galdino" dbms="sqlite">
+        <comment>create table movements</comment>
+        <sql>
+            create table movements (
+            id integer primary key autoincrement not null,
+            patient_id integer not null,
+            company_id integer not null,
+            sector_id integer not null,
+            stock_id integer not null,
+            registration_date Date not null,
+
+            CONSTRAINT fk_patients foreign key(patient_id) references patients(id),
+            CONSTRAINT fk_companies foreign key(company_id) references companies(id),
+            CONSTRAINT fk_sectors foreign key(sector_id) references sectors(id),
+            CONSTRAINT fk_stocks foreign key(stock_id) references stocks(id)
             );
         </sql>
     </changeSet>

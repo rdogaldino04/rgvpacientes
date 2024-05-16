@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240504_0836" author="Galdino">
+    <changeSet id="240504_0836" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -14,6 +14,15 @@
             ALTER TABLE ${schemaName}.materials RENAME TO product;
             ALTER TABLE ${schemaName}.movement_items RENAME COLUMN material_id TO product_id;
             update ${schemaName}.menus set url = 'cadastros/products' where name = 'Medicamentos';
+        </sql>
+    </changeSet>
+
+    <changeSet id="240504_0836" author="Galdino" dbms="sqlite">
+        <comment>alter name table materials to product</comment>
+        <sql>
+            ALTER TABLE materials RENAME TO product;
+            ALTER TABLE movement_items RENAME COLUMN material_id TO product_id;
+            update menus set url = 'cadastros/products' where name = 'Medicamentos';
         </sql>
     </changeSet>
 

@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240414_1649" author="Galdino">
+    <changeSet id="240414_1649" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -23,6 +23,22 @@
               references ${schemaName}.materials(id)
             );
             
+        </sql>
+    </changeSet>
+
+    <changeSet id="240414_1649" author="Galdino" dbms="sqlite">
+        <comment>create table batch</comment>
+        <sql>
+            create table batch (
+            id integer primary key autoincrement not null,
+            batch_number varchar(100) not null,
+            manufacture_date Date not null,
+            expiry_date Date,
+            material_id bigint not null,
+
+            constraint fk_material foreign key(material_id) references materials(id)
+            );
+
         </sql>
     </changeSet>
 

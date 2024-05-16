@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="230909_2031" author="Galdino">
+    <changeSet id="230909_2031" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -13,6 +13,13 @@
         <sql>
             alter table ${schemaName}.materials
             add constraint uk_materials_name unique(name);
+        </sql>
+    </changeSet>
+
+    <changeSet id="230909_2031" author="Galdino" dbms="sqlite">
+        <comment>create unique uk_materials_name</comment>
+        <sql>
+            CREATE UNIQUE INDEX materials_name_IDX ON materials (name);
         </sql>
     </changeSet>
 

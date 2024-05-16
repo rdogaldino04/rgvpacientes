@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240516_1355" author="Galdino" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240516_1355_delete_and_insert_menus</comment>
+        <sql>
+            DELETE FROM dbapatient.menus;
+            INSERT INTO dbapatient.menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(1, 'Home', true, NULL, NULL);
+            INSERT INTO dbapatient.menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(2, 'Cadastros', true, NULL, NULL);
+            INSERT INTO dbapatient.menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(4, 'Pacientes', true, 'cadastros/pacientes', 2);
+            INSERT INTO dbapatient.menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(3, 'Movimentações', true, NULL, NULL);
+            INSERT INTO dbapatient.menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(6, 'Saída para paciente', true, 'movimentacoes/saida-para-pacientes', 3);
+            INSERT INTO dbapatient.menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(5, 'Medicamentos', true, 'cadastros/products', 2);
+        </sql>
+    </changeSet>
+
+    <changeSet id="240516_1355" author="Galdino" dbms="sqlite">
+        <comment>240511_1116_insert_admin_user</comment>
+        <sql>
+            DELETE FROM menus;
+            INSERT INTO menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(1, 'Home', true, NULL, NULL);
+            INSERT INTO menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(2, 'Cadastros', true, NULL, NULL);
+            INSERT INTO menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(4, 'Pacientes', true, 'cadastros/pacientes', 2);
+            INSERT INTO menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(3, 'Movimentações', true, NULL, NULL);
+            INSERT INTO menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(6, 'Saída para paciente', true, 'movimentacoes/saida-para-pacientes', 3);
+            INSERT INTO menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(5, 'Medicamentos', true, 'cadastros/products', 2);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240511_1013" author="Galdino">
+    <changeSet id="240511_1013" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -34,6 +34,34 @@
 
             ALTER TABLE dbapatient.roles
                 ADD CONSTRAINT uk_role_name UNIQUE (roles_name);
+        </sql>
+    </changeSet>
+
+    <changeSet id="240511_1013" author="Galdino" dbms="sqlite">
+        <comment>240511_1013_create_tb_users_and_roles</comment>
+        <sql>
+            create table roles (
+                roles_id INTEGER PRIMARY KEY AUTOINCREMENT not null,
+                roles_name varchar(255) not null,
+                UNIQUE (roles_name)
+            );
+
+            create table users (
+                user_id INTEGER PRIMARY KEY AUTOINCREMENT not null,
+                name varchar(255) not null,
+                username varchar(255) not null,
+                password varchar(255) not null,
+                roles_id INTEGER,
+                FOREIGN KEY (roles_id) REFERENCES roles(roles_id),
+                UNIQUE (username)
+            );
+
+            create table users_roles (
+                user_id INTEGER not null,
+                role_id INTEGER not null,
+                foreign key (user_id) references users(user_id),
+                foreign key (role_id) references roles(roles_id)
+            );
         </sql>
     </changeSet>
 

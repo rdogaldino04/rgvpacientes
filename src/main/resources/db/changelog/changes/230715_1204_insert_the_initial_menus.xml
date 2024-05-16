@@ -7,7 +7,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="230715_1204" author="Galdino">
+    <changeSet id="230715_1204" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql" />
         </preConditions>
@@ -19,6 +19,18 @@
 	          (3,'Atendimentos',true,NULL,NULL),
 	          (5,'Plano de saúde',true,NULL,2),
 	          (4,'Pacientes',true,'cadastros/pacientes',2);
+        </sql>
+    </changeSet>
+
+    <changeSet id="230715_1204" author="Galdino" dbms="sqlite">
+        <comment>insert the initial menus</comment>
+        <sql>
+            INSERT INTO menus (id,"name",active,url,menu_parent_id) VALUES
+                (1,'Home',1,NULL,NULL),
+                (2,'Cadastros',1,NULL,NULL),
+                (3,'Atendimentos',1,NULL,NULL),
+                (5,'Plano de saúde',1,NULL,2),
+                (4,'Pacientes',1,'cadastros/pacientes',2);
         </sql>
     </changeSet>
 </databaseChangeLog>

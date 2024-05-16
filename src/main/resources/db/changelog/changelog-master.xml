@@ -28,4 +28,5 @@
     <include file="db/changelog/changes/240505_1220_alter_struct_movements_2.xml"/>
     <include file="db/changelog/changes/240511_1013_create_tb_users_and_roles.xml"/>
     <include file="db/changelog/changes/240511_1116_insert_admin_user.xml"/>
+    <include file="db/changelog/changes/240516_1355_delete_and_insert_menus.xml"/>
 </databaseChangeLog>

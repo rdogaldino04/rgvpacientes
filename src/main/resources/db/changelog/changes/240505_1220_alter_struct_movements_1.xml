@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240505_1204" author="Galdino">
+    <changeSet id="240505_1204" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -22,6 +22,16 @@
             ALTER TABLE dbapatient.movement_items ALTER COLUMN movement_item_date SET DEFAULT CURRENT_TIMESTAMP;
             COMMENT ON COLUMN dbapatient.movement_items.movement_item_date IS 'data do registro do item';
             COMMENT ON COLUMN dbapatient.movement_items.movement_id IS 'chave estrangeira que faz referência ao ID da movimentação na tabela movements.';
+        </sql>
+    </changeSet>
+
+    <changeSet id="240505_1204" author="Galdino" dbms="sqlite">
+        <comment>240505_1204_alter_struct_movements</comment>
+        <sql>
+            ALTER TABLE movement_items RENAME COLUMN id TO movement_item_id;
+            ALTER TABLE movement_items RENAME COLUMN product_id TO batch_id;
+            ALTER TABLE movement_items RENAME COLUMN amount TO quantity;
+            ALTER TABLE movement_items RENAME COLUMN registration_date TO movement_item_date;
         </sql>
     </changeSet>
 
