@@ -1,19 +1,18 @@
-package com.galdino.rgvpacientes.dto.product;
+    package com.galdino.rgvpacientes.dto.product;
 
-import lombok.*;
+    import lombok.*;
 
-import java.time.LocalDate;
+    import java.time.LocalDate;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductDTO {
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public class ProductDTO {
 
-    private Long id;
-    private String name;
-    private LocalDate expirationDate;
-    private LocalDate createdAt;
+        private Long id;
+        private String name;
+        private LocalDate createdAt;
 
-}
+    }

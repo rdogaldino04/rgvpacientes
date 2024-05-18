@@ -51,7 +51,6 @@ public class ProductService {
         return ProductDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
-                .expirationDate(product.getExpirationDate())
                 .createdAt(product.getCreatedAt())
                 .build();
     }
@@ -76,7 +75,6 @@ public class ProductService {
         return this.productRepository.findById(id)
                 .map(productFound -> {
                     productFound.setName(productInput.getName());
-                    productFound.setExpirationDate(productInput.getExpirationDate());
 
                     manager.detach(productFound);
                     Optional<Product> existingProduct = productRepository.findByName(productInput.getName());

@@ -1,50 +1,37 @@
-package com.galdino.rgvpacientes.model;
+    package com.galdino.rgvpacientes.model;
 
-import java.time.LocalDate;
+    import lombok.*;
+    import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotNull;
+    import javax.persistence.*;
+    import java.time.LocalDate;
 
-import org.hibernate.annotations.CreationTimestamp;
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+    @Entity
+    @Table(name = "product", schema = "dbapatient")
+    public class Product {
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+        @EqualsAndHashCode.Include
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "product_id")
+        private Long id;
 
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity
-@Table(name = "product", schema = "dbapatient")
-public class Product {
+        @Column(name = "product_name")
+        private String name;
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Long id;
+        @CreationTimestamp
+        @Column(name = "created_at")
+        private LocalDate createdAt;
 
-    @Column(name = "product_name")
-    private String name;
+        public Product() {
+        }
 
-    @Deprecated
-    @NotNull
-    @FutureOrPresent
-    private LocalDate expirationDate;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDate createdAt;
-
-    public Product() {
+        public Product(Long id) {
+            this.id = id;
+        }
     }
-
-    public Product(Long id) {
-        this.id = id;
-    }
-}
