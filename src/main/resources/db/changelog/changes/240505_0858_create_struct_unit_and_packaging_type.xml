@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240505_0858" author="Galdino">
+    <changeSet id="240505_0858" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -53,6 +53,59 @@
             --ALTER TABLE dbapatient.product DROP COLUMN unit_id;
             --drop table dbapatient.unit;
             --drop table dbapatient.packaging_type;
+        </sql>
+    </changeSet>
+
+    <changeSet id="240505_0858" author="Galdino" dbms="sqlite">
+        <comment>create_struct_unit_and_packaging_type</comment>
+        <sql>
+            create table unit (
+            unit_id integer primary key autoincrement not null, -- ID da unidade de medida, chave primária
+            unit_name varchar(200) not null, -- nome da unidade de medida, por exemplo, "Gramas", "Mililitros", etc.
+            constraint uk_unit_name unique (unit_name)
+            );
+
+            create table packaging_type (
+            packaging_type_id integer primary key autoincrement not null,
+            packaging_name varchar(200) not null,
+            constraint uk_packaging_name unique (packaging_name)
+            );
+
+            CREATE TEMPORARY TABLE temp AS
+            SELECT
+            product_id,
+            product_name,
+            expiration_date,
+            created_at
+            FROM product;
+
+            DROP TABLE product;
+
+            CREATE TABLE product (
+            product_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            product_name VARCHAR NOT NULL,
+            expiration_date DATE,
+            created_at DATE,
+            packaging_type_id ITEGER,
+            unit_id integer,
+            CONSTRAINT product_packaging_type_FK FOREIGN KEY (packaging_type_id) REFERENCES packaging_type(packaging_type_id),
+            CONSTRAINT product_unit_fk FOREIGN KEY (unit_id) REFERENCES unit(unit_id)
+            );
+            CREATE UNIQUE INDEX materials_name_IDX ON product (product_name);
+
+            INSERT INTO product
+            (product_id,
+            product_name,
+            expiration_date,
+            created_at)
+            SELECT
+            product_id,
+            product_name,
+            expiration_date,
+            created_at
+            FROM temp;
+
+            DROP TABLE temp;
         </sql>
     </changeSet>
 

@@ -7,7 +7,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="230909_0841" author="Galdino">
+    <changeSet id="230909_0841" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -19,6 +19,42 @@
             alter table ${schemaName}.sectors
             add constraint fk_companies foreign key(company_id)
             references ${schemaName}.companies(id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="230909_0841" author="Galdino" dbms="sqlite">
+        <comment>add column company_id in sectors</comment>
+        <sql>
+            ALTER TABLE sectors ADD company_id INTEGER;
+
+            CREATE TEMPORARY TABLE temp AS
+            SELECT
+                id,
+                name,
+                company_id
+            FROM sectors;
+
+            DROP TABLE sectors;
+
+            CREATE TABLE sectors (
+                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                name VARCHAR NOT NULL,
+                company_id INTEGER NOT NULL,
+                CONSTRAINT sectors_companies_FK FOREIGN KEY (company_id) REFERENCES companies(id)
+            );
+
+            INSERT INTO sectors
+            (id,
+            name,
+            company_id)
+            SELECT
+            id,
+            name,
+            company_id
+            FROM temp;
+
+            DROP TABLE temp;
+
         </sql>
     </changeSet>
 

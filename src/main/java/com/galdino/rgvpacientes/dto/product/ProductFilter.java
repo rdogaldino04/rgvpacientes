@@ -13,7 +13,6 @@ public class ProductFilter {
 
     private Long id;
     private String name;
-    private LocalDate expirationDate;
     private LocalDate createdAt;
 
 }

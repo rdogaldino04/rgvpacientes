@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240505_1204" author="Galdino">
+    <changeSet id="240505_1204" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -21,6 +21,15 @@
             ALTER TABLE dbapatient.movements ALTER COLUMN movement_date SET DEFAULT CURRENT_TIMESTAMP;
             COMMENT ON COLUMN dbapatient.movements.movement_date IS 'É a data e hora em que a movimentação ocorreu.';
             COMMENT ON TABLE dbapatient.movements IS 'servirá como um registro principal para cada movimentação de estoque, contendo informações gerais sobre a movimentação';
+        </sql>
+    </changeSet>
+
+    <changeSet id="240505_1204" author="Galdino" dbms="sqlite">
+        <comment>240505_1204_alter_struct_movements</comment>
+        <sql>
+            ALTER TABLE movements RENAME COLUMN id TO movement_id;
+            ALTER TABLE movements ADD movement_type varchar(50) NULL;
+            ALTER TABLE movements RENAME COLUMN registration_date TO movement_date;
         </sql>
     </changeSet>
 

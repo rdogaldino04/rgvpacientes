@@ -11,7 +11,6 @@ public class ProductMapper {
     public Product toEntity(ProductInput productInput) {
         Product product = new Product();
         product.setName(productInput.getName());
-        product.setExpirationDate(productInput.getExpirationDate());
         return product;
     }
 
@@ -19,7 +18,6 @@ public class ProductMapper {
         return ProductDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
-                .expirationDate(product.getExpirationDate())
                 .createdAt(product.getCreatedAt())
                 .build();
     }

@@ -8,12 +8,17 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 
-    <changeSet id="230715_1210" author="Galdino">
+    <changeSet id="230715_1210" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql" />
         </preConditions>
         <comment>add column status patient</comment>
         <sql> ALTER TABLE ${schemaName}.patients ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'Active'; </sql>
+    </changeSet>
+
+    <changeSet id="230715_1210" author="Galdino" dbms="sqlite">
+        <comment>add column status patient</comment>
+        <sql> ALTER TABLE patients ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'Active'; </sql>
     </changeSet>
 
 </databaseChangeLog>

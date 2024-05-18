@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240505_1014" author="Galdino">
+    <changeSet id="240505_1014" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -20,6 +20,15 @@
             ALTER TABLE dbapatient.batch ADD manufacturing_date date NULL;
             COMMENT ON COLUMN dbapatient.batch.manufacturing_date IS 'data de fabricação';
             COMMENT ON COLUMN dbapatient.batch.expiry_date IS 'validade do lote';
+        </sql>
+    </changeSet>
+
+    <changeSet id="240505_1014" author="Galdino" dbms="sqlite">
+        <comment>alter_struct_batch</comment>
+        <sql>
+            ALTER TABLE batch RENAME COLUMN material_id TO product_id;
+            ALTER TABLE batch RENAME COLUMN id TO batch_id;
+            ALTER TABLE batch ADD manufacturing_date date NULL;
         </sql>
     </changeSet>
 

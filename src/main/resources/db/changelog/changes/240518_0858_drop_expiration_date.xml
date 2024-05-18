@@ -5,14 +5,20 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="240505_1220" author="Galdino" dbms="postgresql">
+    <changeSet id="240518_0858" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
-        <comment>240505_1220_alter_struct_movements_2</comment>
+        <comment>240518_0858_drop_expiration_date</comment>
         <sql>
-            ALTER TABLE dbapatient.movement_items DROP CONSTRAINT fk_materials;
-            ALTER TABLE dbapatient.movement_items ADD CONSTRAINT movement_items_batch_fk FOREIGN KEY (batch_id) REFERENCES dbapatient.batch(batch_id);
+            ALTER TABLE dbapatient.product DROP column expiration_date;
+        </sql>
+    </changeSet>
+
+    <changeSet id="240518_0858" author="Galdino" dbms="sqlite">
+        <comment>240518_0858_drop_expiration_date</comment>
+        <sql>
+            ALTER TABLE product DROP column expiration_date;
         </sql>
     </changeSet>
 

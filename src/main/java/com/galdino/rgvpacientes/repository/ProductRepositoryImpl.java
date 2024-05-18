@@ -26,7 +26,7 @@ public class ProductRepositoryImpl implements ProductRepositoryQuery {
         Map<String, Object> parameters = new HashMap<>();
         StringBuilder sql = new StringBuilder("SELECT ");
         sql.append("new com.galdino.rgvpacientes.dto.product.ProductDTO( ");
-        sql.append("  m.id, m.name, m.expirationDate, m.createdAt ");
+        sql.append("  m.id, m.name, m.createdAt ");
         sql.append(" ) ");
         sql.append("FROM Product m ");
         sql.append("WHERE 1 = 1 ");

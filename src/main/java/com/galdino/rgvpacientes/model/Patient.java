@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "patients", schema = "dbapatient")
-@SQLDelete(sql = "UPDATE dbapatient.patients SET status = 'Inactive' WHERE id = ?")
+@SQLDelete(sql = "UPDATE patients SET status = 'Inactive' WHERE id = ?")
 public class Patient {
 
     @EqualsAndHashCode.Include

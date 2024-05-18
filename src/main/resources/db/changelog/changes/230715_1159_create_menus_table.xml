@@ -7,13 +7,27 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="230715_1159" author="Galdino">
+    <changeSet id="230715_1159" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql" />
         </preConditions>
         <comment>create table menus</comment>
         <sql>
             create table ${schemaName}.menus(
+                id int4 NOT NULL,
+                name varchar(200) NOT NULL,
+                active bool NULL DEFAULT true,
+                url varchar(200) NULL,
+                menu_parent_id int4 NULL,
+                CONSTRAINT menus_pkey PRIMARY KEY (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="230715_1159" author="Galdino" dbms="sqlite">
+        <comment>create table menus</comment>
+        <sql>
+            create table menus(
                 id int4 NOT NULL,
                 name varchar(200) NOT NULL,
                 active bool NULL DEFAULT true,

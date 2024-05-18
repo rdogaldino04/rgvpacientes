@@ -8,7 +8,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 
-    <changeSet id="230902_1110" author="Galdino">
+    <changeSet id="230902_1110" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql" />
         </preConditions>
@@ -20,6 +20,17 @@
               cnpj varchar(14) not null,
               constraint pk_companies primary key (id),
               constraint uk_companies unique (cnpj)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="230902_1110" author="Galdino" dbms="sqlite">
+        <comment>add column id patient</comment>
+        <sql>
+            create table companies (
+                id integer primary key autoincrement not null,
+                name varchar(200) not null,
+                cnpj varchar(14) unique not null
             );
         </sql>
     </changeSet>

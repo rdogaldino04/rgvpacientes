@@ -7,7 +7,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="230715_1151" author="Galdino">
+    <changeSet id="230715_1151" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql" />
         </preConditions>
@@ -23,6 +23,22 @@
           );
           alter table ${schemaName}.patients
             add constraint pk_patients primary key (cpf);
+        </sql>
+    </changeSet>
+
+    <changeSet id="230715_1151" author="Galdino" dbms="sqlite">
+        <comment>create table patients</comment>
+        <sql>
+            create table patients(
+                cpf varchar(11),
+                name varchar(200) NOT NULL,
+                phone varchar(30),
+                address_name varchar(300),
+                address_number varchar(30),
+                address_complement varchar(100),
+                address_district varchar(100),
+                constraint pk_patients primary key (cpf)
+            );
         </sql>
     </changeSet>
 </databaseChangeLog>

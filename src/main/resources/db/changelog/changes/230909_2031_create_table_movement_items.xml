@@ -5,7 +5,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="230909_2031" author="Galdino">
+    <changeSet id="230909_2031" author="Galdino" dbms="postgresql">
         <preConditions onFail="MARK_RAN">
             <dbms type="postgresql"/>
         </preConditions>
@@ -25,6 +25,22 @@
             alter table dbapatient.movement_items
             add constraint fk_materials foreign key(material_id)
             references dbapatient.materials(id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="230909_2031" author="Galdino" dbms="sqlite">
+        <comment>create table movement_items</comment>
+        <sql>
+            create table movement_items (
+            id integer primary key autoincrement not null,
+            movement_id integer not null,
+            material_id integer not null,
+            amount numeric(3, 2) not null,
+            registration_date Date not null,
+
+            constraint fk_movements foreign key(movement_id) references movements(id)
+            constraint fk_materials foreign key(material_id) references materials(id)
+            );
         </sql>
     </changeSet>
 
