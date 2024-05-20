@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240519_1737" author="Galdino" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240519_1737_insert_menu_batchies</comment>
+        <sql>
+            INSERT INTO dbapatient.menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(7, 'Lotes', true, 'cadastros/batchies', 2);
+        </sql>
+    </changeSet>
+
+    <changeSet id="240516_1355" author="Galdino" dbms="sqlite">
+        <comment>240511_1116_insert_admin_user</comment>
+        <sql>
+            INSERT INTO menus
+            (id, "name", active, url, menu_parent_id)
+            VALUES(7, 'Lotes', true, 'cadastros/batchies', 2);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

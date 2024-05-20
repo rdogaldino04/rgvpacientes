@@ -2,6 +2,11 @@ package com.galdino.rgvpacientes.controller;
 
 import javax.validation.Valid;
 
+import com.galdino.rgvpacientes.dto.BatchFilter;
+import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.model.Batch;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,8 +14,10 @@ import com.galdino.rgvpacientes.dto.BatchDTO;
 import com.galdino.rgvpacientes.dto.BatchInput;
 import com.galdino.rgvpacientes.service.BatchService;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("api/batches")
+@RequestMapping("api/batchies")
 public class BatchController {
 
     private final BatchService batchService;
@@ -34,6 +41,11 @@ public class BatchController {
     @GetMapping("/{id}")
     public BatchDTO findById(@PathVariable Long id) {
         return this.batchService.findById(id);
+    }
+
+    @GetMapping()
+    public PageWrapper<Batch> findAll(BatchFilter batchFilter, @PageableDefault(size = 5) Pageable pageable) {
+        return this.batchService.findAll(batchFilter, pageable);
     }
 
 }

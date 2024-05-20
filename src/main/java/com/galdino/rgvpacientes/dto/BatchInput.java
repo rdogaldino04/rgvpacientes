@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.galdino.rgvpacientes.dto.product.ProductBatchUpdateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +31,6 @@ public class BatchInput {
     private LocalDate expiryDate;
 
     @NotNull
-    private Long productId;
+    private ProductBatchUpdateDTO product;
 
 }

@@ -8,7 +8,12 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
+import com.galdino.rgvpacientes.dto.BatchFilter;
+import com.galdino.rgvpacientes.dto.specs.BatchSpecs;
+import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.service.exception.BusinessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.galdino.rgvpacientes.dto.BatchDTO;
@@ -47,7 +52,7 @@ public class BatchService {
             throw new BusinessException(String.format("There is already a batch with number %s", batch.getBatchNumber()));
         }
 
-        this.productService.findById(batchInput.getProductId());
+        this.productService.findById(batchInput.getProduct().getId());
 
         Batch batchSave = this.batchRepository.save(batch);
         return this.batchMapper.toDTO(batchSave);
@@ -57,5 +62,10 @@ public class BatchService {
         return this.batchRepository.findById(id)
                 .map(this.batchMapper::toDTO)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("There is no batch with id %d", id)));
+    }
+
+    public PageWrapper<Batch> findAll(BatchFilter batchFilter, Pageable pageable) {
+        Page<Batch> batcPage = this.batchRepository.findAll(BatchSpecs.usingFilter(batchFilter), pageable);
+        return new PageWrapper<>(batcPage);
     }
 }

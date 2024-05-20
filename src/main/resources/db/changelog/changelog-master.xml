@@ -30,4 +30,5 @@
     <include file="db/changelog/changes/240511_1116_insert_admin_user.xml"/>
     <include file="db/changelog/changes/240516_1355_delete_and_insert_menus.xml"/>
     <include file="db/changelog/changes/240518_0858_drop_expiration_date.xml"/>
+    <include file="db/changelog/changes/240519_1737_insert_menu_batchies.xml"/>
 </databaseChangeLog>

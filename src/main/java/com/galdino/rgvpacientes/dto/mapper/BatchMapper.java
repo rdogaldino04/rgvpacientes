@@ -1,6 +1,7 @@
 package com.galdino.rgvpacientes.dto.mapper;
 
 import com.galdino.rgvpacientes.dto.product.BatchMovementItemDTO;
+import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.model.Product;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class BatchMapper {
         batch.setExpiryDate(batchInput.getExpiryDate());
 
         Product productEntity = new Product();
-        productEntity.setId(batchInput.getProductId());
+        productEntity.setId(batchInput.getProduct().getId());
         batch.setProduct(productEntity);
         return batch;
     }
@@ -45,7 +46,10 @@ public class BatchMapper {
                 .batchNumber(batch.getBatchNumber())
                 .manufactureDate(batch.getManufactureDate())
                 .expiryDate(batch.getExpiryDate())
-                .productId(batch.getProduct().getId())
+                .product(ProductDTO.builder()
+                        .id(batch.getProduct().getId())
+                        .name(batch.getProduct().getName())
+                        .build())
                 .build();
     }
 
