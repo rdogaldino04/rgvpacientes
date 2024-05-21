@@ -11,6 +11,7 @@ import javax.validation.Validator;
 import com.galdino.rgvpacientes.dto.BatchFilter;
 import com.galdino.rgvpacientes.dto.specs.BatchSpecs;
 import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import com.galdino.rgvpacientes.service.exception.BusinessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,14 +29,16 @@ public class BatchService {
 
     private final BatchRepository batchRepository;
     private final ProductService productService;
+    private final MovementItemRepository movementItemRepository;
     private final Validator validator;
     private final BatchMapper batchMapper;
 
-    public BatchService(BatchRepository batchRepository, Validator validator, BatchMapper batchMapper, ProductService productService) {
+    public BatchService(BatchRepository batchRepository, Validator validator, BatchMapper batchMapper, ProductService productService, MovementItemRepository movementItemRepository) {
         this.batchRepository = batchRepository;
         this.validator = validator;
         this.batchMapper = batchMapper;
         this.productService = productService;
+        this.movementItemRepository = movementItemRepository;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -67,5 +70,13 @@ public class BatchService {
     public PageWrapper<Batch> findAll(BatchFilter batchFilter, Pageable pageable) {
         Page<Batch> batcPage = this.batchRepository.findAll(BatchSpecs.usingFilter(batchFilter), pageable);
         return new PageWrapper<>(batcPage);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Long id) {
+        if (this.movementItemRepository.existsByBatch(new Batch(id))) {
+            throw new BusinessException("Não é possível remover o lote, pois está vinculado ao um ou mais movimentações.");
+        }
+        this.batchRepository.deleteById(id);
     }
 }
