@@ -16,4 +16,6 @@ public interface BatchRepository extends CustomJpaRepository<Batch, Long>, JpaSp
     @Query("from Batch b join fetch b.product")
     List<Batch> findAll();
 
+    boolean existsByProduct_Id(Long productId);
+
 }

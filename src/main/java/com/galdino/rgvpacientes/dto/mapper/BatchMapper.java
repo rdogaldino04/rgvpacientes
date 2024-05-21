@@ -49,6 +49,7 @@ public class BatchMapper {
                 .product(ProductDTO.builder()
                         .id(batch.getProduct().getId())
                         .name(batch.getProduct().getName())
+                        .createdAt(batch.getProduct().getCreatedAt())
                         .build())
                 .build();
     }
