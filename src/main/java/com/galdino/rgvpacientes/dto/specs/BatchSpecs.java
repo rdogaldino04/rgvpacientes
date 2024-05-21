@@ -23,6 +23,9 @@ public class BatchSpecs {
             if (StringUtils.hasText(filter.getBatchNumber())) {
                 predicates.add(builder.like(root.get("batchNumber"), filter.getBatchNumber().toUpperCase().concat("%")));
             }
+            if (filter.getProductId() != null) {
+                predicates.add(builder.equal(root.get("product").get("id"), filter.getProductId()));
+            }
             query.orderBy(builder.asc(root.get("batchNumber")));
             return builder.and(predicates.toArray(new Predicate[0]));
         };

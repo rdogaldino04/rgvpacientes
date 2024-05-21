@@ -9,5 +9,6 @@
 
         private Long id;
         private String batchNumber;
+        private Long productId;
 
     }
