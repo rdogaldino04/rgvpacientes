@@ -7,7 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import javax.validation.Validator;
 
 import com.galdino.rgvpacientes.repository.MovementItemRepository;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.galdino.rgvpacientes.dto.batch.BatchDTO;
-import com.galdino.rgvpacientes.dto.batch.BatchInput;
 import com.galdino.rgvpacientes.mapper.BatchMapper;
 import com.galdino.rgvpacientes.model.Batch;
 import com.galdino.rgvpacientes.repository.BatchRepository;
@@ -25,7 +23,6 @@ class BatchServiceTest {
     private BatchService batchService;
     private BatchRepository batchRepository;
     private ProductService productService;
-    private Validator validator;
     private BatchMapper batchMapper;
     private MovementItemRepository movementItemRepository;
 
@@ -33,26 +30,18 @@ class BatchServiceTest {
     public void setUp() {
         batchRepository = mock(BatchRepository.class);
         productService = mock(ProductService.class);
-        validator = mock(Validator.class);
+        mock(Validator.class);
         batchMapper = mock(BatchMapper.class);
         movementItemRepository = mock(MovementItemRepository.class);
-        batchService = new BatchService(batchRepository, validator, batchMapper, productService, movementItemRepository);
+        batchService = new BatchService(batchRepository, productService, movementItemRepository);
     }
 
     @Test
     void testCreate() {
-        BatchInput batchInput = new BatchInput();
-        batchInput.setBatchNumber("123");
-        batchInput.setManufactureDate(LocalDate.of(2021, 1, 1));
-        batchInput.setExpiryDate(LocalDate.of(2028, 12, 31));
-
-        when(validator.validate(batchInput)).thenReturn(new HashSet<>());
-
         Batch batch = new Batch();
         batch.setBatchNumber("123");
         batch.setManufactureDate(LocalDate.of(2021, 1, 1));
         batch.setExpiryDate(LocalDate.of(2028, 12, 31));
-        when(batchMapper.toEntity(batchInput)).thenReturn(batch);
 
         when(batchRepository.save(any(Batch.class))).thenAnswer(invocation -> {
             Batch batchSave = invocation.getArgument(0);
@@ -71,8 +60,8 @@ class BatchServiceTest {
                 .build();
         when(batchMapper.toDTO(batch)).thenReturn(batchDTOSave);
 
-        BatchDTO batchDTO = batchService.create(batchInput);
-        assert (batchDTO != null);
+        Batch result = batchService.create(batch);
+        assert (result != null);
 
         // Verificando se o método save foi chamado no BatchRepository
         verify(batchRepository, times(1)).save(any(Batch.class));
