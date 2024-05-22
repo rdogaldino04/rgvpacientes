@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.controller;
 
-import com.galdino.rgvpacientes.dto.CompanyDTO;
-import com.galdino.rgvpacientes.dto.CompanyFilter;
+import com.galdino.rgvpacientes.dto.company.CompanyDTO;
+import com.galdino.rgvpacientes.dto.company.CompanyFilter;
 import com.galdino.rgvpacientes.model.Company;
 import com.galdino.rgvpacientes.service.CompanyService;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,14 +1,14 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.dto.PatientFilter;
-import com.galdino.rgvpacientes.dto.PatientInput;
-import com.galdino.rgvpacientes.dto.PatientDTO;
-import com.galdino.rgvpacientes.dto.mapper.PatientMapper;
-import com.galdino.rgvpacientes.dto.specs.PatientSpecs;
-import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.dto.patient.PatientFilter;
+import com.galdino.rgvpacientes.dto.patient.PatientInput;
+import com.galdino.rgvpacientes.dto.patient.PatientDTO;
+import com.galdino.rgvpacientes.mapper.PatientMapper;
+import com.galdino.rgvpacientes.repository.specs.PatientSpecs;
+import com.galdino.rgvpacientes.util.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.repository.PatientRepository;
-import com.galdino.rgvpacientes.service.exception.BusinessException;
+import com.galdino.rgvpacientes.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -63,9 +63,9 @@ public class PatientService {
 
     public PageWrapper<Patient> getAllWithPaginate(PatientFilter patientFilter, Pageable pageable) {
         String databaseUrl = env.getProperty("spring.datasource.url");
-        if (databaseUrl != null && databaseUrl.startsWith("jdbc:sqlite:")) {
-            return new PageWrapper<>(this.patienteRepository.getAllWithPaginate(patientFilter, pageable));
-        }
+//        if (databaseUrl != null && databaseUrl.startsWith("jdbc:sqlite:")) {
+//            return new PageWrapper<>(this.patienteRepository.getAllWithPaginate(patientFilter, pageable));
+//        }
         Page<Patient> patientPage = this.patienteRepository.findAll(PatientSpecs.usingFilter(patientFilter), pageable);
         return new PageWrapper<>(patientPage);
     }

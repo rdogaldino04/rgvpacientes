@@ -1,9 +1,9 @@
 package com.galdino.rgvpacientes.controller;
 
-import com.galdino.rgvpacientes.dto.BatchDTO;
-import com.galdino.rgvpacientes.dto.BatchFilter;
-import com.galdino.rgvpacientes.dto.BatchInput;
-import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.dto.batch.BatchDTO;
+import com.galdino.rgvpacientes.dto.batch.BatchFilter;
+import com.galdino.rgvpacientes.dto.batch.BatchInput;
+import com.galdino.rgvpacientes.util.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.model.Batch;
 import com.galdino.rgvpacientes.service.BatchService;
 import org.springframework.data.domain.Pageable;

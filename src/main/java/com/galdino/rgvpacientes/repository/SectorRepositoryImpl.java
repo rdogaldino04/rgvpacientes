@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.repository;
 
-import com.galdino.rgvpacientes.dto.SectorFilter;
-import com.galdino.rgvpacientes.dto.StockDTO;
+import com.galdino.rgvpacientes.dto.sector.SectorFilter;
+import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.model.Sector;
 import org.springframework.util.StringUtils;
 
@@ -59,7 +59,7 @@ public class SectorRepositoryImpl implements SectorRepositoryQuery {
     @Override
     public List<StockDTO> stocksFindBySector(SectorFilter sectorFilter) {
         StringBuilder sql = new StringBuilder("SELECT ");
-        sql.append("new com.galdino.rgvpacientes.dto.StockDTO(st.id, st.name) ");
+        sql.append("new com.galdino.rgvpacientes.dto.stock.StockDTO(st.id, st.name) ");
         sql.append("FROM Stock st ");
         sql.append("JOIN Sector s ON s.id = st.sector.id ");
         sql.append("WHERE st.sector.id = :sectorId ");

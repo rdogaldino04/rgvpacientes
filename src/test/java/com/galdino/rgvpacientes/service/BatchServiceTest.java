@@ -10,12 +10,13 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import javax.validation.Validator;
 
+import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.galdino.rgvpacientes.dto.BatchDTO;
-import com.galdino.rgvpacientes.dto.BatchInput;
-import com.galdino.rgvpacientes.dto.mapper.BatchMapper;
+import com.galdino.rgvpacientes.dto.batch.BatchDTO;
+import com.galdino.rgvpacientes.dto.batch.BatchInput;
+import com.galdino.rgvpacientes.mapper.BatchMapper;
 import com.galdino.rgvpacientes.model.Batch;
 import com.galdino.rgvpacientes.repository.BatchRepository;
 
@@ -26,6 +27,7 @@ class BatchServiceTest {
     private ProductService productService;
     private Validator validator;
     private BatchMapper batchMapper;
+    private MovementItemRepository movementItemRepository;
 
     @BeforeEach
     public void setUp() {
@@ -33,7 +35,8 @@ class BatchServiceTest {
         productService = mock(ProductService.class);
         validator = mock(Validator.class);
         batchMapper = mock(BatchMapper.class);
-        batchService = new BatchService(batchRepository, validator, batchMapper, productService);
+        movementItemRepository = mock(MovementItemRepository.class);
+        batchService = new BatchService(batchRepository, validator, batchMapper, productService, movementItemRepository);
     }
 
     @Test

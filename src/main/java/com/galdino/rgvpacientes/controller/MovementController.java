@@ -1,8 +1,8 @@
 package com.galdino.rgvpacientes.controller;
 
-import com.galdino.rgvpacientes.dto.MovementDTO;
-import com.galdino.rgvpacientes.dto.MovementIdDTO;
-import com.galdino.rgvpacientes.dto.MovementInput;
+import com.galdino.rgvpacientes.dto.movement.MovementDTO;
+import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
+import com.galdino.rgvpacientes.dto.movement.MovementInput;
 import com.galdino.rgvpacientes.service.movement.MovementService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;

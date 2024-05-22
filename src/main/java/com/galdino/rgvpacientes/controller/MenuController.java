@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.controller;
 
-import com.galdino.rgvpacientes.dto.MenuOut;
-import com.galdino.rgvpacientes.dto.MenuService;
+import com.galdino.rgvpacientes.dto.menu.MenuOut;
+import com.galdino.rgvpacientes.dto.menu.MenuService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

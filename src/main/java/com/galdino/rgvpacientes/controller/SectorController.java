@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.controller;
 
-import com.galdino.rgvpacientes.dto.SectorFilter;
-import com.galdino.rgvpacientes.dto.StockDTO;
+import com.galdino.rgvpacientes.dto.sector.SectorFilter;
+import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.service.SectorService;
 import org.springframework.web.bind.annotation.GetMapping;

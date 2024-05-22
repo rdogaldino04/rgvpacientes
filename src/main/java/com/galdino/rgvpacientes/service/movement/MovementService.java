@@ -1,9 +1,9 @@
 package com.galdino.rgvpacientes.service.movement;
 
-import com.galdino.rgvpacientes.dto.MovementDTO;
-import com.galdino.rgvpacientes.dto.MovementIdDTO;
-import com.galdino.rgvpacientes.dto.MovementInput;
-import com.galdino.rgvpacientes.dto.mapper.MovementMapper;
+import com.galdino.rgvpacientes.dto.movement.MovementDTO;
+import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
+import com.galdino.rgvpacientes.dto.movement.MovementInput;
+import com.galdino.rgvpacientes.mapper.MovementMapper;
 import com.galdino.rgvpacientes.model.Movement;
 import com.galdino.rgvpacientes.repository.MovementRepository;
 import com.galdino.rgvpacientes.service.movement.validation.MovementValidationStrategy;

@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.repository;
 
-import com.galdino.rgvpacientes.dto.CompanyDTO;
-import com.galdino.rgvpacientes.dto.CompanyFilter;
+import com.galdino.rgvpacientes.dto.company.CompanyDTO;
+import com.galdino.rgvpacientes.dto.company.CompanyFilter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
     @Override
     public List<CompanyDTO> getAll(CompanyFilter companyFilter) {
         StringBuilder sql = new StringBuilder("SELECT ");
-        sql.append("new com.galdino.rgvpacientes.dto.CompanyDTO(c.id, c.name, c.cnpj) ");
+        sql.append("new com.galdino.rgvpacientes.dto.company.CompanyDTO(c.id, c.name, c.cnpj) ");
         sql.append("FROM Company c ");
         sql.append("WHERE ( UPPER(c.name) LIKE UPPER(:name) OR c.name IS NULL) ");
         sql.append("ORDER BY c.name ");

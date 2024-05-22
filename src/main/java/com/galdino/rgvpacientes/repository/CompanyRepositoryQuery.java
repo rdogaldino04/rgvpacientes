@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.repository;
 
-import com.galdino.rgvpacientes.dto.CompanyDTO;
-import com.galdino.rgvpacientes.dto.CompanyFilter;
+import com.galdino.rgvpacientes.dto.company.CompanyDTO;
+import com.galdino.rgvpacientes.dto.company.CompanyFilter;
 
 import java.util.List;
 

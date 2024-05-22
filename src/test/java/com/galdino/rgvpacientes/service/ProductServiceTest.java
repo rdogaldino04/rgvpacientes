@@ -7,12 +7,13 @@ import static org.mockito.Mockito.when;
 import javax.persistence.EntityManager;
 
 import com.galdino.rgvpacientes.model.Product;
+import com.galdino.rgvpacientes.repository.BatchRepository;
 import com.galdino.rgvpacientes.service.movement.MovementItemService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.galdino.rgvpacientes.dto.mapper.ProductMapper;
+import com.galdino.rgvpacientes.mapper.ProductMapper;
 import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.dto.product.ProductInput;
 import com.galdino.rgvpacientes.repository.ProductRepository;
@@ -24,6 +25,7 @@ public class ProductServiceTest {
     private MovementItemService movementItemService;
     private ProductRepository productRepository;
     private EntityManager manager;
+    private BatchRepository batchRepository;
 
     @BeforeEach
     public void setUp() {
@@ -31,7 +33,8 @@ public class ProductServiceTest {
         productMapper = mock(ProductMapper.class);
         movementItemService = mock(MovementItemService.class);
         manager = mock(EntityManager.class);
-        productService = new ProductService(productRepository, productMapper, movementItemService);
+        batchRepository = mock(BatchRepository.class);
+        productService = new ProductService(productRepository, productMapper, movementItemService, batchRepository);
         ReflectionTestUtils.setField(productService, "manager", manager);
     }
 

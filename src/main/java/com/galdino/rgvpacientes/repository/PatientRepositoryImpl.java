@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
 
-import com.galdino.rgvpacientes.dto.PatientFilter;
+import com.galdino.rgvpacientes.dto.patient.PatientFilter;
 import com.galdino.rgvpacientes.enums.Status;
 import com.galdino.rgvpacientes.model.Patient;
 

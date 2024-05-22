@@ -1,14 +1,14 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.dto.mapper.ProductMapper;
+import com.galdino.rgvpacientes.mapper.ProductMapper;
 import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.dto.product.ProductFilter;
 import com.galdino.rgvpacientes.dto.product.ProductInput;
-import com.galdino.rgvpacientes.dto.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.util.wrapper.PageWrapper;
 import com.galdino.rgvpacientes.model.Product;
 import com.galdino.rgvpacientes.repository.BatchRepository;
 import com.galdino.rgvpacientes.repository.ProductRepository;
-import com.galdino.rgvpacientes.service.exception.BusinessException;
+import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.service.movement.MovementItemService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -32,8 +32,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
-import com.galdino.rgvpacientes.service.exception.BusinessException;
-import com.galdino.rgvpacientes.service.exception.EntityInUseException;
+import com.galdino.rgvpacientes.exception.BusinessException;
+import com.galdino.rgvpacientes.exception.EntityInUseException;
 
 import lombok.extern.slf4j.Slf4j;
 

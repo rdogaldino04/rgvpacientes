@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.dto.CompanyDTO;
-import com.galdino.rgvpacientes.dto.CompanyFilter;
+import com.galdino.rgvpacientes.dto.company.CompanyDTO;
+import com.galdino.rgvpacientes.dto.company.CompanyFilter;
 import com.galdino.rgvpacientes.model.Company;
 import com.galdino.rgvpacientes.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
