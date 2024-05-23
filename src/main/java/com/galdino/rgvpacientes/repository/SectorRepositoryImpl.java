@@ -20,7 +20,7 @@ public class SectorRepositoryImpl implements SectorRepositoryQuery {
         StringBuilder sql = new StringBuilder("SELECT ");
         sql.append("DISTINCT s ");
         sql.append("FROM Sector s ");
-        sql.append("JOIN FETCH s.stocks ");
+        sql.append("LEFT JOIN FETCH s.stocks ");
         sql.append("LEFT JOIN FETCH s.company ");
         sql.append("WHERE 1 = 1 ");
 

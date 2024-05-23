@@ -1,15 +1,16 @@
 package com.galdino.rgvpacientes.dto.sector;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SectorDTO {
 
     private Long id;
     private String name;
+    private SectorCompanyDTO company;
 
 }
