@@ -1,24 +1,16 @@
 package com.galdino.rgvpacientes.dto.stock;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class StockDTO {
 
     private Long id;
 
     private String name;
-
-    public StockDTO() {
-    }
-
-    public StockDTO(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
 }

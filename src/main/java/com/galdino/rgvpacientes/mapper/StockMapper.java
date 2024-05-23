@@ -1,6 +1,8 @@
 package com.galdino.rgvpacientes.mapper;
 
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
+import com.galdino.rgvpacientes.dto.stock.StockSaveDTO;
+import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.model.Stock;
 import org.springframework.stereotype.Component;
 
@@ -14,4 +16,13 @@ public class StockMapper {
                 .build();
     }
 
+    public Stock toEntity(StockSaveDTO stockSaveDTO) {
+        return Stock.builder()
+                .name(stockSaveDTO.getName())
+                .sector(Sector
+                        .builder()
+                        .id(stockSaveDTO.getSectorId())
+                        .build())
+                .build();
+    }
 }
