@@ -6,7 +6,7 @@
     import com.galdino.rgvpacientes.repository.BatchRepository;
     import com.galdino.rgvpacientes.repository.MovementItemRepository;
     import com.galdino.rgvpacientes.repository.specs.BatchSpecs;
-    import com.galdino.rgvpacientes.util.wrapper.PageWrapper;
+    import com.galdino.rgvpacientes.util.page.PageWrapper;
     import org.springframework.data.domain.Page;
     import org.springframework.data.domain.Pageable;
     import org.springframework.stereotype.Service;

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.dto.product.ProductFilter;
 import com.galdino.rgvpacientes.dto.product.ProductInput;
-import com.galdino.rgvpacientes.util.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
 import com.galdino.rgvpacientes.service.ProductService;
 
 @RestController

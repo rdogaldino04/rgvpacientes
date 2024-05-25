@@ -5,7 +5,7 @@ import com.galdino.rgvpacientes.dto.patient.PatientInput;
 import com.galdino.rgvpacientes.dto.patient.PatientDTO;
 import com.galdino.rgvpacientes.mapper.PatientMapper;
 import com.galdino.rgvpacientes.repository.specs.PatientSpecs;
-import com.galdino.rgvpacientes.util.wrapper.PageWrapper;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.repository.PatientRepository;
 import com.galdino.rgvpacientes.exception.BusinessException;

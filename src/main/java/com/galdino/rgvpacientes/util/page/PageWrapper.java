@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.util.wrapper;
+package com.galdino.rgvpacientes.util.page;
 
 import java.util.List;
 
