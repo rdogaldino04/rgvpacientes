@@ -1,11 +1,14 @@
 package com.galdino.rgvpacientes.controller;
 
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
+import com.galdino.rgvpacientes.dto.stock.StockFilter;
 import com.galdino.rgvpacientes.dto.stock.StockSaveDTO;
 import com.galdino.rgvpacientes.dto.stock.StockWithSectorDTO;
 import com.galdino.rgvpacientes.mapper.StockMapper;
 import com.galdino.rgvpacientes.model.Stock;
 import com.galdino.rgvpacientes.service.StockService;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,4 +44,8 @@ public class StockController {
         return this.stockMapper.toDTOWithSector(this.stockService.findByIdWithSector(id));
     }
 
+    @GetMapping
+    public PageWrapper<Stock> getStockByFilter(StockFilter stockFilter, Pageable pageable) {
+        return this.stockService.getStockByFilter(stockFilter, pageable);
+    }
 }

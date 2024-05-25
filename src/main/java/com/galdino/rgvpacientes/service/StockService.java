@@ -1,10 +1,14 @@
 package com.galdino.rgvpacientes.service;
 
+import com.galdino.rgvpacientes.dto.stock.StockFilter;
 import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.model.Stock;
 import com.galdino.rgvpacientes.repository.StockRepository;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +51,11 @@ public class StockService {
     public Stock findByIdWithSector(Long stockId) {
         return this.stockRepository.findByIdWithSector(stockId)
                 .orElseThrow(() -> new BusinessException(String.format("There is no stock with code %d", stockId)));
+    }
+
+    public PageWrapper<Stock> getStockByFilter(StockFilter stockFilter, Pageable pageable) {
+        Page<Stock> stockPage = this.stockRepository.getStockByFilter(stockFilter, pageable);
+        return new PageWrapper<>(stockPage);
     }
 
 }
