@@ -9,4 +9,6 @@ public class CompanyFilter {
 
     private String name;
 
+    private String cnpj;
+
 }

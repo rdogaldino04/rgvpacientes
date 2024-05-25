@@ -6,11 +6,13 @@ import com.galdino.rgvpacientes.dto.company.CompanySaveDTO;
 import com.galdino.rgvpacientes.mapper.CompanyMapper;
 import com.galdino.rgvpacientes.model.Company;
 import com.galdino.rgvpacientes.service.CompanyService;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/companies")
@@ -25,8 +27,8 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<CompanyDTO> findAll(CompanyFilter companyFilter) {
-        return this.companyService.getAll(companyFilter);
+    public PageWrapper<CompanyDTO> findAll(CompanyFilter companyFilter, @PageableDefault(size = 5) Pageable pageable) {
+        return this.companyService.getAll(companyFilter, pageable);
     }
 
     @GetMapping("cnpj/{cnpj}")

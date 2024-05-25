@@ -1,18 +1,18 @@
 package com.galdino.rgvpacientes.service;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.galdino.rgvpacientes.dto.company.CompanyDTO;
 import com.galdino.rgvpacientes.dto.company.CompanyFilter;
 import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.model.Company;
 import com.galdino.rgvpacientes.repository.CompanyRepository;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class CompanyService {
@@ -23,11 +23,9 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public List<CompanyDTO> getAll(CompanyFilter companyFilter) {
-        if (companyFilter != null && companyFilter.getName() == null) {
-            companyFilter.setName("");
-        }
-        return this.companyRepository.getAll(companyFilter);
+    public PageWrapper<CompanyDTO> getAll(CompanyFilter companyFilter, Pageable pageable) {
+        Page<CompanyDTO> page = this.companyRepository.getAll(companyFilter, pageable);
+        return new PageWrapper<>(page);
     }
 
     public Company findByCnpj(String cnpj) {
