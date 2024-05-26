@@ -27,7 +27,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    public PageWrapper<CompanyDTO> findAll(CompanyFilter companyFilter, @PageableDefault(size = 5) Pageable pageable) {
+    public PageWrapper<CompanyDTO> getAll(CompanyFilter companyFilter, @PageableDefault(size = 5) Pageable pageable) {
         return this.companyService.getAll(companyFilter, pageable);
     }
 
@@ -48,6 +48,17 @@ public class CompanyController {
         Company company = this.companyMapper.toEntity(companySaveDTO);
         company.setId(id);
         return this.companyMapper.toDTO(this.companyService.update(company));
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        this.companyService.delete(id);
+    }
+
+    @GetMapping("{id}")
+    public CompanyDTO findById(@PathVariable Long id) {
+        return this.companyMapper.toDTO(this.companyService.findById(id));
     }
 
 }

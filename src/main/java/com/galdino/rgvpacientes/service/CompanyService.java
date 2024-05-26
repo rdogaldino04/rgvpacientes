@@ -68,4 +68,13 @@ public class CompanyService {
         return this.companyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("There is no company with id %s", id)));
     }
+
+    @Transactional
+    public void delete(Long id) {
+        if (this.companyRepository.existsBySector(id)) {
+            throw new BusinessException("Company has sectors associated");
+        }
+        this.companyRepository.deleteById(id);
+    }
+
 }

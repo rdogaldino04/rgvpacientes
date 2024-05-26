@@ -26,11 +26,15 @@ public class CompanyRepositoryImpl implements CompanyRepositoryQuery {
                 "new com.galdino.rgvpacientes.dto.company.CompanyDTO(c.id, c.name, c.cnpj) ";
         String sqlFrom = "FROM Company c WHERE 1 = 1 ";
         String sqlWhere = "";
+        if (companyFilter.getId() != null) {
+            sqlWhere = sqlWhere + "AND c.id = :id ";
+            parameters.put("id", companyFilter.getId());
+        }
         if (StringUtils.hasText(companyFilter.getName())) {
             sqlWhere = sqlWhere + "AND UPPER(c.name) LIKE UPPER(:name) ";
             parameters.put("name", companyFilter.getName().concat("%"));
         }
-        if (companyFilter.getCnpj() != null) {
+        if (StringUtils.hasText(companyFilter.getCnpj())) {
             sqlWhere = sqlWhere + "AND c.cnpj = :cnpj ";
             parameters.put("cnpj", companyFilter.getCnpj());
         }

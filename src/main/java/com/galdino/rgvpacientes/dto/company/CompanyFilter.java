@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class CompanyFilter {
 
+    private Long id;
+
     private String name;
 
     private String cnpj;
