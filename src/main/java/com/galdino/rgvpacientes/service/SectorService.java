@@ -1,17 +1,19 @@
 package com.galdino.rgvpacientes.service;
 
-import java.util.List;
-
-import javax.persistence.EntityNotFoundException;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.galdino.rgvpacientes.dto.sector.SectorDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorFilter;
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.repository.SectorRepository;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 public class SectorService {
@@ -24,8 +26,9 @@ public class SectorService {
         this.companyService = companyService;
     }
 
-    public List<Sector> getAll(SectorFilter sectorFilter) {
-        return this.sectorRepository.getAll(sectorFilter);
+    public PageWrapper<SectorDTO> getAll(SectorFilter sectorFilter, Pageable pageable) {
+        Page<SectorDTO> page = this.sectorRepository.getAll(sectorFilter, pageable);
+        return new PageWrapper<>(page);
     }
 
     public List<StockDTO> stocksFindBySector(SectorFilter sectorFilter) {

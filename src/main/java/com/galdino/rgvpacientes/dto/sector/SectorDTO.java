@@ -16,4 +16,9 @@ public class SectorDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private SectorCompanyDTO company;
 
+    public SectorDTO(Long id, String name, Long companyId, String companyName) {
+        this.id = id;
+        this.name = name;
+        this.company = new SectorCompanyDTO(companyId, companyName);
+    }
 }

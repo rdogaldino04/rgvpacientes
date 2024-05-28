@@ -1,12 +1,11 @@
 package com.galdino.rgvpacientes.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.galdino.rgvpacientes.dto.sector.SectorCompanyDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorSaveDTO;
 import com.galdino.rgvpacientes.model.Company;
 import com.galdino.rgvpacientes.model.Sector;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SectorMapper {
@@ -17,6 +16,7 @@ public class SectorMapper {
         sectorDTO.setName(sector.getName());
         SectorCompanyDTO companyDTO = new SectorCompanyDTO();
         companyDTO.setId(sector.getCompany().getId());
+        companyDTO.setName(sector.getCompany().getName());
         sectorDTO.setCompany(companyDTO);
         return sectorDTO;
     }

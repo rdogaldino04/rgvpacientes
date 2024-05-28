@@ -7,6 +7,9 @@ import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.mapper.SectorMapper;
 import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.service.SectorService;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +29,13 @@ public class SectorController {
     }
 
     @GetMapping("{id}")
-    public Sector findById(@PathVariable Long id) {
-        return this.sectorService.findById(id);
+    public SectorDTO findById(@PathVariable Long id) {
+        return this.sectorMapper.toDTO(this.sectorService.findById(id));
     }
 
     @GetMapping
-    public List<Sector> getAll(SectorFilter sectorFilter) {
-        return this.sectorService.getAll(sectorFilter);
+    public PageWrapper<SectorDTO> getAll(SectorFilter sectorFilter, @PageableDefault(size = 5) Pageable pageable) {
+        return this.sectorService.getAll(sectorFilter, pageable);
     }
 
     @GetMapping("{sectorId}/stocks")

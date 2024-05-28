@@ -22,10 +22,8 @@ public class Sector {
 
     private String name;
 
-    @OneToMany(mappedBy = "sector", fetch = FetchType.LAZY)
-    private List<Stock> stocks;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
 }

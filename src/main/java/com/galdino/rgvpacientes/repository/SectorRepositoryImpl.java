@@ -1,14 +1,19 @@
 package com.galdino.rgvpacientes.repository;
 
+import com.galdino.rgvpacientes.dto.sector.SectorDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorFilter;
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
-import com.galdino.rgvpacientes.model.Sector;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SectorRepositoryImpl implements SectorRepositoryQuery {
 
@@ -16,44 +21,43 @@ public class SectorRepositoryImpl implements SectorRepositoryQuery {
     private EntityManager manager;
 
     @Override
-    public List<Sector> getAll(SectorFilter sectorFilter) {
-        StringBuilder sql = new StringBuilder("SELECT ");
-        sql.append("DISTINCT s ");
-        sql.append("FROM Sector s ");
-        sql.append("LEFT JOIN FETCH s.stocks ");
-        sql.append("LEFT JOIN FETCH s.company ");
-        sql.append("WHERE 1 = 1 ");
+    public Page<SectorDTO> getAll(SectorFilter sectorFilter, Pageable pageable) {
+        Map<String, Object> parameters = new HashMap<>();
+        String sqlFields = "SELECT " +
+                "DISTINCT new com.galdino.rgvpacientes.dto.sector.SectorDTO(" +
+                "s.id, s.name, s.company.id, s.company.name) ";
+        String sqlFrom = "FROM Sector s " +
+                "JOIN s.company ";
+        String sqlWhere = "WHERE 1 = 1 ";
 
         if (sectorFilter.getId() != null) {
-            sql.append("AND s.id = :id ");
+            sqlWhere = sqlWhere + "AND s.id = :id ";
+            parameters.put("id", sectorFilter.getId());
         }
 
         if (StringUtils.hasText(sectorFilter.getName())) {
-            sql.append("AND UPPER(s.name) LIKE UPPER(:name) ");
+            sqlWhere = sqlWhere + "AND UPPER(s.name) LIKE UPPER(:name) ";
+            parameters.put("name", sectorFilter.getName().concat("%"));
         }
 
         if (sectorFilter.getCompanyId() != null) {
-            sql.append("AND s.company.id = :companyId ");
+            sqlWhere = sqlWhere + "AND s.company.id = :companyId ";
+            parameters.put("companyId", sectorFilter.getCompanyId());
         }
 
-        sql.append("ORDER BY s.name ");
+        String sqlOrder = "ORDER BY s.name ";
+        String sql = sqlFields + sqlFrom + sqlWhere + sqlOrder;
 
-        TypedQuery<Sector> createQuery = manager.createQuery(sql.toString(), Sector.class)
+        TypedQuery<SectorDTO> createQuery = manager.createQuery(sql, SectorDTO.class)
                 .setMaxResults(180);
+        parameters.keySet().forEach(key -> createQuery.setParameter(key, parameters.get(key)));
 
-        if (sectorFilter.getId() != null) {
-            createQuery.setParameter("id", sectorFilter.getId());
-        }
+        createQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        createQuery.setMaxResults(pageable.getPageSize());
 
-        if (StringUtils.hasText(sectorFilter.getName())) {
-            createQuery.setParameter("name", sectorFilter.getName().concat("%"));
-        }
-
-        if (sectorFilter.getCompanyId() != null) {
-            createQuery.setParameter("companyId", sectorFilter.getCompanyId());
-        }
-
-        return createQuery.getResultList();
+        List<SectorDTO> results = createQuery.getResultList();
+        long totalElements = getTotalElements(sqlWhere, parameters);
+        return new PageImpl<>(results, pageable, totalElements);
     }
 
     @Override
@@ -87,6 +91,14 @@ public class SectorRepositoryImpl implements SectorRepositoryQuery {
         }
 
         return createQuery.getResultList();
+    }
+
+    private long getTotalElements(String sqlWhere, Map<String, Object> parameters) {
+        String sqlCount = "SELECT COUNT(s) FROM Sector s JOIN s.company ";
+        sqlCount = sqlCount + sqlWhere;
+        TypedQuery<Long> createQueryCount = manager.createQuery(sqlCount, Long.class);
+        parameters.keySet().forEach(key -> createQueryCount.setParameter(key, parameters.get(key)));
+        return createQueryCount.getSingleResult();
     }
 
 }
