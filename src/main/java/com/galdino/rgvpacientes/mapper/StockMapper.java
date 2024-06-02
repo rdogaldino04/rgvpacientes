@@ -23,7 +23,7 @@ public class StockMapper {
                 .name(stockSaveDTO.getName())
                 .sector(Sector
                         .builder()
-                        .id(stockSaveDTO.getSectorId())
+                        .id(stockSaveDTO.getSector().getId())
                         .build())
                 .build();
     }

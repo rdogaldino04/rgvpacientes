@@ -32,4 +32,5 @@
     <include file="db/changelog/changes/240518_0858_drop_expiration_date.xml"/>
     <include file="db/changelog/changes/240519_1737_insert_menu_batchies.xml"/>
     <include file="db/changelog/changes/240525_1512_insert_menu_companies.xml"/>
+    <include file="db/changelog/changes/240601_0826_insert_menu_stocks.xml"/>
 </databaseChangeLog>

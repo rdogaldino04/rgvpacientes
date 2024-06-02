@@ -4,15 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class StockSaveDTO {
+public class StockSectorUpdateDTO {
 
     @NotBlank
-    private String name;
+    private Long id;
 
-    @NotNull
-    private StockSectorUpdateDTO sector;
 }

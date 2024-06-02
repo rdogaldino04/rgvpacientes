@@ -48,4 +48,10 @@ public class StockController {
     public PageWrapper<Stock> getStockByFilter(StockFilter stockFilter, Pageable pageable) {
         return this.stockService.getStockByFilter(stockFilter, pageable);
     }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        this.stockService.delete(id);
+    }
 }

@@ -58,4 +58,9 @@ public class StockService {
         return new PageWrapper<>(stockPage);
     }
 
+    public void delete(Long stockId) {
+        Stock stock = this.findById(stockId);
+        this.stockRepository.delete(stock);
+    }
+
 }

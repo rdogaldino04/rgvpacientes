@@ -1,6 +1,5 @@
 package com.galdino.rgvpacientes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +21,6 @@ public class Stock {
 
     private String name;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sector_id", nullable = false)
     private Sector sector;
