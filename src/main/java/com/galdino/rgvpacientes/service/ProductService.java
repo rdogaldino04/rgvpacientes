@@ -10,6 +10,9 @@ import com.galdino.rgvpacientes.repository.BatchRepository;
 import com.galdino.rgvpacientes.repository.ProductRepository;
 import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.service.movement.MovementItemService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -48,6 +51,7 @@ public class ProductService {
         return productRepository.existsById(productId);
     }
 
+    @Cacheable("product")
     public ProductDTO findById(Long id) {
         Product product = this.productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(THERE_IS_NO_PRODUCT_WITH_CODE, id)));
@@ -73,6 +77,7 @@ public class ProductService {
         return new PageWrapper<>(page);
     }
 
+    @CachePut(value = "product", key = "#product.id")
     @Transactional
     public ProductDTO update(Long id, ProductInput productInput) {
         return this.productRepository.findById(id)
@@ -90,6 +95,7 @@ public class ProductService {
                 }).orElseThrow(() -> new EntityNotFoundException(String.format(THERE_IS_NO_PRODUCT_WITH_CODE, id)));
     }
 
+    @CacheEvict(value = "product", key = "#id")
     @Transactional
     public void delete(Long id) {
         Product productExists = productRepository.findById(id)
