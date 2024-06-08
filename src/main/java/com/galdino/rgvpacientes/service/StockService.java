@@ -23,7 +23,6 @@ public class StockService {
         this.sectorService = sectorService;
     }
 
-
     public boolean existsById(Long stockId) {
         return this.stockRepository.existsById(stockId);
     }
