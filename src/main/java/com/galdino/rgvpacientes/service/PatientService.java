@@ -1,24 +1,21 @@
 package com.galdino.rgvpacientes.service;
 
+import com.galdino.rgvpacientes.dto.patient.PatientDTO;
 import com.galdino.rgvpacientes.dto.patient.PatientFilter;
 import com.galdino.rgvpacientes.dto.patient.PatientInput;
-import com.galdino.rgvpacientes.dto.patient.PatientDTO;
+import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.mapper.PatientMapper;
-import com.galdino.rgvpacientes.repository.specs.PatientSpecs;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.repository.PatientRepository;
-import com.galdino.rgvpacientes.exception.BusinessException;
+import com.galdino.rgvpacientes.repository.specs.PatientSpecs;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Optional;
@@ -31,12 +28,6 @@ public class PatientService {
 
     @Autowired
     private PatientMapper patientMapper;
-
-    @Autowired
-    private Environment env;
-
-    @PersistenceContext
-    private EntityManager manager;
 
     public PatientDTO findByCpf(String cpf) {
         return this.patientMapper.toDTO(this.patienteRepository.findByCpf(cpf)
@@ -62,10 +53,6 @@ public class PatientService {
     }
 
     public PageWrapper<Patient> getAllWithPaginate(PatientFilter patientFilter, Pageable pageable) {
-        String databaseUrl = env.getProperty("spring.datasource.url");
-//        if (databaseUrl != null && databaseUrl.startsWith("jdbc:sqlite:")) {
-//            return new PageWrapper<>(this.patienteRepository.getAllWithPaginate(patientFilter, pageable));
-//        }
         Page<Patient> patientPage = this.patienteRepository.findAll(PatientSpecs.usingFilter(patientFilter), pageable);
         return new PageWrapper<>(patientPage);
     }
@@ -74,7 +61,7 @@ public class PatientService {
     public PatientDTO update(@Valid PatientInput patientInput, @Valid Long id) {
         patientInput.setId(id);
         Patient patientCurrent = findById(id);
-        manager.detach(patientCurrent);
+        patienteRepository.detach(patientCurrent);
         patientMapper.copyToDomainObject(patientInput, patientCurrent);
         Optional<Patient> patientExisting = patienteRepository.findByCpf(patientInput.getCpf());
         boolean exist = patientExisting.isPresent() && !patientExisting.get().equals(patientCurrent);
