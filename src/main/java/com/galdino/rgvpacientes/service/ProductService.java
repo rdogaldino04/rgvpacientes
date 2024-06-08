@@ -1,15 +1,15 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.mapper.ProductMapper;
 import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.dto.product.ProductFilter;
-import com.galdino.rgvpacientes.dto.product.ProductInput;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.model.Product;
 import com.galdino.rgvpacientes.repository.BatchRepository;
 import com.galdino.rgvpacientes.repository.ProductRepository;
-import com.galdino.rgvpacientes.exception.BusinessException;
-import com.galdino.rgvpacientes.service.movement.MovementItemService;
+import com.galdino.rgvpacientes.util.page.PageWrapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,8 +26,6 @@ public class ProductService {
 
     public static final String THERE_IS_NO_PRODUCT_WITH_CODE = "There is no product with code %d";
     private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
-    private final MovementItemService movementItemService;
     private final BatchRepository batchRepository;
 
     @PersistenceContext
@@ -35,12 +33,8 @@ public class ProductService {
 
     public ProductService(
             ProductRepository productRepository,
-            ProductMapper productMapper,
-            MovementItemService movementItemService,
             BatchRepository batchRepository) {
         this.productRepository = productRepository;
-        this.productMapper = productMapper;
-        this.movementItemService = movementItemService;
         this.batchRepository = batchRepository;
     }
 
@@ -48,24 +42,19 @@ public class ProductService {
         return productRepository.existsById(productId);
     }
 
-    public ProductDTO findById(Long id) {
-        Product product = this.productRepository.findById(id)
+    @Cacheable("product")
+    public Product findById(Long id) {
+        return this.productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(THERE_IS_NO_PRODUCT_WITH_CODE, id)));
-        return ProductDTO.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .createdAt(product.getCreatedAt())
-                .build();
     }
 
     @Transactional
-    public ProductDTO create(ProductInput productInput) {
-        if (productRepository.existsByName(productInput.getName())) {
+    public Product create(Product product) {
+        if (productRepository.existsByName(product.getName())) {
             throw new BusinessException(
-                    String.format("Product with the name %s already exists", productInput.getName()));
+                    String.format("Product with the name %s already exists", product.getName()));
         }
-        Product product = productRepository.save(this.productMapper.toEntity(productInput));
-        return this.productMapper.toDTO(product);
+        return productRepository.save(product);
     }
 
     public PageWrapper<ProductDTO> getProductByFilter(@Valid ProductFilter productFilter, Pageable pageable) {
@@ -73,23 +62,24 @@ public class ProductService {
         return new PageWrapper<>(page);
     }
 
+    @CachePut(value = "product", key = "#product.id")
     @Transactional
-    public ProductDTO update(Long id, ProductInput productInput) {
-        return this.productRepository.findById(id)
+    public Product update(Product product) {
+        return this.productRepository.findById(product.getId())
                 .map(productFound -> {
-                    productFound.setName(productInput.getName());
-
+                    productFound.setName(product.getName());
                     manager.detach(productFound);
-                    Optional<Product> existingProduct = productRepository.findByName(productInput.getName());
+                    Optional<Product> existingProduct = productRepository.findByName(product.getName());
                     if (existingProduct.isPresent() && !existingProduct.get().equals(productFound)) {
                         throw new BusinessException(
-                                String.format("Product with the name %s already exists", productInput.getName()));
+                                String.format("Product with the name %s already exists", product.getName()));
                     }
 
-                    return productMapper.toDTO(productRepository.save(productFound));
-                }).orElseThrow(() -> new EntityNotFoundException(String.format(THERE_IS_NO_PRODUCT_WITH_CODE, id)));
+                    return productRepository.save(productFound);
+                }).orElseThrow(() -> new EntityNotFoundException(String.format(THERE_IS_NO_PRODUCT_WITH_CODE, product.getId())));
     }
 
+    @CacheEvict(value = "product", key = "#id")
     @Transactional
     public void delete(Long id) {
         Product productExists = productRepository.findById(id)
