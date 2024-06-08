@@ -57,4 +57,9 @@ public class SectorService {
         BeanUtils.copyProperties(sector, sectorDB, "id");
         return sector;
     }
+
+    public void delete(Long id) {
+        this.findById(id);
+        this.sectorRepository.deleteById(id);
+    }
 }

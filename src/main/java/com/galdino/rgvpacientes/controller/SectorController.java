@@ -57,4 +57,10 @@ public class SectorController {
         return this.sectorMapper.toDTO(this.sectorService.update(sector));
     }
 
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        this.sectorService.delete(id);
+    }
+
 }
