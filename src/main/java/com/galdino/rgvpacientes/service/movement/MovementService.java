@@ -4,6 +4,7 @@ import com.galdino.rgvpacientes.dto.movement.MovementDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementFilter;
 import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementInput;
+import com.galdino.rgvpacientes.dto.movementitem.MovementItemDTO;
 import com.galdino.rgvpacientes.mapper.MovementMapper;
 import com.galdino.rgvpacientes.model.Movement;
 import com.galdino.rgvpacientes.repository.MovementRepository;
@@ -18,19 +19,22 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MovementService {
 
     private final MovementRepository movementRepository;
+    private final MovementItemService movementItemService;
     private final MovementMapper movementMapper;
     private final List<MovementValidationStrategy> movementValidationStrategies;
 
     public MovementService(
-            MovementRepository movementRepository,
+            MovementRepository movementRepository, MovementItemService movementItemService,
             MovementMapper movementMapper,
             List<MovementValidationStrategy> movementValidationStrategies) {
         this.movementRepository = movementRepository;
+        this.movementItemService = movementItemService;
         this.movementMapper = movementMapper;
         this.movementValidationStrategies = movementValidationStrategies;
     }
@@ -57,12 +61,22 @@ public class MovementService {
 
     @Transactional
     public MovementIdDTO update(Long id, @Valid @NotNull MovementInput movementInput) {
-       this.movementRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("There is no movement with id %d", id)));
-        Movement m = movementMapper.updateEntity(movementInput);
-        this.movementValidationStrategies.forEach(validation -> validation.execute(m));
-        Movement movementSaved = this.movementRepository.save(m);
+        if (!this.movementRepository.existsById(id)) {
+            throw new EntityNotFoundException(String.format("There is no movement with id %d", id));
+        }
+        Movement movement = movementMapper.updateEntity(movementInput);
+        this.movementValidationStrategies.forEach(validation -> validation.execute(movement));
+        Movement movementSaved = this.movementRepository.save(movement);
         return new MovementIdDTO(movementSaved.getId());
     }
 
+    public List<MovementItemDTO> findByMovementId(Long id) {
+        return this.movementItemService.findByMovementId(id).stream()
+                .map(movementItem -> new MovementItemDTO(
+                        movementItem.getId(),
+                        movementItem.getBatch(),
+                        movementItem.getQuantity(),
+                        movementItem.getMovementItemDate()))
+                .collect(Collectors.toList());
+    }
 }

@@ -4,6 +4,7 @@ import com.galdino.rgvpacientes.dto.movement.MovementDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementFilter;
 import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementInput;
+import com.galdino.rgvpacientes.dto.movementitem.MovementItemDTO;
 import com.galdino.rgvpacientes.service.movement.MovementService;
 import com.galdino.rgvpacientes.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/movements")
@@ -46,6 +48,11 @@ public class MovementController {
     public MovementIdDTO update(@Positive @PathVariable Long id, @Validated @RequestBody MovementInput movementInput) {
         movementInput.setId(id);
         return this.movementService.update(id, movementInput);
+    }
+
+    @GetMapping("/{id}/items")
+    public List<MovementItemDTO> getItems(@Positive @PathVariable Long id) {
+        return this.movementService.findByMovementId(id);
     }
 
 }

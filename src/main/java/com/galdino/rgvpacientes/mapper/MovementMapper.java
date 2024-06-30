@@ -81,6 +81,7 @@ public class MovementMapper {
                 .map(itemMapper::toDTO)
                 .collect(Collectors.toList());
         movementDTO.setItems(itemsDTO);
+        movementDTO.setMovementDate(movement.getMovementDate());
         return movementDTO;
     }
 

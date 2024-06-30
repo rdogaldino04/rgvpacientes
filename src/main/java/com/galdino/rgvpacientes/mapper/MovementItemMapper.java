@@ -21,6 +21,7 @@ public class MovementItemMapper {
         itemDTO.setId(item.getId());
         itemDTO.setQuantity(item.getQuantity());
         itemDTO.setBatch(batchMapper.toBatchMovementItemDTO(item.getBatch()));
+        itemDTO.setMovementItemDate(item.getMovementItemDate());
         return itemDTO;
     }
 

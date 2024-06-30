@@ -15,8 +15,11 @@ public interface MovementRepository extends JpaRepository<Movement, Long>, Movem
             "JOIN FETCH m.stock st " +
             "JOIN FETCH m.items i " +
             "JOIN FETCH i.batch b " +
+            "JOIN FETCH b.product p " +
             "WHERE m.id = :id "
     )
     Optional<Movement> findById(Long id);
+
+    boolean existsById(Long id);
 
 }
