@@ -38,4 +38,10 @@ public class StockMapper {
                         .build())
                 .build();
     }
+
+    public Stock toStock(Long stockId) {
+        return Stock.builder()
+                .id(stockId)
+                .build();
+    }
 }

@@ -84,4 +84,28 @@ public class MovementMapper {
         return movementDTO;
     }
 
+    public Movement updateEntity(MovementInput movementInput) {
+        Movement movement = new Movement();
+        movement.setId(movementInput.getId());
+        movement.setPatient(patientMapper.toPatient(movementInput.getPatientId()));
+        movement.setCompany(companyMapper.toCompany(movementInput.getCompanyId()));
+        movement.setSector(sectorMapper.toSector(movementInput.getSectorId()));
+        movement.setStock(stockMapper.toStock(movementInput.getStockId()));
+        movement.setMovementDate(movementInput.getMovementDate());
+        movement.removeItems();
+        movementInput.getItems().forEach(itemInput -> {
+            MovementItem item = new MovementItem();
+            item.setId(itemInput.getId());
+            item.setQuantity(itemInput.getQuantity());
+
+            Batch batch = new Batch();
+            batch.setId(itemInput.getBatchId());
+            item.setBatch(batch);
+
+            item.setMovementItemDate(itemInput.getMovementItemDate());
+
+            movement.addItem(item);
+        });
+        return movement;
+    }
 }

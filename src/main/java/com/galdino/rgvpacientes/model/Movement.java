@@ -64,4 +64,9 @@ public class Movement {
         return Collections.unmodifiableList(items);
     }
 
+    public void removeItems() {
+        items.forEach(item -> item.setMovement(null));
+        items.clear();
+    }
+
 }

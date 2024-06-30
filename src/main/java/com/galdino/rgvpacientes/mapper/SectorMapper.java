@@ -27,4 +27,10 @@ public class SectorMapper {
         sector.setCompany(new Company(sectorSaveDTO.getCompany().getId()));
         return sector;
     }
+
+    public Sector toSector(Long sectorId) {
+        Sector sector = new Sector();
+        sector.setId(sectorId);
+        return sector;
+    }
 }

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigInteger;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -21,5 +22,8 @@ public class MovementItemInput {
     @NotNull
     @Positive
     private BigInteger quantity;
+
+    @NotNull
+    private OffsetDateTime movementItemDate;
 
 }

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Getter
@@ -32,5 +33,8 @@ public class MovementInput {
     @NotEmpty
     @Size(min = 1, max = 100)
     private List<MovementItemInput> items;
+
+    @NotNull
+    private OffsetDateTime movementDate;
 
 }

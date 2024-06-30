@@ -42,4 +42,10 @@ public class MovementController {
         return this.movementService.getByFilter(movementFilter, pageable);
     }
 
+    @PutMapping("{id}")
+    public MovementIdDTO update(@Positive @PathVariable Long id, @Validated @RequestBody MovementInput movementInput) {
+        movementInput.setId(id);
+        return this.movementService.update(id, movementInput);
+    }
+
 }

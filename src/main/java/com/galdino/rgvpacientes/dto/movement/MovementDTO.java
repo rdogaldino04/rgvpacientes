@@ -9,6 +9,7 @@ import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +34,13 @@ public class MovementDTO {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<MovementItemDTO> items = new ArrayList<>();
 
+    private OffsetDateTime movementDate;
+
     public MovementDTO() {
     }
 
     public MovementDTO(Long id, Long patientId, String patientName, Long companyId, String companyName, Long sectorId,
-                       String sectorName, Long stockId, String stockName) {
+                       String sectorName, Long stockId, String stockName, OffsetDateTime movementDate) {
         this.id = id;
         this.patient = PatientMovementDTO.builder()
                 .id(patientId)
@@ -55,6 +58,7 @@ public class MovementDTO {
                 .id(stockId)
                 .name(stockName)
                 .build();
+        this.movementDate = movementDate;
     }
 
 }

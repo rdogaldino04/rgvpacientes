@@ -24,7 +24,7 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
 
         String sqlFields = "SELECT DISTINCT " + "new com.galdino.rgvpacientes.dto.movement.MovementDTO( " +
                 "  m.id, m.patient.id, m.patient.name, m.company.id, m.company.name " +
-                "  , m.sector.id, m.sector.name, m.stock.id, m.stock.name " +
+                "  , m.sector.id, m.sector.name, m.stock.id, m.stock.name, m.movementDate " +
                 " ) ";
 
         String sqlFrom = "FROM Movement m " +

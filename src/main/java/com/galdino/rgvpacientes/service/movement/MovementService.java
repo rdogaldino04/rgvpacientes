@@ -54,4 +54,15 @@ public class MovementService {
         Page<MovementDTO> movements = this.movementRepository.getByFilter(movementFilter, pageable);
         return new PageWrapper<>(movements);
     }
+
+    @Transactional
+    public MovementIdDTO update(Long id, @Valid @NotNull MovementInput movementInput) {
+       this.movementRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("There is no movement with id %d", id)));
+        Movement m = movementMapper.updateEntity(movementInput);
+        this.movementValidationStrategies.forEach(validation -> validation.execute(m));
+        Movement movementSaved = this.movementRepository.save(m);
+        return new MovementIdDTO(movementSaved.getId());
+    }
+
 }

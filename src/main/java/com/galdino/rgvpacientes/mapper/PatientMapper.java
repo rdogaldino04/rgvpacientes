@@ -69,4 +69,9 @@ public class PatientMapper {
         }
     }
 
+    public Patient toPatient(Long patientId) {
+        Patient patient = new Patient();
+        patient.setId(patientId);
+        return patient;
+    }
 }

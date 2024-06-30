@@ -30,4 +30,9 @@ public class CompanyMapper {
         return company;
     }
 
+    public Company toCompany(Long companyId) {
+        Company company = new Company();
+        company.setId(companyId);
+        return company;
+    }
 }
