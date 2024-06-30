@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.dto.company;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 @Builder
@@ -13,6 +14,7 @@ public class CompanyDTO {
 
     private String name;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cnpj;
 
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface MovementRepository extends JpaRepository<Movement, Long> {
+public interface MovementRepository extends JpaRepository<Movement, Long>, MovementRepositoryQuery {
 
     @Query("SELECT DISTINCT m FROM Movement m " +
             "JOIN FETCH m.patient p " +
