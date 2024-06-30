@@ -82,7 +82,10 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
     private long getTotalElements(String sqlWhere, Map<String, Object> parameters) {
         String sqlCount = "SELECT COUNT(m) " +
                 "FROM Movement m " +
-                "JOIN m.patient p ";
+                "JOIN m.patient p " +
+                "JOIN m.company c " +
+                "JOIN m.sector s " +
+                "JOIN m.stock st ";
         sqlCount = sqlCount + sqlWhere;
         TypedQuery<Long> createQuery = manager.createQuery(sqlCount, Long.class);
         parameters.keySet().forEach(key -> createQuery.setParameter(key, parameters.get(key)));
