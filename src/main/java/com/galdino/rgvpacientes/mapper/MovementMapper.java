@@ -39,6 +39,7 @@ public class MovementMapper {
 
             movement.addItem(item);
         });
+        movement.setMovementType(movementInput.getMovementType());
         return movement;
     }
 
@@ -82,6 +83,7 @@ public class MovementMapper {
                 .collect(Collectors.toList());
         movementDTO.setItems(itemsDTO);
         movementDTO.setMovementDate(movement.getMovementDate());
+        movementDTO.setMovementType(movement.getMovementType());
         return movementDTO;
     }
 
@@ -107,6 +109,7 @@ public class MovementMapper {
 
             movement.addItem(item);
         });
+        movement.setMovementType(movementInput.getMovementType());
         return movement;
     }
 }

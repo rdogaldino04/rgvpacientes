@@ -6,6 +6,7 @@ import com.galdino.rgvpacientes.dto.movementitem.MovementItemDTO;
 import com.galdino.rgvpacientes.dto.patient.PatientMovementDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorDTO;
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
+import com.galdino.rgvpacientes.enums.MovementType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,11 +37,13 @@ public class MovementDTO {
 
     private OffsetDateTime movementDate;
 
+    private MovementType movementType;
+
     public MovementDTO() {
     }
 
     public MovementDTO(Long id, Long patientId, String patientName, Long companyId, String companyName, Long sectorId,
-                       String sectorName, Long stockId, String stockName, OffsetDateTime movementDate) {
+                       String sectorName, Long stockId, String stockName, OffsetDateTime movementDate, MovementType movementType) {
         this.id = id;
         this.patient = PatientMovementDTO.builder()
                 .id(patientId)
@@ -59,6 +62,7 @@ public class MovementDTO {
                 .name(stockName)
                 .build();
         this.movementDate = movementDate;
+        this.movementType = movementType;
     }
 
 }

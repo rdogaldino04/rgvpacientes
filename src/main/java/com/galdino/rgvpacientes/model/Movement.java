@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.model;
 
+import com.galdino.rgvpacientes.enums.MovementType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,6 +46,10 @@ public class Movement {
 
     @CreationTimestamp
     private OffsetDateTime movementDate;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private MovementType movementType;
 
     public void addItem(MovementItem item) {
         if (item != null) {

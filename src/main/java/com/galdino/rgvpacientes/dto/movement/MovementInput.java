@@ -1,6 +1,7 @@
 package com.galdino.rgvpacientes.dto.movement;
 
 import com.galdino.rgvpacientes.dto.movementitem.MovementItemInput;
+import com.galdino.rgvpacientes.enums.MovementType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,5 +36,8 @@ public class MovementInput {
     private List<MovementItemInput> items;
 
     private OffsetDateTime movementDate;
+
+    @NotNull
+    private MovementType movementType;
 
 }
