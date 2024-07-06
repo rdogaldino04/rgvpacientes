@@ -69,4 +69,15 @@ public class Movement {
         items.clear();
     }
 
+    public void validateNoDuplicateBatchIds() {
+        for (int i = 0; i < items.size(); i++) {
+            for (int j = i + 1; j < items.size(); j++) {
+                if (items.get(i).getBatch().equals(items.get(j).getBatch())) {
+                    throw new EntityNotFoundException(
+                            "There are movement items with the same batch id: " + items.get(i).getBatch().getId());
+                }
+            }
+        }
+    }
+
 }

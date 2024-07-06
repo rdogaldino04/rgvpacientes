@@ -30,7 +30,8 @@ public class MovementService {
     private final List<MovementValidationStrategy> movementValidationStrategies;
 
     public MovementService(
-            MovementRepository movementRepository, MovementItemService movementItemService,
+            MovementRepository movementRepository,
+            MovementItemService movementItemService,
             MovementMapper movementMapper,
             List<MovementValidationStrategy> movementValidationStrategies) {
         this.movementRepository = movementRepository;
@@ -49,6 +50,7 @@ public class MovementService {
     public MovementIdDTO save(@Valid @NotNull MovementInput movementInput) throws EntityNotFoundException {
         movementInput.setId(null);
         Movement movement = movementMapper.toEntity(movementInput);
+        movement.validateNoDuplicateBatchIds();
         this.movementValidationStrategies.forEach(validation -> validation.execute(movement));
         Movement movementSaved = this.movementRepository.save(movement);
         return new MovementIdDTO(movementSaved.getId());

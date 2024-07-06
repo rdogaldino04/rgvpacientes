@@ -40,7 +40,7 @@ public class MovementController {
 
     @GetMapping
     public PageWrapper<MovementDTO> getByFilter(@Valid MovementFilter movementFilter,
-                                                @PageableDefault(size = 5) Pageable pageable) {
+            @PageableDefault(size = 5) Pageable pageable) {
         return this.movementService.getByFilter(movementFilter, pageable);
     }
 
@@ -51,7 +51,7 @@ public class MovementController {
     }
 
     @GetMapping("/{id}/items")
-    public List<MovementItemDTO> getItems(@Positive @PathVariable Long id) {
+    public List<MovementItemDTO> findByMovementId(@Positive @PathVariable Long id) {
         return this.movementService.findByMovementId(id);
     }
 

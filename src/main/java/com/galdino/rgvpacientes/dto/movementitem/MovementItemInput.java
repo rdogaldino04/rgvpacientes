@@ -23,7 +23,6 @@ public class MovementItemInput {
     @Positive
     private BigInteger quantity;
 
-    @NotNull
     private OffsetDateTime movementItemDate;
 
 }

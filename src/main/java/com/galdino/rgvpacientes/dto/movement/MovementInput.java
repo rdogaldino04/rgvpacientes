@@ -34,7 +34,6 @@ public class MovementInput {
     @Size(min = 1, max = 100)
     private List<MovementItemInput> items;
 
-    @NotNull
     private OffsetDateTime movementDate;
 
 }
