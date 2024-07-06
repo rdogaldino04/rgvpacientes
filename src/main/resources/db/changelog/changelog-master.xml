@@ -34,4 +34,5 @@
     <include file="db/changelog/changes/240525_1512_insert_menu_companies.xml"/>
     <include file="db/changelog/changes/240601_0826_insert_menu_stocks.xml"/>
     <include file="db/changelog/changes/240608_0857_insert_menu_sectors.xml"/>
+    <include file="db/changelog/changes/240706_1534_drop_company_sector.xml"/>
 </databaseChangeLog>

@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.mapper;
 
+import com.galdino.rgvpacientes.dto.sector.SectorCompanyDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorDTO;
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.dto.stock.StockSaveDTO;
@@ -15,6 +16,14 @@ public class StockMapper {
         return StockDTO.builder()
                 .id(stock.getId())
                 .name(stock.getName())
+                .sector(SectorDTO.builder()
+                        .id(stock.getSector().getId())
+                        .name(stock.getSector().getName())
+                        .company(SectorCompanyDTO.builder()
+                                .id(stock.getSector().getCompany().getId())
+                                .name(stock.getSector().getCompany().getName())
+                                .build())
+                        .build())
                 .build();
     }
 

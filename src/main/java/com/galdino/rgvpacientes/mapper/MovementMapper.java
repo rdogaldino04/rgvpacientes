@@ -13,15 +13,11 @@ import java.util.stream.Collectors;
 public class MovementMapper {
 
     private final PatientMapper patientMapper;
-    private final CompanyMapper companyMapper;
-    private final SectorMapper sectorMapper;
     private final StockMapper stockMapper;
     private final MovementItemMapper itemMapper;
 
-    public MovementMapper(PatientMapper patientMapper, CompanyMapper companyMapper, SectorMapper sectorMapper, StockMapper stockMapper, MovementItemMapper itemMapper) {
+    public MovementMapper(PatientMapper patientMapper, StockMapper stockMapper, MovementItemMapper itemMapper) {
         this.patientMapper = patientMapper;
-        this.companyMapper = companyMapper;
-        this.sectorMapper = sectorMapper;
         this.stockMapper = stockMapper;
         this.itemMapper = itemMapper;
     }
@@ -49,20 +45,12 @@ public class MovementMapper {
             movement.setId(movementInput.getId());
         }
 
-        Sector sector = new Sector();
-        sector.setId(movementInput.getSectorId());
-        movement.setSector(sector);
-
         Patient patient = new Patient();
-        patient.setId(movementInput.getPatientId());
+        patient.setId(movementInput.getPatient().getId());
         movement.setPatient(patient);
 
-        Company company = new Company();
-        company.setId(movementInput.getCompanyId());
-        movement.setCompany(company);
-
         Stock stock = new Stock();
-        stock.setId(movementInput.getStockId());
+        stock.setId(movementInput.getStock().getId());
         movement.setStock(stock);
 
         return movement;
@@ -75,8 +63,6 @@ public class MovementMapper {
         MovementDTO movementDTO = new MovementDTO();
         movementDTO.setId(movement.getId());
         movementDTO.setPatient(patientMapper.toPatientMovementDTO(movement.getPatient()));
-        movementDTO.setCompany(companyMapper.toDTO(movement.getCompany()));
-        movementDTO.setSector(sectorMapper.toDTO(movement.getSector()));
         movementDTO.setStock(stockMapper.toDTO(movement.getStock()));
         List<MovementItemDTO> itemsDTO = movement.getItems().stream()
                 .map(itemMapper::toDTO)
@@ -90,10 +76,8 @@ public class MovementMapper {
     public Movement updateEntity(MovementInput movementInput) {
         Movement movement = new Movement();
         movement.setId(movementInput.getId());
-        movement.setPatient(patientMapper.toPatient(movementInput.getPatientId()));
-        movement.setCompany(companyMapper.toCompany(movementInput.getCompanyId()));
-        movement.setSector(sectorMapper.toSector(movementInput.getSectorId()));
-        movement.setStock(stockMapper.toStock(movementInput.getStockId()));
+        movement.setPatient(patientMapper.toPatient(movementInput.getPatient().getId()));
+        movement.setStock(stockMapper.toStock(movementInput.getStock().getId()));
         movement.setMovementDate(movementInput.getMovementDate());
         movement.removeItems();
         movementInput.getItems().forEach(itemInput -> {

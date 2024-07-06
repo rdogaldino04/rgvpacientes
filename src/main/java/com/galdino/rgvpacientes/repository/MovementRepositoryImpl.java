@@ -23,15 +23,18 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
         Map<String, Object> parameters = new HashMap<>();
 
         String sqlFields = "SELECT DISTINCT " + "new com.galdino.rgvpacientes.dto.movement.MovementDTO( " +
-                "  m.id, m.patient.id, m.patient.name, m.company.id, m.company.name " +
-                "  , m.sector.id, m.sector.name, m.stock.id, m.stock.name, m.movementDate, m.movementType " +
+                "  m.id, m.patient.id, m.patient.name" +
+                "  , c.id, c.name " +
+                "  , s.id, s.name " +
+                "  , m.stock.id, m.stock.name " +
+                "  , m.movementDate, m.movementType " +
                 " ) ";
 
         String sqlFrom = "FROM Movement m " +
                 "JOIN m.patient p " +
-                "JOIN m.company c " +
-                "JOIN m.sector s " +
-                "JOIN m.stock st ";
+                "JOIN m.stock st " +
+                "JOIN st.sector s " +
+                "JOIN s.company c ";
 
         String sqlWhere = "WHERE 1 = 1 ";
 
@@ -83,9 +86,9 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
         String sqlCount = "SELECT COUNT(m) " +
                 "FROM Movement m " +
                 "JOIN m.patient p " +
-                "JOIN m.company c " +
-                "JOIN m.sector s " +
-                "JOIN m.stock st ";
+                "JOIN m.stock st " +
+                "JOIN st.sector s " +
+                "JOIN s.company c ";
         sqlCount = sqlCount + sqlWhere;
         TypedQuery<Long> createQuery = manager.createQuery(sqlCount, Long.class);
         parameters.keySet().forEach(key -> createQuery.setParameter(key, parameters.get(key)));

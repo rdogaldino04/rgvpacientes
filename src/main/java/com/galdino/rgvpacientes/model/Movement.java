@@ -31,12 +31,6 @@ public class Movement {
     private Patient patient;
 
     @ManyToOne
-    private Company company;
-
-    @ManyToOne
-    private Sector sector;
-
-    @ManyToOne
     private Stock stock;
 
     @NotNull

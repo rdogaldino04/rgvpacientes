@@ -1,6 +1,8 @@
 package com.galdino.rgvpacientes.dto.movement;
 
 import com.galdino.rgvpacientes.dto.movementitem.MovementItemInput;
+import com.galdino.rgvpacientes.dto.patient.PatientIdDTO;
+import com.galdino.rgvpacientes.dto.stock.StockIdDTO;
 import com.galdino.rgvpacientes.enums.MovementType;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,16 +21,10 @@ public class MovementInput {
     private Long id;
 
     @NotNull
-    private Long patientId;
+    private PatientIdDTO patient;
 
     @NotNull
-    private Long companyId;
-
-    @NotNull
-    private Long sectorId;
-
-    @NotNull
-    private Long stockId;
+    private StockIdDTO stock;
 
     @Valid
     @NotEmpty

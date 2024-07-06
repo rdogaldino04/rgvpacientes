@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.dto.stock;
 
+import com.galdino.rgvpacientes.dto.sector.SectorDTO;
 import lombok.*;
 
 @Getter
@@ -12,5 +13,7 @@ public class StockDTO {
     private Long id;
 
     private String name;
+
+    private SectorDTO sector;
 
 }

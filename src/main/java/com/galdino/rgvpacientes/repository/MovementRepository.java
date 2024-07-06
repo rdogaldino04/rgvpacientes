@@ -10,9 +10,8 @@ public interface MovementRepository extends JpaRepository<Movement, Long>, Movem
 
     @Query("SELECT DISTINCT m FROM Movement m " +
             "JOIN FETCH m.patient p " +
-            "JOIN FETCH m.company c " +
-            "JOIN FETCH m.sector s " +
             "JOIN FETCH m.stock st " +
+            "JOIN FETCH st.sector s " +
             "JOIN FETCH m.items i " +
             "JOIN FETCH i.batch b " +
             "JOIN FETCH b.product p " +

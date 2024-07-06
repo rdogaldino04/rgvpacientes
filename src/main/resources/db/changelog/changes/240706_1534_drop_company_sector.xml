@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240706_1534" author="Galdino" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240706_1534_drop_company_sector</comment>
+        <sql>
+            ALTER TABLE dbapatient.movements DROP column company_id;
+            ALTER TABLE dbapatient.movements DROP column sector_id;
+        </sql>
+    </changeSet>
+
+    <changeSet id="240706_1534" author="Galdino" dbms="sqlite">
+        <comment>240706_1534_drop_company_sector</comment>
+        <sql>
+            -- drop table movement_items
+            CREATE TEMPORARY TABLE temp2 AS
+            SELECT
+            movement_item_id,
+            movement_id,
+            batch_id,
+            quantity,
+            movement_item_date
+            FROM movement_items;
+
+            DROP TABLE movement_items;
+            --
+
+            -- Drop foreign key fk_companies e fk_sectors
+
+            CREATE TEMPORARY TABLE temp AS
+            SELECT
+            movement_id,
+            patient_id,
+            stock_id,
+            movement_date,
+            movement_type
+            FROM movements;
+
+            DROP TABLE movements;
+
+            CREATE TABLE movements (
+            movement_id integer primary key autoincrement not null,
+            patient_id integer not null,
+            stock_id integer not null,
+            movement_date Date not null,
+            movement_type varchar(50) NULL,
+
+            CONSTRAINT fk_patients foreign key(patient_id) references patients(id),
+            CONSTRAINT fk_stocks foreign key(stock_id) references stocks(id)
+            );
+
+            INSERT INTO movements
+            (movement_id,
+            patient_id,
+            stock_id,
+            movement_date,
+            movement_type)
+            SELECT
+            movement_id,
+            patient_id,
+            stock_id,
+            movement_date,
+            movement_type
+            FROM temp;
+
+            DROP TABLE temp;
+
+            -- create table movement_items
+            CREATE TABLE movement_items (
+            movement_item_id integer primary key autoincrement not null,
+            movement_id integer not null,
+            batch_id integer not null,
+            quantity numeric(3, 2) not null,
+            movement_item_date Date not null,
+
+            constraint fk_movements foreign key(movement_id) references movements(movement_id)
+            constraint fk_materials foreign key(batch_id) references "product"(product_id)
+            );
+
+            INSERT INTO movement_items
+            (movement_item_id,
+            movement_id,
+            batch_id,
+            quantity,
+            movement_item_date)
+            SELECT
+            movement_item_id,
+            movement_id,
+            batch_id,
+            quantity,
+            movement_item_date
+            FROM temp2;
+
+            DROP TABLE temp2;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
