@@ -30,7 +30,7 @@ public class MovementMapper {
             item.setQuantity(itemInput.getQuantity());
 
             Batch batch = new Batch();
-            batch.setId(itemInput.getBatchId());
+            batch.setId(itemInput.getBatch().getId());
             item.setBatch(batch);
 
             movement.addItem(item);
@@ -86,7 +86,7 @@ public class MovementMapper {
             item.setQuantity(itemInput.getQuantity());
 
             Batch batch = new Batch();
-            batch.setId(itemInput.getBatchId());
+            batch.setId(itemInput.getBatch().getId());
             item.setBatch(batch);
 
             item.setMovementItemDate(itemInput.getMovementItemDate());

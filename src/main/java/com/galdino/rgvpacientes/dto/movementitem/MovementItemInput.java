@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.dto.movementitem;
 
+import com.galdino.rgvpacientes.dto.batch.BatchIdDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,7 @@ public class MovementItemInput {
 
     @NotNull
     @Valid
-    private Long batchId;
+    private BatchIdDTO batch;
 
     @NotNull
     @Positive
