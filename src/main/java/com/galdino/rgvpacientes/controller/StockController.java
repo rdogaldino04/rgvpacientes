@@ -3,7 +3,6 @@ package com.galdino.rgvpacientes.controller;
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.dto.stock.StockFilter;
 import com.galdino.rgvpacientes.dto.stock.StockSaveDTO;
-import com.galdino.rgvpacientes.dto.stock.StockWithSectorDTO;
 import com.galdino.rgvpacientes.mapper.StockMapper;
 import com.galdino.rgvpacientes.model.Stock;
 import com.galdino.rgvpacientes.service.StockService;
@@ -40,8 +39,8 @@ public class StockController {
     }
 
     @GetMapping("{id}")
-    public StockWithSectorDTO findByIdWithSector(@PathVariable Long id) {
-        return this.stockMapper.toDTOWithSector(this.stockService.findByIdWithSector(id));
+    public StockDTO findById(@PathVariable Long id) {
+        return this.stockMapper.toDTO(this.stockService.findById(id));
     }
 
     @GetMapping

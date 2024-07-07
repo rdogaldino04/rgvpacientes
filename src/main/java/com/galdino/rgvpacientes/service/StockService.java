@@ -42,7 +42,7 @@ public class StockService {
         return stock;
     }
 
-    private Stock findById(Long id) {
+    public Stock findById(Long id) {
         return this.stockRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(String.format("There is no stock with code %d", id)));
     }
