@@ -79,4 +79,8 @@ public class Movement {
         }
     }
 
+    public boolean hasItems() {
+        return !items.isEmpty();
+    }
+
 }
