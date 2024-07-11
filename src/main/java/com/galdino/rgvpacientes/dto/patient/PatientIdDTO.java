@@ -1,12 +1,14 @@
 package com.galdino.rgvpacientes.dto.patient;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PatientIdDTO {
 
     @NotNull

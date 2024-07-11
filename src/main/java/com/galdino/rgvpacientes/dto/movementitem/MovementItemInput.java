@@ -1,8 +1,7 @@
 package com.galdino.rgvpacientes.dto.movementitem;
 
 import com.galdino.rgvpacientes.dto.batch.BatchIdDTO;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -12,6 +11,9 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MovementItemInput {
 
     private Long id;
