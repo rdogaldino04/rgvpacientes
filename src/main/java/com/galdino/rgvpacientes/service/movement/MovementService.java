@@ -50,6 +50,9 @@ public class MovementService {
     public MovementIdDTO save(@Valid @NotNull MovementInput movementInput) throws EntityNotFoundException {
         movementInput.setId(null);
         Movement movement = movementMapper.toEntity(movementInput);
+        if (movement.getItems().isEmpty()) {
+            throw new EntityNotFoundException("The movement must have at least one item");
+        }
         movement.validateNoDuplicateBatchIds();
         this.movementValidationStrategies.forEach(validation -> validation.execute(movement));
         Movement movementSaved = this.movementRepository.save(movement);
@@ -67,6 +70,10 @@ public class MovementService {
             throw new EntityNotFoundException(String.format("There is no movement with id %d", id));
         }
         Movement movement = movementMapper.updateEntity(movementInput);
+        if (movement.getItems().isEmpty()) {
+            throw new EntityNotFoundException("The movement must have at least one item");
+        }
+        movement.validateNoDuplicateBatchIds();
         this.movementValidationStrategies.forEach(validation -> validation.execute(movement));
         Movement movementSaved = this.movementRepository.save(movement);
         return new MovementIdDTO(movementSaved.getId());

@@ -9,9 +9,7 @@ import com.galdino.rgvpacientes.dto.stock.StockIdDTO;
 import com.galdino.rgvpacientes.enums.MovementType;
 import com.galdino.rgvpacientes.mapper.BatchMapper;
 import com.galdino.rgvpacientes.mapper.MovementMapper;
-import com.galdino.rgvpacientes.model.Movement;
-import com.galdino.rgvpacientes.model.Patient;
-import com.galdino.rgvpacientes.model.Stock;
+import com.galdino.rgvpacientes.model.*;
 import com.galdino.rgvpacientes.repository.BatchRepository;
 import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import com.galdino.rgvpacientes.repository.MovementRepository;
@@ -20,6 +18,7 @@ import com.galdino.rgvpacientes.service.movement.MovementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Validator;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -89,6 +88,17 @@ class MovementServiceTest {
             Patient patient = new Patient();
             patient.setId(input.getPatient().getId());
             movement.setPatient(patient);
+            input.getItems().forEach(itemInput -> {
+                MovementItem item = new MovementItem();
+                item.setId(itemInput.getId());
+                item.setQuantity(itemInput.getQuantity());
+
+                Batch batch = new Batch();
+                batch.setId(itemInput.getBatch().getId());
+                item.setBatch(batch);
+
+                movement.addItem(item);
+            });
 
             return movement;
         });
@@ -102,6 +112,108 @@ class MovementServiceTest {
         MovementIdDTO movementIdDTO = this.movementService.save(movementInput);
         assert (movementIdDTO != null);
         assert (movementIdDTO.getId() != null);
+    }
+
+    @Test
+    void shouldUpdateMovement() {
+        MovementItemInput movementItemInput = MovementItemInput.builder()
+                .id(1L)
+                .batch(BatchIdDTO.builder().id(1L).build())
+                .quantity(BigInteger.valueOf(3))
+                .build();
+        MovementItemInput movementItemInput2 = MovementItemInput.builder()
+                .id(null)
+                .batch(BatchIdDTO.builder().id(2L).build())
+                .quantity(BigInteger.valueOf(2))
+                .build();
+        MovementItemInput movementItemInput3 = MovementItemInput.builder()
+                .id(null)
+                .batch(BatchIdDTO.builder().id(3L).build())
+                .quantity(BigInteger.valueOf(2))
+                .build();
+
+        MovementInput movementInput = MovementInput.builder()
+                .id(1L)
+                .movementType(MovementType.INPUT)
+                .stock(StockIdDTO.builder().id(1L).build())
+                .patient(PatientIdDTO.builder().id(1L).build())
+                .items(Arrays.asList(movementItemInput, movementItemInput2, movementItemInput3))
+                .build();
+
+        when(movementRepository.existsById(1L)).thenReturn(true);
+
+        when(movementMapper.updateEntity(any(MovementInput.class))).thenAnswer(invocation -> {
+            MovementInput input = invocation.getArgument(0);
+            Movement movement = new Movement();
+            movement.setId(input.getId());
+            movement.setMovementType(input.getMovementType());
+            Stock stock = new Stock();
+            stock.setId(input.getStock().getId());
+            movement.setStock(stock);
+            Patient patient = new Patient();
+            patient.setId(input.getPatient().getId());
+            movement.setPatient(patient);
+
+            input.getItems().forEach(itemInput -> {
+                MovementItem item = new MovementItem();
+                item.setId(itemInput.getId());
+                item.setQuantity(itemInput.getQuantity());
+
+                Batch batch = new Batch();
+                batch.setId(itemInput.getBatch().getId());
+                item.setBatch(batch);
+
+                movement.addItem(item);
+            });
+
+            return movement;
+        });
+
+        when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> {
+            Movement movement = invocation.getArgument(0);
+            return movement;
+        });
+
+        MovementIdDTO movementIdDTO = this.movementService.update(1L, movementInput);
+        assert (movementIdDTO != null);
+        assert (movementIdDTO.getId() != null);
+    }
+
+    @Test
+    void shouldNotCreateMovementWithNoItems() {
+        MovementInput movementInput = MovementInput.builder()
+                .id(null)
+                .movementType(MovementType.INPUT)
+                .stock(StockIdDTO.builder().id(1L).build())
+                .patient(PatientIdDTO.builder().id(1L).build())
+                .items(null)
+                .build();
+
+        when(movementMapper.toEntity(any(MovementInput.class))).thenAnswer(invocation -> {
+            MovementInput input = invocation.getArgument(0);
+            Movement movement = new Movement();
+            movement.setMovementType(input.getMovementType());
+            Stock stock = new Stock();
+            stock.setId(input.getStock().getId());
+            movement.setStock(stock);
+            Patient patient = new Patient();
+            patient.setId(input.getPatient().getId());
+            movement.setPatient(patient);
+
+            return movement;
+        });
+
+        when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> {
+            Movement movement = invocation.getArgument(0);
+            movement.setId(1L);
+            return movement;
+        });
+
+        try {
+            this.movementService.save(movementInput);
+        } catch (Exception e) {
+            assert (e instanceof EntityNotFoundException);
+        }
     }
 
 }
