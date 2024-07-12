@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import javax.validation.Validator;
 
+import com.galdino.rgvpacientes.model.Product;
 import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,15 @@ class BatchServiceTest {
         batch.setBatchNumber("123");
         batch.setManufactureDate(LocalDate.of(2021, 1, 1));
         batch.setExpiryDate(LocalDate.of(2028, 12, 31));
+        batch.setProduct(new Product(1L));
+
+        when(productService.findById(any(Long.class))).thenAnswer(invocation -> {
+            Long id = invocation.getArgument(0);
+            if (id == 1L) {
+                return null;
+            }
+            return new Product();
+        });
 
         when(batchRepository.save(any(Batch.class))).thenAnswer(invocation -> {
             Batch batchSave = invocation.getArgument(0);
