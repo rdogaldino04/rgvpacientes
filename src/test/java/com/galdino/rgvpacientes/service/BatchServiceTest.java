@@ -62,16 +62,9 @@ class BatchServiceTest {
             return batchSave;
         });
 
-        BatchDTO batchDTOSave = BatchDTO.builder()
-                .id(1L)
-                .batchNumber("123")
-                .manufactureDate(LocalDate.of(2021, 1, 1))
-                .expiryDate(LocalDate.of(2028, 12, 31))
-                .build();
-        when(batchMapper.toDTO(batch)).thenReturn(batchDTOSave);
-
         Batch result = batchService.create(batch);
         assert (result != null);
+        assert (result.getId() != null);
 
         // Verificando se o método save foi chamado no BatchRepository
         verify(batchRepository, times(1)).save(any(Batch.class));
