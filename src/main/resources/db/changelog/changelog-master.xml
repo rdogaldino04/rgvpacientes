@@ -36,4 +36,5 @@
     <include file="db/changelog/changes/240608_0857_insert_menu_sectors.xml"/>
     <include file="db/changelog/changes/240706_1534_drop_company_sector.xml"/>
     <include file="db/changelog/changes/240713_0853_rename_menu_movimentacao.xml"/>
+    <include file="db/changelog/changes/240713_1700_alter_movement_item_fk_batch_id.xml"/>
 </databaseChangeLog>

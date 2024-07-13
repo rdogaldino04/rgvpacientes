@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240713_1700" author="Galdino" dbms="sqlite">
+        <comment>240713_1700_alter_movement_item_fk_batch_id</comment>
+        <sql>
+            -- drop table movement_items
+            CREATE TEMPORARY TABLE temp2 AS
+            SELECT
+                movement_item_id,
+                movement_id,
+                batch_id,
+                quantity,
+                movement_item_date
+            FROM movement_items;
+
+            DROP TABLE movement_items;
+
+            -- create table movement_items
+            CREATE TABLE movement_items (
+                movement_item_id integer primary key autoincrement not null,
+                movement_id integer not null,
+                batch_id integer not null,
+                quantity numeric(3, 2) not null,
+                movement_item_date Date not null,
+
+                constraint fk_movements foreign key(movement_id) references movements(movement_id)
+                constraint fk_batch foreign key(batch_id) references batch(batch_id)
+            );
+
+            INSERT INTO movement_items
+                (movement_item_id,
+                movement_id,
+                batch_id,
+                quantity,
+                movement_item_date)
+            SELECT
+                movement_item_id,
+                movement_id,
+                batch_id,
+                quantity,
+                movement_item_date
+            FROM temp2;
+
+            DROP TABLE temp2;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
