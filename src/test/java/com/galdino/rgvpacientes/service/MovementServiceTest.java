@@ -24,6 +24,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -156,7 +157,8 @@ class MovementServiceTest {
 
             input.getItems().forEach(itemInput -> {
                 MovementItem item = new MovementItem();
-                item.setId(itemInput.getId());
+                Long id = (itemInput.getId() == null) ? (long) (Math.random() * 1000) : itemInput.getId();
+                item.setId(id);
                 item.setQuantity(itemInput.getQuantity());
 
                 Batch batch = new Batch();
@@ -169,14 +171,12 @@ class MovementServiceTest {
             return movement;
         });
 
-        when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> {
-            Movement movement = invocation.getArgument(0);
-            return movement;
-        });
+        when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         MovementIdDTO movementIdDTO = this.movementService.update(1L, movementInput);
-        assert (movementIdDTO != null);
-        assert (movementIdDTO.getId() != null);
+        assertThat(movementIdDTO).isNotNull();
+        assertThat(movementIdDTO.getId()).isNotNull();
+        verify(movementRepository).save(any(Movement.class));
     }
 
     @Test
@@ -203,14 +203,9 @@ class MovementServiceTest {
             return movement;
         });
 
-        when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> {
-            Movement movement = invocation.getArgument(0);
-            movement.setId(1L);
-            return movement;
-        });
-
         try {
             this.movementService.save(movementInput);
+            assert (false);
         } catch (Exception e) {
             assert (e instanceof EntityNotFoundException);
         }
