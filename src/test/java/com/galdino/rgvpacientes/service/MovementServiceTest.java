@@ -111,8 +111,8 @@ class MovementServiceTest {
         });
 
         MovementIdDTO movementIdDTO = this.movementService.save(movementInput);
-        assert (movementIdDTO != null);
-        assert (movementIdDTO.getId() != null);
+        assertThat(movementIdDTO).isNotNull();
+        assertThat(movementIdDTO.getId()).isNotNull();
     }
 
     @Test
@@ -205,7 +205,7 @@ class MovementServiceTest {
 
         try {
             this.movementService.save(movementInput);
-            assert (false);
+            assertThat(false).isTrue();
         } catch (Exception e) {
             assert (e instanceof EntityNotFoundException);
         }
