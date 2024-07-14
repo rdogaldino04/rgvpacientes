@@ -2,9 +2,7 @@ package com.galdino.rgvpacientes.model;
 
 import com.galdino.rgvpacientes.enums.Status;
 import com.galdino.rgvpacientes.enums.converters.StatusConverter;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
@@ -13,6 +11,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "patients", schema = "dbapatient")
 @SQLDelete(sql = "UPDATE patients SET status = 'Inactive' WHERE id = ?")

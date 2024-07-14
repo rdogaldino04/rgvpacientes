@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240714_1426" author="Galdino" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240714_1426_alter_field_quantity</comment>
+        <sql>
+            ALTER TABLE dbapatient.movement_items ALTER COLUMN quantity TYPE decimal(10, 2) USING quantity::decimal(10, 2);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="240713_1724" author="Galdino" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="postgresql"/>
+        </preConditions>
+        <comment>240713_1724_add_fields_movements</comment>
+        <sql>
+            ALTER TABLE dbapatient.movements RENAME COLUMN stock_id TO stock_source_location_id;
+            ALTER TABLE dbapatient.movements ADD COLUMN stock_destination_location_id int8;
+
+            ALTER TABLE dbapatient.movements
+              ADD CONSTRAINT fk_stock_destination_location_id
+              FOREIGN KEY (stock_destination_location_id)
+              REFERENCES dbapatient.stocks (id);
+
+            ALTER TABLE dbapatient.movements ADD COLUMN name VARCHAR(150) NOT NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="240713_1724" author="Galdino" dbms="sqlite">
+        <comment>240713_1724_add_fields_movements</comment>
+        <sql>
+            CREATE TEMPORARY TABLE temp AS
+                SELECT
+                movement_id,
+                patient_id,
+                stock_id,
+                movement_date,
+                movement_type
+            FROM movements;
+
+            DROP TABLE movements;
+
+            CREATE TABLE movements (
+                movement_id integer primary key autoincrement not null,
+                patient_id integer not null,
+                stock_source_location_id integer not null,
+                stock_destination_location_id integer,
+                movement_date Date not null,
+                movement_type varchar(50) NULL,
+                name varchar(150) not null,
+
+                CONSTRAINT fk_patients foreign key(patient_id) references patients(id),
+                CONSTRAINT fk_stock_source_location_id foreign key(stock_source_location_id) references stocks(id),
+                CONSTRAINT fk_stock_destination_location_id foreign key(stock_destination_location_id) references stocks(id)
+            );
+
+            INSERT INTO movements
+            (movement_id,
+            patient_id,
+            stock_source_location_id,
+            movement_date,
+            movement_type)
+            SELECT
+            movement_id,
+            patient_id,
+            stock_id,
+            movement_date,
+            movement_type
+            FROM temp;
+
+            DROP TABLE temp;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

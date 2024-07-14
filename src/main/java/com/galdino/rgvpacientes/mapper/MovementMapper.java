@@ -36,6 +36,8 @@ public class MovementMapper {
             movement.addItem(item);
         });
         movement.setMovementType(movementInput.getMovementType());
+        movement.setName(movementInput.getName());
+        movement.setObservation(movementInput.getObservation());
         return movement;
     }
 
@@ -50,8 +52,14 @@ public class MovementMapper {
         movement.setPatient(patient);
 
         Stock stock = new Stock();
-        stock.setId(movementInput.getStock().getId());
-        movement.setStock(stock);
+        stock.setId(movementInput.getStockSourceLocation().getId());
+        movement.setStockSourceLocation(stock);
+
+        if (movementInput.getStockDestinationLocation() != null) {
+            Stock stockDestination = new Stock();
+            stockDestination.setId(movementInput.getStockDestinationLocation().getId());
+            movement.setStockDestinationLocation(stockDestination);
+        }
 
         return movement;
     }
@@ -63,7 +71,7 @@ public class MovementMapper {
         MovementDTO movementDTO = new MovementDTO();
         movementDTO.setId(movement.getId());
         movementDTO.setPatient(patientMapper.toPatientMovementDTO(movement.getPatient()));
-        movementDTO.setStock(stockMapper.toDTO(movement.getStock()));
+        movementDTO.setStock(stockMapper.toDTO(movement.getStockSourceLocation()));
         List<MovementItemDTO> itemsDTO = movement.getItems().stream()
                 .map(itemMapper::toDTO)
                 .collect(Collectors.toList());
@@ -77,7 +85,7 @@ public class MovementMapper {
         Movement movement = new Movement();
         movement.setId(movementInput.getId());
         movement.setPatient(patientMapper.toPatient(movementInput.getPatient().getId()));
-        movement.setStock(stockMapper.toStock(movementInput.getStock().getId()));
+        movement.setStockSourceLocation(stockMapper.toStock(movementInput.getStockSourceLocation().getId()));
         movement.setMovementDate(movementInput.getMovementDate());
         movement.removeItems();
         movementInput.getItems().forEach(itemInput -> {

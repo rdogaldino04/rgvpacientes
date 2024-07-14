@@ -21,8 +21,8 @@ public class ExistingStockValidationImpl implements  MovementValidationStrategy 
     }
 
     private void validateStock(Movement movement) {
-        if (!this.stockService.existsById(movement.getStock().getId())) {
-            throw new EntityNotFoundException(String.format("There is no stock with id %d", movement.getStock().getId()));
+        if (!this.stockService.existsById(movement.getStockSourceLocation().getId())) {
+            throw new EntityNotFoundException(String.format("There is no stock with id %d", movement.getStockSourceLocation().getId()));
         }
     }
 

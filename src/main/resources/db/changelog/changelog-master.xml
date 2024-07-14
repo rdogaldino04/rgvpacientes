@@ -37,4 +37,8 @@
     <include file="db/changelog/changes/240706_1534_drop_company_sector.xml"/>
     <include file="db/changelog/changes/240713_0853_rename_menu_movimentacao.xml"/>
     <include file="db/changelog/changes/240713_1700_alter_movement_item_fk_batch_id.xml"/>
+    <include file="db/changelog/changes/240713_1724_add_fields_movements.xml"/>
+    <include file="db/changelog/changes/240714_1352_add_field_related_movement_id.xml"/>
+    <include file="db/changelog/changes/240714_1426_alter_field_quantity.xml"/>
+    <include file="db/changelog/changes/240714_1623_add_field_user_id_and_obsevation.xml"/>
 </databaseChangeLog>

@@ -1,11 +1,7 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.dto.batch.BatchIdDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementInput;
-import com.galdino.rgvpacientes.dto.movementitem.MovementItemInput;
-import com.galdino.rgvpacientes.dto.patient.PatientIdDTO;
-import com.galdino.rgvpacientes.dto.stock.StockIdDTO;
 import com.galdino.rgvpacientes.enums.MovementType;
 import com.galdino.rgvpacientes.mapper.BatchMapper;
 import com.galdino.rgvpacientes.mapper.MovementMapper;
@@ -18,11 +14,13 @@ import com.galdino.rgvpacientes.service.movement.MovementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,13 +39,14 @@ class MovementServiceTest {
     private MovementItemService movementItemService;
     private List movementValidationStrategies;
     private MovementService movementService;
+    private Validator validator;
 
 
     @BeforeEach
     public void setUp() {
         batchRepository = mock(BatchRepository.class);
         productService = mock(ProductService.class);
-        mock(Validator.class);
+        validator = mock(Validator.class);
         batchMapper = mock(BatchMapper.class);
         movementItemRepository = mock(MovementItemRepository.class);
 
@@ -55,37 +54,58 @@ class MovementServiceTest {
         movementItemService = mock(MovementItemService.class);
         movementMapper = mock(MovementMapper.class);
         movementValidationStrategies = mock(List.class);
-        movementService = new MovementService(movementRepository, movementItemService, movementMapper, movementValidationStrategies);
+        movementService = new MovementService(movementRepository, movementItemService, movementMapper, movementValidationStrategies, validator);
     }
 
     @Test
     void shouldCreateMovement() {
-        MovementItemInput movementItemInput = MovementItemInput.builder()
+        MovementItem movementItemSave = MovementItem.builder()
                 .id(null)
-                .batch(BatchIdDTO.builder().id(1L).build())
+                .batch(Batch.builder().id(1L).build())
                 .quantity(BigInteger.valueOf(3))
                 .build();
-        MovementItemInput movementItemInput2 = MovementItemInput.builder()
+        MovementItem movementItemSave2 = MovementItem.builder()
                 .id(null)
-                .batch(BatchIdDTO.builder().id(2L).build())
+                .batch(Batch.builder().id(2L).build())
                 .quantity(BigInteger.valueOf(2))
                 .build();
 
-        MovementInput movementInput = MovementInput.builder()
+        Movement movementSave = Movement.builder()
                 .id(null)
                 .movementType(MovementType.INPUT)
-                .stock(StockIdDTO.builder().id(1L).build())
-                .patient(PatientIdDTO.builder().id(1L).build())
-                .items(Arrays.asList(movementItemInput, movementItemInput2))
+                .stockSourceLocation(Stock.builder().id(1L).build())
+                .patient(Patient.builder().id(1L).build())
+                .items(Arrays.asList(movementItemSave, movementItemSave2))
                 .build();
+
+        when(validator.validate(movementSave)).thenAnswer(invocation -> {
+            Movement movement = invocation.getArgument(0);
+            Set<ConstraintViolation<Movement>> violations = new HashSet<>();
+            if (movement.getPatient() == null) {
+                ConstraintViolation<Movement> violation = mock(ConstraintViolation.class);
+                when(violation.getMessage()).thenReturn("Patient is required");
+                violations.add(violation);
+            }
+            if (movement.getStockSourceLocation() == null) {
+                ConstraintViolation<Movement> violation = mock(ConstraintViolation.class);
+                when(violation.getMessage()).thenReturn("Stock source location is required");
+                violations.add(violation);
+            }
+            if (movement.getMovementType() == null) {
+                ConstraintViolation<Movement> violation = mock(ConstraintViolation.class);
+                when(violation.getMessage()).thenReturn("Movement type is required");
+                violations.add(violation);
+            }
+            return violations;
+        });
 
         when(movementMapper.toEntity(any(MovementInput.class))).thenAnswer(invocation -> {
             MovementInput input = invocation.getArgument(0);
             Movement movement = new Movement();
             movement.setMovementType(input.getMovementType());
             Stock stock = new Stock();
-            stock.setId(input.getStock().getId());
-            movement.setStock(stock);
+            stock.setId(input.getStockSourceLocation().getId());
+            movement.setStockSourceLocation(stock);
             Patient patient = new Patient();
             patient.setId(input.getPatient().getId());
             movement.setPatient(patient);
@@ -110,35 +130,35 @@ class MovementServiceTest {
             return movement;
         });
 
-        MovementIdDTO movementIdDTO = this.movementService.save(movementInput);
+        MovementIdDTO movementIdDTO = this.movementService.save(movementSave);
         assertThat(movementIdDTO).isNotNull();
         assertThat(movementIdDTO.getId()).isNotNull();
     }
 
     @Test
     void shouldUpdateMovement() {
-        MovementItemInput movementItemInput = MovementItemInput.builder()
+        MovementItem movementItemSave = MovementItem.builder()
                 .id(1L)
-                .batch(BatchIdDTO.builder().id(1L).build())
+                .batch(Batch.builder().id(1L).build())
                 .quantity(BigInteger.valueOf(3))
                 .build();
-        MovementItemInput movementItemInput2 = MovementItemInput.builder()
+        MovementItem movementItemSave2 = MovementItem.builder()
                 .id(null)
-                .batch(BatchIdDTO.builder().id(2L).build())
+                .batch(Batch.builder().id(2L).build())
                 .quantity(BigInteger.valueOf(2))
                 .build();
-        MovementItemInput movementItemInput3 = MovementItemInput.builder()
+        MovementItem movementItemSave3 = MovementItem.builder()
                 .id(null)
-                .batch(BatchIdDTO.builder().id(3L).build())
+                .batch(Batch.builder().id(3L).build())
                 .quantity(BigInteger.valueOf(2))
                 .build();
 
-        MovementInput movementInput = MovementInput.builder()
+        Movement movementSave = Movement.builder()
                 .id(1L)
                 .movementType(MovementType.INPUT)
-                .stock(StockIdDTO.builder().id(1L).build())
-                .patient(PatientIdDTO.builder().id(1L).build())
-                .items(Arrays.asList(movementItemInput, movementItemInput2, movementItemInput3))
+                .stockSourceLocation(Stock.builder().id(1L).build())
+                .patient(Patient.builder().id(1L).build())
+                .items(Arrays.asList(movementItemSave, movementItemSave2, movementItemSave3))
                 .build();
 
         when(movementRepository.existsById(1L)).thenReturn(true);
@@ -149,8 +169,8 @@ class MovementServiceTest {
             movement.setId(input.getId());
             movement.setMovementType(input.getMovementType());
             Stock stock = new Stock();
-            stock.setId(input.getStock().getId());
-            movement.setStock(stock);
+            stock.setId(input.getStockSourceLocation().getId());
+            movement.setStockSourceLocation(stock);
             Patient patient = new Patient();
             patient.setId(input.getPatient().getId());
             movement.setPatient(patient);
@@ -173,7 +193,7 @@ class MovementServiceTest {
 
         when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        MovementIdDTO movementIdDTO = this.movementService.update(1L, movementInput);
+        MovementIdDTO movementIdDTO = this.movementService.update(1L, movementSave);
         assertThat(movementIdDTO).isNotNull();
         assertThat(movementIdDTO.getId()).isNotNull();
         verify(movementRepository).save(any(Movement.class));
@@ -181,11 +201,11 @@ class MovementServiceTest {
 
     @Test
     void shouldNotCreateMovementWithNoItems() {
-        MovementInput movementInput = MovementInput.builder()
+        Movement movementSave = Movement.builder()
                 .id(null)
                 .movementType(MovementType.INPUT)
-                .stock(StockIdDTO.builder().id(1L).build())
-                .patient(PatientIdDTO.builder().id(1L).build())
+                .stockSourceLocation(Stock.builder().id(1L).build())
+                .patient(Patient.builder().id(1L).build())
                 .items(null)
                 .build();
 
@@ -194,8 +214,8 @@ class MovementServiceTest {
             Movement movement = new Movement();
             movement.setMovementType(input.getMovementType());
             Stock stock = new Stock();
-            stock.setId(input.getStock().getId());
-            movement.setStock(stock);
+            stock.setId(input.getStockSourceLocation().getId());
+            movement.setStockSourceLocation(stock);
             Patient patient = new Patient();
             patient.setId(input.getPatient().getId());
             movement.setPatient(patient);
@@ -204,10 +224,10 @@ class MovementServiceTest {
         });
 
         try {
-            this.movementService.save(movementInput);
+            this.movementService.save(movementSave);
             assertThat(false).isTrue();
         } catch (Exception e) {
-            assert (e instanceof EntityNotFoundException);
+            assertThat(e.getMessage()).isEqualTo("The movement must have at least one item");
         }
     }
 

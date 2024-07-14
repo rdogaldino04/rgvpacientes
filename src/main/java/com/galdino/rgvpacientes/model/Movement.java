@@ -1,12 +1,13 @@
 package com.galdino.rgvpacientes.model;
 
+import com.galdino.rgvpacientes.enums.MovementName;
 import com.galdino.rgvpacientes.enums.MovementType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.galdino.rgvpacientes.exception.BusinessException;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
@@ -17,6 +18,9 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "movements", schema = "dbapatient")
 public class Movement {
@@ -27,11 +31,16 @@ public class Movement {
     @Column(name = "movement_id")
     private Long id;
 
+    @NotNull
     @ManyToOne
     private Patient patient;
 
+    @NotNull
     @ManyToOne
-    private Stock stock;
+    private Stock stockSourceLocation;
+
+    @ManyToOne
+    private Stock stockDestinationLocation;
 
     @NotNull
     @NotEmpty
@@ -44,6 +53,21 @@ public class Movement {
     @NotNull
     @Enumerated(EnumType.STRING)
     private MovementType movementType;
+
+    @Valid
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private MovementName name;
+
+    @ManyToOne
+    @JoinColumn(name = "related_movement_id", nullable = true)
+    private Movement relatedMovement;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    private String observation;
 
     public void addItem(MovementItem item) {
         if (item != null) {
@@ -80,7 +104,18 @@ public class Movement {
     }
 
     public boolean hasItems() {
-        return !items.isEmpty();
+        return items != null && !items.isEmpty();
     }
 
+    public void setName(@NotNull MovementName name) {
+        if (movementType == MovementType.OUTPUT && name == MovementName.ENTRADA_AVULSA) {
+            throw new BusinessException("Movement name must be OUTPUT for movement type ENTRADA_AVULSA");
+        }
+
+        if (movementType == MovementType.INPUT && name == MovementName.SAIDA_AVULSA) {
+            throw new BusinessException("Movement name must be INPUT for movement type SAIDA_AVULSA");
+        }
+
+        this.name = name;
+    }
 }
