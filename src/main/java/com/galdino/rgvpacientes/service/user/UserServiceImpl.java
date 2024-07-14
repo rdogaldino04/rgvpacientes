@@ -1,6 +1,7 @@
 package com.galdino.rgvpacientes.service.user;
 
 import com.galdino.rgvpacientes.model.User;
+import com.galdino.rgvpacientes.model.UserDetailsCustom;
 import com.galdino.rgvpacientes.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -44,8 +45,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userOptional.get();
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                authorities);
+        return new UserDetailsCustom(user.getUsername(), user.getPassword(),
+                authorities, user.getId());
     }
 
 }
