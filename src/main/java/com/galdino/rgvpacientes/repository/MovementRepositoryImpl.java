@@ -22,17 +22,20 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
     public Page<MovementDTO> getByFilter(MovementFilter movementFilter, Pageable pageable) {
         Map<String, Object> parameters = new HashMap<>();
 
-        String sqlFields = "SELECT DISTINCT " + "new com.galdino.rgvpacientes.dto.movement.MovementDTO( " +
+        String sqlFields = "SELECT DISTINCT " +
+                "new com.galdino.rgvpacientes.dto.movement.MovementDTO( " +
                 "  m.id, m.patient.id, m.patient.name" +
                 "  , c.id, c.name " +
                 "  , s.id, s.name " +
-                "  , m.stock.id, m.stock.name " +
+                "  , m.stockSourceLocation.id, m.stockSourceLocation.name " +
+                "  , m.stockDestinationLocation.id, m.stockDestinationLocation.name " +
                 "  , m.movementDate, m.movementType " +
                 " ) ";
 
         String sqlFrom = "FROM Movement m " +
                 "JOIN m.patient p " +
-                "JOIN m.stock st " +
+                "JOIN m.stockSourceLocation st " +
+                "LEFT JOIN m.stockDestinationLocation sd " +
                 "JOIN st.sector s " +
                 "JOIN s.company c ";
 
@@ -86,7 +89,8 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
         String sqlCount = "SELECT COUNT(m) " +
                 "FROM Movement m " +
                 "JOIN m.patient p " +
-                "JOIN m.stock st " +
+                "JOIN m.stockSourceLocation st " +
+                "LEFT JOIN m.stockDestinationLocation sd " +
                 "JOIN st.sector s " +
                 "JOIN s.company c ";
         sqlCount = sqlCount + sqlWhere;

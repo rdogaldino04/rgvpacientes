@@ -73,7 +73,7 @@ public class MovementMapper {
         MovementDTO movementDTO = new MovementDTO();
         movementDTO.setId(movement.getId());
         movementDTO.setPatient(patientMapper.toPatientMovementDTO(movement.getPatient()));
-        movementDTO.setStock(stockMapper.toDTO(movement.getStockSourceLocation()));
+        movementDTO.setStockSourceLocation(stockMapper.toDTO(movement.getStockSourceLocation()));
         List<MovementItemDTO> itemsDTO = movement.getItems().stream()
                 .map(itemMapper::toDTO)
                 .collect(Collectors.toList());
