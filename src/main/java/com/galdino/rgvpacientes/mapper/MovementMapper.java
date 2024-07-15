@@ -3,10 +3,12 @@ package com.galdino.rgvpacientes.mapper;
 import com.galdino.rgvpacientes.dto.movement.MovementDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementInput;
 import com.galdino.rgvpacientes.dto.movementitem.MovementItemDTO;
+import com.galdino.rgvpacientes.dto.user.UserDTO;
 import com.galdino.rgvpacientes.model.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -78,6 +80,15 @@ public class MovementMapper {
         movementDTO.setItems(itemsDTO);
         movementDTO.setMovementDate(movement.getMovementDate());
         movementDTO.setMovementType(movement.getMovementType());
+        movementDTO.setName(movement.getName());
+        movementDTO.setRelatedMovement(MovementDTO.builder()
+                .id(Optional.ofNullable(movement.getRelatedMovement()).map(Movement::getId).orElse(null))
+                .build());
+        movementDTO.setUser(UserDTO.builder()
+                .id(movement.getUser().getId())
+                .username(movement.getUser().getName())
+                .build());
+        movementDTO.setObservation(movement.getObservation());
         return movementDTO;
     }
 
