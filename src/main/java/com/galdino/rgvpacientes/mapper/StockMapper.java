@@ -13,16 +13,20 @@ import org.springframework.stereotype.Component;
 public class StockMapper {
 
     public StockDTO toDTO(Stock stock) {
+        SectorCompanyDTO companyDTO = null;
+        if (stock.getSector().getCompany() != null) {
+            companyDTO = SectorCompanyDTO.builder()
+                    .id(stock.getSector().getCompany().getId())
+                    .name(stock.getSector().getCompany().getName())
+                    .build();
+        }
         return StockDTO.builder()
                 .id(stock.getId())
                 .name(stock.getName())
                 .sector(SectorDTO.builder()
                         .id(stock.getSector().getId())
                         .name(stock.getSector().getName())
-                        .company(SectorCompanyDTO.builder()
-                                .id(stock.getSector().getCompany().getId())
-                                .name(stock.getSector().getCompany().getName())
-                                .build())
+                        .company(companyDTO)
                         .build())
                 .build();
     }
