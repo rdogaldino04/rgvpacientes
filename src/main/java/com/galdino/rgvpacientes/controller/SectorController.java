@@ -7,7 +7,7 @@ import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.mapper.SectorMapper;
 import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.service.SectorService;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;

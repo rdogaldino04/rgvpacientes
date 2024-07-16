@@ -5,7 +5,7 @@ import com.galdino.rgvpacientes.dto.sector.SectorFilter;
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
 import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.repository.SectorRepository;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

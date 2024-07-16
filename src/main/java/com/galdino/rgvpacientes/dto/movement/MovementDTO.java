@@ -6,7 +6,7 @@ import com.galdino.rgvpacientes.dto.patient.PatientMovementDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorCompanyDTO;
 import com.galdino.rgvpacientes.dto.sector.SectorDTO;
 import com.galdino.rgvpacientes.dto.stock.StockDTO;
-import com.galdino.rgvpacientes.dto.user.UserDTO;
+import com.galdino.rgvpacientes.user.dto.UserDTO;
 import com.galdino.rgvpacientes.enums.MovementName;
 import com.galdino.rgvpacientes.enums.MovementType;
 import lombok.*;

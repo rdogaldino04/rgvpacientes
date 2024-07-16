@@ -6,7 +6,7 @@ import com.galdino.rgvpacientes.dto.stock.StockSaveDTO;
 import com.galdino.rgvpacientes.mapper.StockMapper;
 import com.galdino.rgvpacientes.model.Stock;
 import com.galdino.rgvpacientes.service.StockService;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

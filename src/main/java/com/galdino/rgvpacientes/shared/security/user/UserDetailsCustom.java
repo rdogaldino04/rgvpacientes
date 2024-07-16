@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.model;
+package com.galdino.rgvpacientes.shared.security.user;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

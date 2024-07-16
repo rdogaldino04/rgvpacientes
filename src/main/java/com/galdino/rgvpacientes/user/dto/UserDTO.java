@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.dto.user;
+package com.galdino.rgvpacientes.user.dto;
 
 import lombok.*;
 

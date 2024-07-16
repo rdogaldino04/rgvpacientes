@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.config.security.fllter;
+package com.galdino.rgvpacientes.shared.security.fllter;
 
 
 import com.auth0.jwt.JWT;
@@ -6,7 +6,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.galdino.rgvpacientes.model.UsernamePasswordAuthenticationTokenCustom;
+import com.galdino.rgvpacientes.shared.security.user.UsernamePasswordAuthenticationTokenCustom;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

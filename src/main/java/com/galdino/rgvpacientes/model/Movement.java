@@ -3,6 +3,7 @@ package com.galdino.rgvpacientes.model;
 import com.galdino.rgvpacientes.enums.MovementName;
 import com.galdino.rgvpacientes.enums.MovementType;
 import com.galdino.rgvpacientes.exception.BusinessException;
+import com.galdino.rgvpacientes.user.model.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

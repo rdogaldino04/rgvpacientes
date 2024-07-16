@@ -8,7 +8,7 @@ import com.galdino.rgvpacientes.dto.movementitem.MovementItemDTO;
 import com.galdino.rgvpacientes.enums.MovementName;
 import com.galdino.rgvpacientes.mapper.MovementMapper;
 import com.galdino.rgvpacientes.service.movement.MovementService;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;

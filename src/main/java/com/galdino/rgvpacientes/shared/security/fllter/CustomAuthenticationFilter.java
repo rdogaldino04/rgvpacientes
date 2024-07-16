@@ -1,9 +1,9 @@
-package com.galdino.rgvpacientes.config.security.fllter;
+package com.galdino.rgvpacientes.shared.security.fllter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.galdino.rgvpacientes.model.UserDetailsCustom;
+import com.galdino.rgvpacientes.shared.security.user.UserDetailsCustom;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;

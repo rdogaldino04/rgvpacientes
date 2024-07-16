@@ -6,7 +6,7 @@ import com.galdino.rgvpacientes.dto.company.CompanySaveDTO;
 import com.galdino.rgvpacientes.mapper.CompanyMapper;
 import com.galdino.rgvpacientes.model.Company;
 import com.galdino.rgvpacientes.service.CompanyService;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;

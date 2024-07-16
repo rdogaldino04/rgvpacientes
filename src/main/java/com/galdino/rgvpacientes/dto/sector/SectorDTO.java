@@ -11,6 +11,8 @@ import lombok.*;
 public class SectorDTO {
 
     private Long id;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

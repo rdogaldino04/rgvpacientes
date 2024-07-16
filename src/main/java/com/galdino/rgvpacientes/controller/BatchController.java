@@ -4,7 +4,7 @@ import com.galdino.rgvpacientes.dto.batch.BatchDTO;
 import com.galdino.rgvpacientes.dto.batch.BatchFilter;
 import com.galdino.rgvpacientes.dto.batch.BatchInput;
 import com.galdino.rgvpacientes.mapper.BatchMapper;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import com.galdino.rgvpacientes.model.Batch;
 import com.galdino.rgvpacientes.service.BatchService;
 import org.springframework.data.domain.Pageable;

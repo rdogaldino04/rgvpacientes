@@ -6,7 +6,7 @@ import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.model.Product;
 import com.galdino.rgvpacientes.repository.BatchRepository;
 import com.galdino.rgvpacientes.repository.ProductRepository;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.config;
+package com.galdino.rgvpacientes.shared.config;
 import javax.servlet.Filter;
 
 import org.springframework.context.annotation.Bean;

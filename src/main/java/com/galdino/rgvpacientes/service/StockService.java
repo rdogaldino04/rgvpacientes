@@ -5,7 +5,7 @@ import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.model.Sector;
 import com.galdino.rgvpacientes.model.Stock;
 import com.galdino.rgvpacientes.repository.StockRepository;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

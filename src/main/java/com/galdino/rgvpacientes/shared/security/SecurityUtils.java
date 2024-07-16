@@ -1,7 +1,7 @@
-package com.galdino.rgvpacientes.util;
+package com.galdino.rgvpacientes.shared.security;
 
-import com.galdino.rgvpacientes.model.User;
-import com.galdino.rgvpacientes.model.UsernamePasswordAuthenticationTokenCustom;
+import com.galdino.rgvpacientes.user.model.User;
+import com.galdino.rgvpacientes.shared.security.user.UsernamePasswordAuthenticationTokenCustom;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtils {

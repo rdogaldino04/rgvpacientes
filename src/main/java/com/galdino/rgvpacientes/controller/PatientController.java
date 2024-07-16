@@ -5,7 +5,7 @@ import com.galdino.rgvpacientes.dto.patient.PatientFilter;
 import com.galdino.rgvpacientes.dto.patient.PatientInput;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.service.PatientService;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;

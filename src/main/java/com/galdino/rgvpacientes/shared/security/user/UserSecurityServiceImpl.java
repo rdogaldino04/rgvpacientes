@@ -1,8 +1,7 @@
-package com.galdino.rgvpacientes.service.user;
+package com.galdino.rgvpacientes.shared.security.user;
 
-import com.galdino.rgvpacientes.model.User;
-import com.galdino.rgvpacientes.model.UserDetailsCustom;
-import com.galdino.rgvpacientes.repository.UserRepository;
+import com.galdino.rgvpacientes.user.model.User;
+import com.galdino.rgvpacientes.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +18,11 @@ import java.util.Optional;
 @Service
 @Transactional
 @Slf4j
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserSecurityServiceImpl implements UserSecurityService, UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserSecurityServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

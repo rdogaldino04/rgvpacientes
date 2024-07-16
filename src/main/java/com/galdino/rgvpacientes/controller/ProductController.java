@@ -6,7 +6,7 @@ import com.galdino.rgvpacientes.dto.product.ProductInput;
 import com.galdino.rgvpacientes.mapper.ProductMapper;
 import com.galdino.rgvpacientes.model.Product;
 import com.galdino.rgvpacientes.service.ProductService;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;

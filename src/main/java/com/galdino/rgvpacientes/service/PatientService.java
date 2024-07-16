@@ -8,7 +8,7 @@ import com.galdino.rgvpacientes.mapper.PatientMapper;
 import com.galdino.rgvpacientes.model.Patient;
 import com.galdino.rgvpacientes.repository.PatientRepository;
 import com.galdino.rgvpacientes.repository.specs.PatientSpecs;
-import com.galdino.rgvpacientes.util.page.PageWrapper;
+import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

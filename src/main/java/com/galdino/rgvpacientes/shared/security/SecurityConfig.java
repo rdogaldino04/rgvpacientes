@@ -1,7 +1,7 @@
-package com.galdino.rgvpacientes.config.security;
+package com.galdino.rgvpacientes.shared.security;
 
-import com.galdino.rgvpacientes.config.security.fllter.CustomAuthenticationFilter;
-import com.galdino.rgvpacientes.config.security.fllter.CustomAuthorizationFilter;
+import com.galdino.rgvpacientes.shared.security.fllter.CustomAuthenticationFilter;
+import com.galdino.rgvpacientes.shared.security.fllter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
