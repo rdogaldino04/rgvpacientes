@@ -2,6 +2,7 @@ package com.galdino.rgvpacientes.service;
 
 import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementInput;
+import com.galdino.rgvpacientes.enums.MovementName;
 import com.galdino.rgvpacientes.enums.MovementType;
 import com.galdino.rgvpacientes.mapper.BatchMapper;
 import com.galdino.rgvpacientes.mapper.MovementMapper;
@@ -28,32 +29,18 @@ import static org.mockito.Mockito.*;
 
 class MovementServiceTest {
 
-    private BatchService batchService;
-    private BatchRepository batchRepository;
-    private ProductService productService;
-    private BatchMapper batchMapper;
-    private MovementItemRepository movementItemRepository;
     private MovementRepository movementRepository;
-
     private MovementMapper movementMapper;
-    private MovementItemService movementItemService;
-    private List movementValidationStrategies;
     private MovementService movementService;
     private Validator validator;
 
-
     @BeforeEach
     public void setUp() {
-        batchRepository = mock(BatchRepository.class);
-        productService = mock(ProductService.class);
         validator = mock(Validator.class);
-        batchMapper = mock(BatchMapper.class);
-        movementItemRepository = mock(MovementItemRepository.class);
-
         movementRepository = mock(MovementRepository.class);
-        movementItemService = mock(MovementItemService.class);
+        MovementItemService movementItemService = mock(MovementItemService.class);
         movementMapper = mock(MovementMapper.class);
-        movementValidationStrategies = mock(List.class);
+        List movementValidationStrategies = mock(List.class);
         movementService = new MovementService(movementRepository, movementItemService, movementMapper, movementValidationStrategies, validator);
     }
 
@@ -76,63 +63,15 @@ class MovementServiceTest {
                 .stockSourceLocation(Stock.builder().id(1L).build())
                 .patient(Patient.builder().id(1L).build())
                 .items(Arrays.asList(movementItemSave, movementItemSave2))
+                .name(MovementName.ENTRADA_AVULSA)
                 .build();
 
-        when(validator.validate(movementSave)).thenAnswer(invocation -> {
-            Movement movement = invocation.getArgument(0);
-            Set<ConstraintViolation<Movement>> violations = new HashSet<>();
-            if (movement.getPatient() == null) {
-                ConstraintViolation<Movement> violation = mock(ConstraintViolation.class);
-                when(violation.getMessage()).thenReturn("Patient is required");
-                violations.add(violation);
-            }
-            if (movement.getStockSourceLocation() == null) {
-                ConstraintViolation<Movement> violation = mock(ConstraintViolation.class);
-                when(violation.getMessage()).thenReturn("Stock source location is required");
-                violations.add(violation);
-            }
-            if (movement.getMovementType() == null) {
-                ConstraintViolation<Movement> violation = mock(ConstraintViolation.class);
-                when(violation.getMessage()).thenReturn("Movement type is required");
-                violations.add(violation);
-            }
-            return violations;
-        });
+        mockValidatorBehavior(movementSave);
+        mockMovementRepositorySave();
 
-        when(movementMapper.toEntity(any(MovementInput.class))).thenAnswer(invocation -> {
-            MovementInput input = invocation.getArgument(0);
-            Movement movement = new Movement();
-            movement.setMovementType(input.getMovementType());
-            Stock stock = new Stock();
-            stock.setId(input.getStockSourceLocation().getId());
-            movement.setStockSourceLocation(stock);
-            Patient patient = new Patient();
-            patient.setId(input.getPatient().getId());
-            movement.setPatient(patient);
-            input.getItems().forEach(itemInput -> {
-                MovementItem item = new MovementItem();
-                item.setId(itemInput.getId());
-                item.setQuantity(itemInput.getQuantity());
-
-                Batch batch = new Batch();
-                batch.setId(itemInput.getBatch().getId());
-                item.setBatch(batch);
-
-                movement.addItem(item);
-            });
-
-            return movement;
-        });
-
-        when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> {
-            Movement movement = invocation.getArgument(0);
-            movement.setId(1L);
-            return movement;
-        });
-
-        MovementIdDTO movementIdDTO = this.movementService.save(movementSave);
-        assertThat(movementIdDTO).isNotNull();
-        assertThat(movementIdDTO.getId()).isNotNull();
+        Movement save = this.movementService.save(movementSave);
+        assertThat(save).isNotNull();
+        assertThat(save.getId()).isNotNull();
     }
 
     @Test
@@ -231,4 +170,30 @@ class MovementServiceTest {
         }
     }
 
+    private void mockMovementRepositorySave() {
+        when(movementRepository.save(any(Movement.class))).thenAnswer(invocation -> {
+            Movement movement = invocation.getArgument(0);
+            movement.setId(1L);
+            return movement;
+        });
+    }
+
+    private void mockValidatorBehavior(Movement movementSave) {
+        when(validator.validate(movementSave)).thenAnswer(invocation -> {
+            Movement movement = invocation.getArgument(0);
+            Set<ConstraintViolation<Movement>> violations = new HashSet<>();
+            checkAndAddViolation(movement.getPatient() == null, violations, "Patient is required");
+            checkAndAddViolation(movement.getStockSourceLocation() == null, violations, "Stock source location is required");
+            checkAndAddViolation(movement.getMovementType() == null, violations, "Movement type is required");
+            return violations;
+        });
+    }
+
+    private void checkAndAddViolation(boolean condition, Set<ConstraintViolation<Movement>> violations, String message) {
+        if (condition) {
+            ConstraintViolation<Movement> violation = mock(ConstraintViolation.class);
+            when(violation.getMessage()).thenReturn(message);
+            violations.add(violation);
+        }
+    }
 }
