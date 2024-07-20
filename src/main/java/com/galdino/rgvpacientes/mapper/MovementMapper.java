@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.mapper;
 
+import com.galdino.rgvpacientes.batch.model.Batch;
 import com.galdino.rgvpacientes.dto.movement.MovementDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementInput;
 import com.galdino.rgvpacientes.dto.movementitem.MovementItemDTO;

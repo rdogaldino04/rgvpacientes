@@ -1,6 +1,7 @@
 package com.galdino.rgvpacientes.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.galdino.rgvpacientes.batch.model.Batch;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

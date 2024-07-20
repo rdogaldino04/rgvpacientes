@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.dto.batch;
+package com.galdino.rgvpacientes.batch.dto;
 
 import lombok.Getter;
 import lombok.Setter;

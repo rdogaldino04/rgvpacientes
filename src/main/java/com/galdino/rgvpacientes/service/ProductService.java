@@ -4,7 +4,7 @@ import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.dto.product.ProductFilter;
 import com.galdino.rgvpacientes.exception.BusinessException;
 import com.galdino.rgvpacientes.model.Product;
-import com.galdino.rgvpacientes.repository.BatchRepository;
+import com.galdino.rgvpacientes.batch.repository.BatchRepository;
 import com.galdino.rgvpacientes.repository.ProductRepository;
 import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.cache.annotation.CacheEvict;

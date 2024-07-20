@@ -1,5 +1,6 @@
 package com.galdino.rgvpacientes.mapper;
 
+import com.galdino.rgvpacientes.batch.mapper.BatchMapper;
 import com.galdino.rgvpacientes.dto.movementitem.MovementItemDTO;
 import com.galdino.rgvpacientes.model.MovementItem;
 import org.springframework.stereotype.Component;

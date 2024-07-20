@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.repository;
 
-import com.galdino.rgvpacientes.model.Batch;
+import com.galdino.rgvpacientes.batch.model.Batch;
 import com.galdino.rgvpacientes.model.MovementItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

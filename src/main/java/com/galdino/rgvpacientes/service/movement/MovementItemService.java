@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.service.movement;
 
-import com.galdino.rgvpacientes.model.Batch;
+import com.galdino.rgvpacientes.batch.model.Batch;
 import com.galdino.rgvpacientes.model.MovementItem;
 import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import org.springframework.stereotype.Service;

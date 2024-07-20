@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.repository.specs;
 
-import com.galdino.rgvpacientes.dto.batch.BatchFilter;
-import com.galdino.rgvpacientes.model.Batch;
+import com.galdino.rgvpacientes.batch.dto.BatchFilter;
+import com.galdino.rgvpacientes.batch.model.Batch;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 

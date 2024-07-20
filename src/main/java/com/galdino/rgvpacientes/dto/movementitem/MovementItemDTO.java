@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.dto.movementitem;
 
-import com.galdino.rgvpacientes.dto.batch.BatchMovementItemDTO;
-import com.galdino.rgvpacientes.model.Batch;
+import com.galdino.rgvpacientes.batch.dto.BatchMovementItemDTO;
+import com.galdino.rgvpacientes.batch.model.Batch;
 import lombok.Getter;
 import lombok.Setter;
 

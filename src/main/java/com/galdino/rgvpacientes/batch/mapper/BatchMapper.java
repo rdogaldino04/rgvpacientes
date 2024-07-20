@@ -1,13 +1,13 @@
-package com.galdino.rgvpacientes.mapper;
+package com.galdino.rgvpacientes.batch.mapper;
 
-import com.galdino.rgvpacientes.dto.batch.BatchMovementItemDTO;
+import com.galdino.rgvpacientes.batch.dto.BatchMovementItemDTO;
 import com.galdino.rgvpacientes.dto.product.ProductDTO;
 import com.galdino.rgvpacientes.model.Product;
 import org.springframework.stereotype.Component;
 
-import com.galdino.rgvpacientes.dto.batch.BatchDTO;
-import com.galdino.rgvpacientes.dto.batch.BatchInput;
-import com.galdino.rgvpacientes.model.Batch;
+import com.galdino.rgvpacientes.batch.dto.BatchDTO;
+import com.galdino.rgvpacientes.batch.dto.BatchInput;
+import com.galdino.rgvpacientes.batch.model.Batch;
 
 @Component
 public class BatchMapper {

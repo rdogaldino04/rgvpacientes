@@ -1,14 +1,12 @@
 package com.galdino.rgvpacientes.service;
 
+import com.galdino.rgvpacientes.batch.model.Batch;
 import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
 import com.galdino.rgvpacientes.dto.movement.MovementInput;
 import com.galdino.rgvpacientes.enums.MovementName;
 import com.galdino.rgvpacientes.enums.MovementType;
-import com.galdino.rgvpacientes.mapper.BatchMapper;
 import com.galdino.rgvpacientes.mapper.MovementMapper;
 import com.galdino.rgvpacientes.model.*;
-import com.galdino.rgvpacientes.repository.BatchRepository;
-import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import com.galdino.rgvpacientes.repository.MovementRepository;
 import com.galdino.rgvpacientes.service.movement.MovementItemService;
 import com.galdino.rgvpacientes.service.movement.MovementService;

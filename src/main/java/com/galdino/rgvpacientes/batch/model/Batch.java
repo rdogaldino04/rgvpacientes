@@ -1,4 +1,4 @@
-package com.galdino.rgvpacientes.model;
+package com.galdino.rgvpacientes.batch.model;
 
 import java.time.LocalDate;
 
@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.galdino.rgvpacientes.model.Product;
 import lombok.*;
 
 @Data

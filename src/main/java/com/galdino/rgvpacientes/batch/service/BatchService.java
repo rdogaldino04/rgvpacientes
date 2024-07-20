@@ -1,11 +1,12 @@
-package com.galdino.rgvpacientes.service;
+package com.galdino.rgvpacientes.batch.service;
 
-import com.galdino.rgvpacientes.dto.batch.BatchFilter;
+import com.galdino.rgvpacientes.batch.dto.BatchFilter;
 import com.galdino.rgvpacientes.exception.BusinessException;
-import com.galdino.rgvpacientes.model.Batch;
-import com.galdino.rgvpacientes.repository.BatchRepository;
+import com.galdino.rgvpacientes.batch.model.Batch;
+import com.galdino.rgvpacientes.batch.repository.BatchRepository;
 import com.galdino.rgvpacientes.repository.MovementItemRepository;
 import com.galdino.rgvpacientes.repository.specs.BatchSpecs;
+import com.galdino.rgvpacientes.service.ProductService;
 import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

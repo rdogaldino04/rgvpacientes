@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes.dto.movementitem;
 
-import com.galdino.rgvpacientes.dto.batch.BatchIdDTO;
+import com.galdino.rgvpacientes.batch.dto.BatchIdDTO;
 import lombok.*;
 
 import javax.validation.Valid;

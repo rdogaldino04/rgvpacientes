@@ -1,6 +1,7 @@
-package com.galdino.rgvpacientes.repository;
+package com.galdino.rgvpacientes.batch.repository;
 
-import com.galdino.rgvpacientes.model.Batch;
+import com.galdino.rgvpacientes.batch.model.Batch;
+import com.galdino.rgvpacientes.repository.CustomJpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

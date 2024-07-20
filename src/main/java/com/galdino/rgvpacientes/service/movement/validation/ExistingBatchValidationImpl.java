@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.service.movement.validation;
 
 import com.galdino.rgvpacientes.model.Movement;
-import com.galdino.rgvpacientes.service.BatchService;
+import com.galdino.rgvpacientes.batch.service.BatchService;
 import org.springframework.stereotype.Component;
 
 @Component
