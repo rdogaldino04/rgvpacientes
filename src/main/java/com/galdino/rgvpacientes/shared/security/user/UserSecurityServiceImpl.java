@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.shared.security.user;
 
-import com.galdino.rgvpacientes.user.model.User;
-import com.galdino.rgvpacientes.user.repository.UserRepository;
+import com.galdino.rgvpacientes.domain.user.model.User;
+import com.galdino.rgvpacientes.domain.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

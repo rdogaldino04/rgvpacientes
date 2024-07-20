@@ -9,15 +9,16 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import javax.validation.Validator;
 
-import com.galdino.rgvpacientes.batch.service.BatchService;
-import com.galdino.rgvpacientes.model.Product;
-import com.galdino.rgvpacientes.repository.MovementItemRepository;
+import com.galdino.rgvpacientes.domain.batch.service.BatchService;
+import com.galdino.rgvpacientes.domain.product.model.Product;
+import com.galdino.rgvpacientes.domain.movementitem.repository.MovementItemRepository;
+import com.galdino.rgvpacientes.domain.product.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.galdino.rgvpacientes.batch.mapper.BatchMapper;
-import com.galdino.rgvpacientes.batch.model.Batch;
-import com.galdino.rgvpacientes.batch.repository.BatchRepository;
+import com.galdino.rgvpacientes.domain.batch.mapper.BatchMapper;
+import com.galdino.rgvpacientes.domain.batch.model.Batch;
+import com.galdino.rgvpacientes.domain.batch.repository.BatchRepository;
 
 class BatchServiceTest {
 

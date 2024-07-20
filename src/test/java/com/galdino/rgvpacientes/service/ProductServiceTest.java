@@ -1,12 +1,13 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.dto.product.ProductDTO;
-import com.galdino.rgvpacientes.dto.product.ProductInput;
-import com.galdino.rgvpacientes.mapper.ProductMapper;
-import com.galdino.rgvpacientes.model.Product;
-import com.galdino.rgvpacientes.batch.repository.BatchRepository;
-import com.galdino.rgvpacientes.repository.ProductRepository;
-import com.galdino.rgvpacientes.service.movement.MovementItemService;
+import com.galdino.rgvpacientes.domain.product.service.ProductService;
+import com.galdino.rgvpacientes.domain.product.product.ProductDTO;
+import com.galdino.rgvpacientes.domain.product.product.ProductInput;
+import com.galdino.rgvpacientes.domain.product.mapper.ProductMapper;
+import com.galdino.rgvpacientes.domain.product.model.Product;
+import com.galdino.rgvpacientes.domain.batch.repository.BatchRepository;
+import com.galdino.rgvpacientes.domain.product.repository.ProductRepository;
+import com.galdino.rgvpacientes.domain.movementitem.service.MovementItemService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;

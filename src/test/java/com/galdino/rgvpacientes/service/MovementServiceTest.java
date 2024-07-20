@@ -1,15 +1,18 @@
 package com.galdino.rgvpacientes.service;
 
-import com.galdino.rgvpacientes.batch.model.Batch;
-import com.galdino.rgvpacientes.dto.movement.MovementIdDTO;
-import com.galdino.rgvpacientes.dto.movement.MovementInput;
-import com.galdino.rgvpacientes.enums.MovementName;
-import com.galdino.rgvpacientes.enums.MovementType;
-import com.galdino.rgvpacientes.mapper.MovementMapper;
-import com.galdino.rgvpacientes.model.*;
-import com.galdino.rgvpacientes.repository.MovementRepository;
-import com.galdino.rgvpacientes.service.movement.MovementItemService;
-import com.galdino.rgvpacientes.service.movement.MovementService;
+import com.galdino.rgvpacientes.domain.batch.model.Batch;
+import com.galdino.rgvpacientes.domain.movement.dto.MovementIdDTO;
+import com.galdino.rgvpacientes.domain.movement.dto.MovementInput;
+import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
+import com.galdino.rgvpacientes.domain.movement.enums.MovementType;
+import com.galdino.rgvpacientes.domain.movement.mapper.MovementMapper;
+import com.galdino.rgvpacientes.domain.movement.model.Movement;
+import com.galdino.rgvpacientes.domain.movement.repository.MovementRepository;
+import com.galdino.rgvpacientes.domain.movement.service.MovementService;
+import com.galdino.rgvpacientes.domain.movementitem.model.MovementItem;
+import com.galdino.rgvpacientes.domain.movementitem.service.MovementItemService;
+import com.galdino.rgvpacientes.domain.patient.model.Patient;
+import com.galdino.rgvpacientes.domain.stock.model.Stock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package com.galdino.rgvpacientes;
 
-import com.galdino.rgvpacientes.repository.CustomJpaRepositoryImpl;
+import com.galdino.rgvpacientes.shared.repository.CustomJpaRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
