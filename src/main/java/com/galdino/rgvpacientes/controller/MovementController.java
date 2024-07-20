@@ -11,12 +11,14 @@ import com.galdino.rgvpacientes.service.movement.MovementService;
 import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -37,13 +39,15 @@ public class MovementController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public MovementIdDTO save(@Validated @RequestBody MovementInput movementInput) {
-        movementInput.setId(null);
-        if (movementInput.getName() == MovementName.TRANSFERENCIA) {
-            return this.movementService.transferStock(movementMapper.toEntity(movementInput));
-        }
-        return new MovementIdDTO(this.movementService.save(movementMapper.toEntity(movementInput)).getId());
+    public ResponseEntity<MovementIdDTO> save(@Validated @RequestBody MovementInput movementInput) {
+        MovementIdDTO movementIdDTO = processMovementInput(movementInput);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(movementIdDTO.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(movementIdDTO);
     }
 
     @GetMapping
@@ -61,6 +65,15 @@ public class MovementController {
     @GetMapping("/{id}/items")
     public List<MovementItemDTO> findByMovementId(@Positive @PathVariable Long id) {
         return this.movementService.findByMovementId(id);
+    }
+
+    private MovementIdDTO processMovementInput(MovementInput movementInput) {
+        movementInput.setId(null);
+        if (movementInput.getName() == MovementName.TRANSFERENCIA) {
+            return new MovementIdDTO(this.movementService.transferStock(movementMapper.toEntity(movementInput)).getId());
+        } else {
+            return new MovementIdDTO(this.movementService.save(movementMapper.toEntity(movementInput)).getId());
+        }
     }
 
 }

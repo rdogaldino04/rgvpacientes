@@ -110,7 +110,7 @@ public class MovementService {
     }
 
     @Transactional
-    public MovementIdDTO transferStock(Movement movement) {
+    public Movement transferStock(Movement movement) {
         MovementService proxy = applicationContext.getBean(MovementService.class);
 
         if (!movement.getName().equals(MovementName.TRANSFERENCIA)) {
@@ -138,7 +138,6 @@ public class MovementService {
         proxy.save(inputMovement);
 
         savedOutputMovement.setRelatedMovement(inputMovement);
-        proxy.save(savedOutputMovement);
-        return null;
+        return proxy.save(savedOutputMovement);
     }
 }
