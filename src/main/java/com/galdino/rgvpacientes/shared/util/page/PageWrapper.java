@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+@Deprecated
 public class PageWrapper<T> {
 
     private Page<T> page;

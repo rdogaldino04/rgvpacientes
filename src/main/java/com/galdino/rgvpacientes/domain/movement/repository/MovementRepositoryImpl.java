@@ -1,7 +1,7 @@
 package com.galdino.rgvpacientes.domain.movement.repository;
 
-import com.galdino.rgvpacientes.domain.movement.dto.MovementDTO;
 import com.galdino.rgvpacientes.domain.movement.dto.MovementFilter;
+import com.galdino.rgvpacientes.domain.movement.model.Movement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,18 +19,10 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
     private EntityManager manager;
 
     @Override
-    public Page<MovementDTO> getByFilter(MovementFilter movementFilter, Pageable pageable) {
+    public Page<Movement> getByFilter(MovementFilter movementFilter, Pageable pageable) {
         Map<String, Object> parameters = new HashMap<>();
 
-        String sqlFields = "SELECT DISTINCT " +
-                "new com.galdino.rgvpacientes.domain.movement.dto.MovementDTO( " +
-                "  m.id, m.patient.id, m.patient.name" +
-                "  , c.id, c.name " +
-                "  , s.id, s.name " +
-                "  , m.stockSourceLocation.id, m.stockSourceLocation.name " +
-                "  , m.stockDestinationLocation.id, m.stockDestinationLocation.name " +
-                "  , m.movementDate, m.movementType " +
-                " ) ";
+        String sqlFields = "SELECT DISTINCT m ";
 
         String sqlFrom = "FROM Movement m " +
                 "JOIN m.patient p " +
@@ -69,7 +61,7 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
         String sqlOrder = "ORDER BY m.id ";
         String sql = sqlFields + sqlFrom + sqlWhere + sqlOrder;
 
-        TypedQuery<MovementDTO> createQuery = manager.createQuery(sql, MovementDTO.class)
+        TypedQuery<Movement> createQuery = manager.createQuery(sql, Movement.class)
                 .setMaxResults(180);
 
         parameters.keySet().forEach(key -> createQuery.setParameter(key, parameters.get(key)));
@@ -77,7 +69,7 @@ public class MovementRepositoryImpl implements MovementRepositoryQuery {
         createQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
         createQuery.setMaxResults(pageable.getPageSize());
 
-        List<MovementDTO> results = createQuery.getResultList();
+        List<Movement> results = createQuery.getResultList();
 
         long totalElements = getTotalElements(sqlWhere, parameters);
 

@@ -6,14 +6,13 @@ import com.galdino.rgvpacientes.domain.movement.dto.MovementIdDTO;
 import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
 import com.galdino.rgvpacientes.domain.movement.enums.MovementType;
 import com.galdino.rgvpacientes.domain.movement.mapper.MovementMapper;
+import com.galdino.rgvpacientes.domain.movement.model.Movement;
 import com.galdino.rgvpacientes.domain.movement.repository.MovementRepository;
+import com.galdino.rgvpacientes.domain.movement.validation.MovementValidationStrategy;
 import com.galdino.rgvpacientes.domain.movementitem.dto.MovementItemDTO;
 import com.galdino.rgvpacientes.domain.movementitem.service.MovementItemService;
 import com.galdino.rgvpacientes.shared.exception.BusinessException;
-import com.galdino.rgvpacientes.domain.movement.model.Movement;
-import com.galdino.rgvpacientes.domain.movement.validation.MovementValidationStrategy;
 import com.galdino.rgvpacientes.shared.security.SecurityUtils;
-import com.galdino.rgvpacientes.shared.util.page.PageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
@@ -80,9 +79,8 @@ public class MovementService {
         return this.movementRepository.save(movement);
     }
 
-    public PageWrapper<MovementDTO> getByFilter(MovementFilter movementFilter, Pageable pageable) {
-        Page<MovementDTO> movements = this.movementRepository.getByFilter(movementFilter, pageable);
-        return new PageWrapper<>(movements);
+    public Page<Movement> getByFilter(MovementFilter movementFilter, Pageable pageable) {
+        return this.movementRepository.getByFilter(movementFilter, pageable);
     }
 
     @Transactional
