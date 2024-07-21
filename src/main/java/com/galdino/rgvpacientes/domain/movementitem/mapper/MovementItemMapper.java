@@ -5,6 +5,7 @@ import com.galdino.rgvpacientes.domain.movementitem.dto.MovementItemDTO;
 import com.galdino.rgvpacientes.domain.movementitem.model.MovementItem;
 import org.springframework.stereotype.Component;
 
+@Deprecated
 @Component
 public class MovementItemMapper {
 

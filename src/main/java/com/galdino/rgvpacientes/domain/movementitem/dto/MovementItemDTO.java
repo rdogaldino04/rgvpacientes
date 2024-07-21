@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
 
+@Deprecated
 @Getter
 @Setter
 public class MovementItemDTO {

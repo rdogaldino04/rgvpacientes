@@ -8,7 +8,7 @@ import com.galdino.rgvpacientes.domain.movement.mapper.MovementMapper;
 import com.galdino.rgvpacientes.domain.movement.model.Movement;
 import com.galdino.rgvpacientes.domain.movement.repository.MovementRepository;
 import com.galdino.rgvpacientes.domain.movement.validation.MovementValidationStrategy;
-import com.galdino.rgvpacientes.domain.movementitem.dto.MovementItemDTO;
+import com.galdino.rgvpacientes.domain.movementitem.model.MovementItem;
 import com.galdino.rgvpacientes.domain.movementitem.service.MovementItemService;
 import com.galdino.rgvpacientes.shared.exception.BusinessException;
 import com.galdino.rgvpacientes.shared.security.SecurityUtils;
@@ -27,7 +27,6 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class MovementService {
@@ -96,14 +95,8 @@ public class MovementService {
         return new MovementIdDTO(movementSaved.getId());
     }
 
-    public List<MovementItemDTO> findByMovementId(Long id) {
-        return this.movementItemService.findByMovementId(id).stream()
-                .map(movementItem -> new MovementItemDTO(
-                        movementItem.getId(),
-                        movementItem.getBatch(),
-                        movementItem.getQuantity(),
-                        movementItem.getMovementItemDate()))
-                .collect(Collectors.toList());
+    public List<MovementItem> findByMovementId(Long id) {
+        return this.movementItemService.findByMovementId(id);
     }
 
     @Transactional

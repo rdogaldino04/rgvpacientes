@@ -9,12 +9,14 @@ import com.galdino.rgvpacientes.domain.movement.mapper.assembler.MovementModelAs
 import com.galdino.rgvpacientes.domain.movement.mapper.model.MovementModel;
 import com.galdino.rgvpacientes.domain.movement.model.Movement;
 import com.galdino.rgvpacientes.domain.movement.service.MovementService;
-import com.galdino.rgvpacientes.domain.movementitem.dto.MovementItemDTO;
+import com.galdino.rgvpacientes.domain.movementitem.mapper.MovementItemModel;
+import com.galdino.rgvpacientes.domain.movementitem.mapper.MovementItemModelAssembler;
 import com.galdino.rgvpacientes.shared.data.PageWrapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +26,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/movements")
@@ -34,12 +35,14 @@ public class MovementController {
     private final MovementMapper movementMapper;
     private final MovementModelAssembler movementModelAssembler;
     private final PagedResourcesAssembler<Movement> pagedResourcesAssembler;
+    private final MovementItemModelAssembler movementItemModelAssembler;
 
-    public MovementController(MovementService movementService, MovementMapper movementMapper, MovementModelAssembler movementModelAssembler, PagedResourcesAssembler<Movement> pagedResourcesAssembler) {
+    public MovementController(MovementService movementService, MovementMapper movementMapper, MovementModelAssembler movementModelAssembler, PagedResourcesAssembler<Movement> pagedResourcesAssembler, MovementItemModelAssembler movementItemModelAssembler) {
         this.movementService = movementService;
         this.movementMapper = movementMapper;
         this.movementModelAssembler = movementModelAssembler;
         this.pagedResourcesAssembler = pagedResourcesAssembler;
+        this.movementItemModelAssembler = movementItemModelAssembler;
     }
 
     @GetMapping("{id}")
@@ -74,8 +77,8 @@ public class MovementController {
     }
 
     @GetMapping("/{id}/items")
-    public List<MovementItemDTO> findByMovementId(@Positive @PathVariable Long id) {
-        return this.movementService.findByMovementId(id);
+    public CollectionModel<MovementItemModel> findByMovementId(@Positive @PathVariable Long id) {
+        return movementItemModelAssembler.toCollectionModel(this.movementService.findByMovementId(id));
     }
 
     private MovementIdDTO processMovementInput(MovementInput movementInput) {
