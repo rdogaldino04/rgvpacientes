@@ -1,6 +1,5 @@
 package com.galdino.rgvpacientes.domain.movement.controller;
 
-import com.galdino.rgvpacientes.domain.movement.dto.MovementDTO;
 import com.galdino.rgvpacientes.domain.movement.dto.MovementFilter;
 import com.galdino.rgvpacientes.domain.movement.dto.MovementIdDTO;
 import com.galdino.rgvpacientes.domain.movement.dto.MovementInput;
@@ -44,8 +43,8 @@ public class MovementController {
     }
 
     @GetMapping("{id}")
-    public MovementDTO findById(@Positive @PathVariable Long id) {
-        return this.movementService.findById(id);
+    public MovementModel findById(@Positive @PathVariable Long id) {
+        return movementModelAssembler.toModel(movementService.findById(id));
     }
 
     @PostMapping

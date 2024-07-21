@@ -1,6 +1,5 @@
 package com.galdino.rgvpacientes.domain.movement.service;
 
-import com.galdino.rgvpacientes.domain.movement.dto.MovementDTO;
 import com.galdino.rgvpacientes.domain.movement.dto.MovementFilter;
 import com.galdino.rgvpacientes.domain.movement.dto.MovementIdDTO;
 import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
@@ -53,10 +52,9 @@ public class MovementService {
         this.validator = validator;
     }
 
-    public MovementDTO findById(Long id) {
-        Movement movement = movementRepository.findById(id)
+    public Movement findById(Long id) {
+        return movementRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("There is no movement with id %d", id)));
-        return movementMapper.toDTO(movement);
     }
 
     @Transactional

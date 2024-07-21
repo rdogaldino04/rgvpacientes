@@ -3,6 +3,7 @@ package com.galdino.rgvpacientes.domain.sector.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+@Deprecated
 @Getter
 @Setter
 @Builder

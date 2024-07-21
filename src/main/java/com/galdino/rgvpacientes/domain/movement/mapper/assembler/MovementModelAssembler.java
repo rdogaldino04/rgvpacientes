@@ -5,6 +5,7 @@ import com.galdino.rgvpacientes.domain.movement.mapper.model.MovementModel;
 import com.galdino.rgvpacientes.domain.movement.model.Movement;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +19,8 @@ public class MovementModelAssembler extends RepresentationModelAssemblerSupport<
     }
 
     @Override
-    public MovementModel toModel(Movement movement) {
+    @NonNull
+    public MovementModel toModel(@NonNull Movement movement) {
         MovementModel movementModel = createModelWithId(movement.getId(), movement);
         this.modelMapper.map(movement, movementModel);
         return movementModel;
