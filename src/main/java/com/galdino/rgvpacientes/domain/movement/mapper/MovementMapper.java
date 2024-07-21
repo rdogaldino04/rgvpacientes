@@ -47,6 +47,7 @@ public class MovementMapper {
         movement.setMovementType(movementInput.getMovementType());
         movement.setName(movementInput.getName());
         movement.setObservation(movementInput.getObservation());
+        movement.setStatus(movementInput.getStatus());
         return movement;
     }
 

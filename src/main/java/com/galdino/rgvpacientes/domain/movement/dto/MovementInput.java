@@ -1,10 +1,11 @@
 package com.galdino.rgvpacientes.domain.movement.dto;
 
+import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
+import com.galdino.rgvpacientes.domain.movement.enums.MovementStatus;
+import com.galdino.rgvpacientes.domain.movement.enums.MovementType;
 import com.galdino.rgvpacientes.domain.movementitem.dto.MovementItemInput;
 import com.galdino.rgvpacientes.domain.patient.dto.PatientIdDTO;
 import com.galdino.rgvpacientes.domain.stock.dto.StockIdDTO;
-import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
-import com.galdino.rgvpacientes.domain.movement.enums.MovementType;
 import lombok.*;
 
 import javax.validation.Valid;
@@ -45,5 +46,8 @@ public class MovementInput {
     private MovementName name;
 
     private String observation;
+
+    @NotNull
+    private MovementStatus status;
 
 }

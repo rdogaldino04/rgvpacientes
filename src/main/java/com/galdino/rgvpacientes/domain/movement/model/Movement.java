@@ -1,12 +1,13 @@
 package com.galdino.rgvpacientes.domain.movement.model;
 
 import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
+import com.galdino.rgvpacientes.domain.movement.enums.MovementStatus;
 import com.galdino.rgvpacientes.domain.movement.enums.MovementType;
 import com.galdino.rgvpacientes.domain.movementitem.model.MovementItem;
 import com.galdino.rgvpacientes.domain.patient.model.Patient;
 import com.galdino.rgvpacientes.domain.stock.model.Stock;
-import com.galdino.rgvpacientes.shared.exception.BusinessException;
 import com.galdino.rgvpacientes.domain.user.model.User;
+import com.galdino.rgvpacientes.shared.exception.BusinessException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -72,6 +73,11 @@ public class Movement {
     private User user;
 
     private String observation;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MovementStatus status;
 
     public void addItem(MovementItem item) {
         if (item != null) {

@@ -41,4 +41,5 @@
     <include file="db/changelog/changes/240714_1352_add_field_related_movement_id.xml"/>
     <include file="db/changelog/changes/240714_1426_alter_field_quantity.xml"/>
     <include file="db/changelog/changes/240714_1623_add_field_user_id_and_obsevation.xml"/>
+    <include file="db/changelog/changes/240721_1121_add_field_status_in_movement.xml"/>
 </databaseChangeLog>

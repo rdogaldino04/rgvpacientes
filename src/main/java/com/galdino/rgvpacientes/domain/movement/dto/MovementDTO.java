@@ -1,6 +1,8 @@
 package com.galdino.rgvpacientes.domain.movement.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
+import com.galdino.rgvpacientes.domain.movement.enums.MovementStatus;
 import com.galdino.rgvpacientes.domain.movement.enums.MovementType;
 import com.galdino.rgvpacientes.domain.movementitem.dto.MovementItemDTO;
 import com.galdino.rgvpacientes.domain.patient.dto.PatientMovementDTO;
@@ -8,7 +10,6 @@ import com.galdino.rgvpacientes.domain.sector.dto.SectorCompanyDTO;
 import com.galdino.rgvpacientes.domain.sector.dto.SectorDTO;
 import com.galdino.rgvpacientes.domain.stock.dto.StockDTO;
 import com.galdino.rgvpacientes.domain.user.dto.UserDTO;
-import com.galdino.rgvpacientes.domain.movement.enums.MovementName;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -47,6 +48,8 @@ public class MovementDTO {
     private UserDTO user;
 
     private String observation;
+
+    private MovementStatus status;
 
     public MovementDTO(Long id, Long patientId, String patientName, Long companyId, String companyName,
                        Long sectorId,
