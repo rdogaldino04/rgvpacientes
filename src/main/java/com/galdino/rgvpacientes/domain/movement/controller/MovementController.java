@@ -51,15 +51,15 @@ public class MovementController {
     }
 
     @PostMapping
-    public ResponseEntity<MovementIdDTO> save(@Validated @RequestBody MovementInput movementInput) {
-        MovementIdDTO movementIdDTO = processMovementInput(movementInput);
+    public ResponseEntity<MovementModel> save(@Validated @RequestBody MovementInput movementInput) {
+        MovementModel movementModel = processMovementInput(movementInput);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(movementIdDTO.getId())
+                .buildAndExpand(movementModel.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(movementIdDTO);
+        return ResponseEntity.created(uri).body(movementModel);
     }
 
     @GetMapping
@@ -81,12 +81,12 @@ public class MovementController {
         return movementItemModelAssembler.toCollectionModel(this.movementService.findByMovementId(id));
     }
 
-    private MovementIdDTO processMovementInput(MovementInput movementInput) {
+    private MovementModel processMovementInput(MovementInput movementInput) {
         movementInput.setId(null);
         if (movementInput.getName() == MovementName.TRANSFERENCIA) {
-            return new MovementIdDTO(this.movementService.transferStock(movementMapper.toEntity(movementInput)).getId());
+            return movementModelAssembler.toModel(this.movementService.transferStock(movementMapper.toEntity(movementInput)));
         } else {
-            return new MovementIdDTO(this.movementService.save(movementMapper.toEntity(movementInput)).getId());
+            return movementModelAssembler.toModel(this.movementService.save(movementMapper.toEntity(movementInput)));
         }
     }
 
